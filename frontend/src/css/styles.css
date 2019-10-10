@@ -1,0 +1,24 @@
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+#login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+#label {
+    text-align: left;
+}
+/* #input {
+    
+} */
