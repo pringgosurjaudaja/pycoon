@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Pycoon</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,16 +15,42 @@
         crossorigin="anonymous"></script>
         <script src="../semantic/dist/semantic.min.js"></script>
 
+
+        <link rel="stylesheet" type="text/css" href="../src/css/styles.css">
     </head>
     <body>
-        <p>Hello World</p>
+        <div class="ui center aligned middle aligned grid" id="container">
+            <div class="column" id="login">
+                <img class="medium ui image" src="/images/wireframe/image.png" alt="Pycoon logo">
+                <h2 class="ui black image header">            
+                    Log-in to Pycoon
+                </h2>
+                <div class="ui large form">
+                    <div class="ui segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="email" placeholder="E-mail">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" placeholder="Password">
+                            </div>
+                        </div>
+                    </div>
+                    
+                <button class="medium ui primary button">
+                    Login
+                </button>
+                <button class="medium ui button">
+                    Register
+                </button>
+                </div>
+            </div>    
+        </div>
         
-        <button class="ui primary button">
-            Save
-          </button>
-          <button class="ui button">
-            Discard
-          </button>
         <script src="../src/js/index.js"></script>
     </body>
 </html>
