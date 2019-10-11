@@ -19,45 +19,64 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}">
     </head>
     <body>
+        <div class="ui secondary menu">
+            <button class="ui left labeled icon button" formaction="/" onclick="window.location.href='{{url_for('main.index')}}'">
+                <i class="left arrow icon"></i>
+                Back
+            </button>
+        </div>
         <div class="ui center aligned middle aligned grid" id="container">
             <div class="column" id="login">
                 <h2 class="ui black image header">            
                     Register
                 </h2>
                 <div class="ui large form">
-                    <div class="ui stackable two column divided grid">
-                        <div class="inline fields">
-                            <div class="field">
-                                <label>Fullname</label>
-                                <div class="ui input">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <label>Fullname</label>
+                        </div>
+                        <div class= "twelve wide column">
+                            <div class="ui input">
                                     <input type="text" name="name" placeholder="Fullname">
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="inline fields">
-                            <div class="field">
-                                <label>E-mail</label>
-                                <div class="ui input">
-                                    <input type="text" name="email" placeholder="E-mail">
-                                </div>
                             </div>
                         </div>
-                        <div class="inline fields">
+                    </div>
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <label>E-mail</label>
+                        </div>
+                        <div class="twelve wide column">
+                            <div class="ui input">
+                                <input type="text" name="email" placeholder="E-mail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="four wide column">
                             <label>Password</label>
+                        </div>
+                        <div class="twelve wide column">
                             <div class="ui input">
                                 <input type="password" name="password" placeholder="Password">
                             </div>
                         </div>
                     </div>
-                <button class="medium ui primary button" formaction="/" onclick="window.location.href='{{url_for('main.index')}}'">
-                        Login
-                    </button>
-                <button class="medium ui button" onclick="window.location.href='{{url_for('auth.signup_post')}}'">
-                    Register
-                </button>
+                    <div class="ui grid">
+                        <div class="sixteen wide column">
+                            <div class="ui buttons">
+                                <button class="medium ui primary button" formaction="/" onclick="window.location.href='{{url_for('main.index')}}'">
+                                    Login
+                                </button>
+                                <button class="medium ui button" onclick="window.location.href='{{url_for('auth.signup_post')}}'">
+                                    Register
+                                </button>
+                            </div>
+                        </div>
+                            
+                    </div>
                 </div>
-            </div>    
+                    
+            </div>
         </div>
         
         <script src="../src/js/index.js"></script>
