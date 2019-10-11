@@ -19,58 +19,61 @@
         <link rel="stylesheet" type="text/css" href="../src/css/styles.css">
     </head>
     <body>
+        <div class="ui secondary  menu">
+            <button class="ui left labeled icon button">
+                    <i class="left arrow icon"></i>
+                    Back
+            </button>
+        </div>
         <div class="ui center aligned middle aligned grid" id="container">
             <div class="column" id="login">
                 <h2 class="ui black image header">            
                     Register
                 </h2>
                 <div class="ui large form">
-                    <div class="ui stackable two column divided grid">
-                        <!-- <div class="row">
-                            <div class="column">
-                                <div class="ui segment">
-                                    <label>Fullname</label>
-                                </div>
-                            </div>
-                            <div class="column">
-                                    <div class="ui segment">
-                                        <div class="ui input">
-                                            <input type="text" name="email" placeholder="Fullname">
-                                        </div>
-                                    </div>
-                                </div>
-                        </div> -->
-                        <!-- <div class="inline fields">
-                            <div class="field">
-                                <label>Fullname</label>
-                                <div class="ui input">
-                                    <input type="text" name="email" placeholder="Fullname">
-                                </div>
-                            </div>
-                            
+                    <div class="ui grid">
+                        <div class="four wide column" id="label">
+                            <label>Fullname</label>
                         </div>
-                        <div class="inline fields">
-                            <div class="field">
-                                <label>E-mail</label>
-                                <div class="ui input">
-                                    <input type="text" name="email" placeholder="E-mail">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inline fields">
-                            <label>Password</label>
+                        <div class="twelve wide column">
                             <div class="ui input">
-                                <input type="text" name="email" placeholder="Password">
+                                <input type="text" name="fullname" placeholder="Fullname">
                             </div>
-                        </div> -->
+                        </div>
                     </div>
-                    
-                <button class="medium ui primary button">
-                    Login
-                </button>
-                <button class="medium ui button">
-                    Register
-                </button>
+                    <div class="ui grid">
+                        <div class="four wide column" id="label">
+                            <label>Email</label>
+                        </div>
+                        <div class="twelve wide column">
+                            <div class="ui input">
+                                <input type="text" name="email" placeholder="Email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="four wide column" id="label">
+                            <label>Password</label>
+                        </div>
+                        <div class="twelve wide column">
+                            <div class="ui input">
+                                <input type="text" name="password" placeholder="Password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="sixteen wide column">
+                            <div class="ui buttons">
+                                <button class="medium ui primary button">
+                                    Register
+                                </button>
+                                <button class="medium ui button">
+                                    Back to Login page
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
                 </div>
             </div>    
         </div>
