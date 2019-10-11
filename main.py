@@ -8,7 +8,7 @@ main = Blueprint('main',__name__)
 def index():
     if current_user.is_authenticated:
         return render_template('profile.html')
-    return render_template('login.html')
+    return render_template('index.html')
 
 @main.route('/profile')
 def profile():
