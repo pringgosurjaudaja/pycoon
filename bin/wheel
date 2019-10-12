@@ -1,5 +1,4 @@
-#!/home/jansen/Documents/COMP/4920/pycoon/bin/python3
-
+#!/Users/elhadinata/Desktop/19t3/COMP4920/project/pycoon/bin/python3.7
 # -*- coding: utf-8 -*-
 import re
 import sys
