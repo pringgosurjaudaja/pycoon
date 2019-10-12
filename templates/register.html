@@ -30,51 +30,55 @@
                 <h2 class="ui black image header">            
                     Register
                 </h2>
-                <div class="ui large form">
-                    <div class="ui grid">
-                        <div class="four wide column">
-                            <label>Fullname</label>
-                        </div>
-                        <div class= "twelve wide column">
-                            <div class="ui input">
-                                    <input type="text" name="name" placeholder="Fullname">
+                <form method="POST" action="/signup">
+                    <div class="ui large form">
+                        <div class="ui grid">
+                            <div class="four wide column">
+                                <label>Fullname</label>
+                            </div>
+                            <div class= "twelve wide column">
+                                <div class="ui input">
+                                        <input type="text" name="name" placeholder="Fullname">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="ui grid">
-                        <div class="four wide column">
-                            <label>E-mail</label>
-                        </div>
-                        <div class="twelve wide column">
-                            <div class="ui input">
-                                <input type="text" name="email" placeholder="E-mail">
+                        <div class="ui grid">
+                            <div class="four wide column">
+                                <label>E-mail</label>
+                            </div>
+                            <div class="twelve wide column">
+                                <div class="ui input">
+                                    <input type="text" name="email" placeholder="E-mail">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="ui grid">
-                        <div class="four wide column">
-                            <label>Password</label>
-                        </div>
-                        <div class="twelve wide column">
-                            <div class="ui input">
-                                <input type="password" name="password" placeholder="Password">
+                        <div class="ui grid">
+                            <div class="four wide column">
+                                <label>Password</label>
+                            </div>
+                            <div class="twelve wide column">
+                                <div class="ui input">
+                                    <input type="password" name="password" placeholder="Password">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="ui grid">
-                        <div class="sixteen wide column">
-                            <div class="ui buttons">
-                                <button class="medium ui primary button" formaction="/" onclick="window.location.href='{{url_for('main.index')}}'">
-                                    Login
-                                </button>
-                                <button class="medium ui button" onclick="window.location.href='{{url_for('auth.signup_post')}}'">
-                                    Register
-                                </button>
+                        <div class="ui grid">
+                            <div class="sixteen wide column">
+                                <div class="ui buttons">
+                                    <button class="medium ui primary button" onclick="window.location.href='{{url_for('auth.signup_post')}}'">
+                                        Register
+                                    </button>
+                                    <button type="button" class="medium ui button" formaction="/" onclick="window.location.href='{{url_for('main.index')}}'">
+                                        Login
+                                    </button>
+                                    
+                                </div>
                             </div>
+                                
                         </div>
-                            
                     </div>
-                </div>
+                </form>
+                
                     
             </div>
         </div>
