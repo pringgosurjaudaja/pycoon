@@ -6,9 +6,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint('auth',__name__)
 
-@auth.route('/login')
+@auth.route('/')
 def login():
-    return render_template('login.html')
+    return render_template('home.html')
 
 @auth.route('/', methods=['GET', 'POST'])
 def home():
@@ -17,11 +17,12 @@ def home():
         password = request.form.get('password')
         
         user = User.query.filter_by(email=email).first()
-        print('YO')
+
         if not user or not check_password_hash(user.password, password):
             return redirect(url_for('auth.home'))
         login_user(user)
         return redirect(url_for('auth.profile'))
+        
     if current_user.is_authenticated:
         return render_template('profile.html')
     return render_template('home.html')    
