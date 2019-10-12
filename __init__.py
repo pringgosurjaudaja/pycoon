@@ -17,7 +17,7 @@ def create_app():
     
 
     login_manager = LoginManager()
-    login_manager.login_view = 'main.index'
+    login_manager.login_view = 'auth.index'
     login_manager.init_app(app)
 
     from .models import User
@@ -29,7 +29,7 @@ def create_app():
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+    # from .auth import main as main_blueprint
+    # app.register_blueprint(main_blueprint)
 
     return app
