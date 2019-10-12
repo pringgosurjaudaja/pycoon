@@ -39,7 +39,7 @@ def signup_post():
 
 @auth.route('/signup')
 def signup():
-    return render_template('register.html')
+    return render_template('signup.html')
 
 @auth.route('/logout')
 @login_required
