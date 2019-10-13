@@ -16,44 +16,41 @@
         <script src="../semantic/dist/semantic.min.js"></script>
 
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}">
     </head>
     <body>
-        <div class="ui center aligned middle aligned grid" id="container">
-            
-            <div class="column" id="login">
-                <img class="medium ui image" src="{{ url_for('static', filename='assets/pycoon-logo.png') }}" alt="Pycoon logo">
-                <h2 class="ui black image header">            
-                    Log-in to Pycoon
-                </h2>
-
-                <form method="POST" action="/">
-                    <div class="ui large form">
-                        <div class="ui segment">
-                            <div class="field">
-                                <div class="ui left icon input">
-                                    <i class="user icon"></i>
-                                    <input type="text" name="email" placeholder="E-mail">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui left icon input">
-                                    <i class="lock icon"></i>
-                                    <input type="password" name="password" placeholder="Password">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="medium ui primary button" onclick="window.location.href='{{ url_for('main.home') }}'">
-                            Login
-                        </button>
-                        <button type="button" class="medium ui button" formaction="/signup" onclick="window.location.href='{{ url_for('main.signup') }}'">
-                            Register
-                        </button>
-                    </div>
-                </form>
-                
-            </div>    
+        <div class="ui secondary menu">
+            <button class="ui left labeled icon button" formaction="/" onclick="window.location.href='{{url_for('main.login')}}'">
+                <i class="left arrow icon"></i>
+                Back
+            </button>
         </div>
-        
+        <div class="ui container">
+            <div class="ui stackable grid">
+              <div class="column">
+                <div class="ui horizontal segments">
+                  <div class="ui segment ">
+                    <div>
+
+                    </div>
+                  </div>
+                  <div class="ui segment">
+                    <div class="ui segments">
+                        <div class="ui segment">
+                          <label>testt</label>
+                        </div>
+                        <div class="ui segment">
+                          <label>testt</label>
+                        </div>    
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+        </div>
+        <a href="{{ url_for('main.logout') }}">
+          Logout
+      </a>
     </body>
 </html>

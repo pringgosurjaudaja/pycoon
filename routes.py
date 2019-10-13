@@ -6,8 +6,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 main = Blueprint('main',__name__)
 
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/')
+@login_required
 def home():
+    return render_template('home.html')
+
+@main.route('/login', methods=['GET', 'POST'])
+def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -17,11 +22,11 @@ def home():
         if not user or not check_password_hash(user.password, password):
             return redirect(url_for('main.home'))
         login_user(user)
-        return redirect(url_for('main.profile'))
+        return redirect(url_for('main.home'))
         
     if current_user.is_authenticated:
-        return render_template('profile.html')
-    return render_template('home.html')    
+        return render_template('home.html')
+    return render_template('login.html')    
 
 @main.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -46,7 +51,3 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
-
-@main.route('/profile')
-def profile():
-    return render_template('profile.html')
