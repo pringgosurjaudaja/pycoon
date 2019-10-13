@@ -4,13 +4,9 @@ from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-auth = Blueprint('auth',__name__)
+main = Blueprint('main',__name__)
 
-@auth.route('/')
-def login():
-    return render_template('home.html')
-
-@auth.route('/', methods=['GET', 'POST'])
+@main.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -19,15 +15,15 @@ def home():
         user = User.query.filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
-            return redirect(url_for('auth.home'))
+            return redirect(url_for('main.home'))
         login_user(user)
-        return redirect(url_for('auth.profile'))
+        return redirect(url_for('main.profile'))
         
     if current_user.is_authenticated:
         return render_template('profile.html')
     return render_template('home.html')    
 
-@auth.route('/signup', methods=['GET', 'POST'])
+@main.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -36,21 +32,21 @@ def signup():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            return redirect(url_for('auth.signup'))
+            return redirect(url_for('main.signup'))
 
         new_user = User(email=email, name=name, password = generate_password_hash(password, method='sha256'))
 
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for('auth.home'))
+        return redirect(url_for('main.home'))
     return render_template('signup.html')    
 
-@auth.route('/logout')
+@main.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.home'))
+    return redirect(url_for('main.home'))
 
-@auth.route('/profile')
+@main.route('/profile')
 def profile():
     return render_template('profile.html')

@@ -20,7 +20,7 @@
     </head>
     <body>
         <div class="ui secondary menu">
-            <button class="ui left labeled icon button" formaction="/" onclick="window.location.href='{{url_for('auth.home')}}'">
+            <button class="ui left labeled icon button" formaction="/" onclick="window.location.href='{{url_for('main.home')}}'">
                 <i class="left arrow icon"></i>
                 Back
             </button>
@@ -49,5 +49,8 @@
               </div>
             </div>
         </div>
+        <a href="{{ url_for('main.logout') }}">
+          Logout
+      </a>
     </body>
 </html>
