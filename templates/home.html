@@ -20,37 +20,43 @@
     </head>
     <body>
         <div class="ui secondary menu">
-            <button class="ui left labeled icon button" formaction="/" onclick="window.location.href='{{url_for('main.login')}}'">
+            <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.logout')}}'">
                 <i class="left arrow icon"></i>
                 Back
             </button>
         </div>
-        <div class="ui container">
-            <div class="ui stackable grid">
-              <div class="column">
-                <div class="ui horizontal segments">
-                  <div class="ui segment ">
-                    <div>
-
-                    </div>
+        <div class="ui centered container" id="scrollable">
+            <div class="ui centered grid">
+              <div class="four wide left aligned column">
+                <div class="ui massive segment">
+                  <label>TERM 3 2018</label>
+                  <div class="ui divider"></div>
+                  <div class="ui indicating progress">
+                      <div class="bar"></div>
+                      <div class="label">Week</div>
                   </div>
-                  <div class="ui segment">
-                    <div class="ui segments">
-                        <div class="ui segment">
-                          <label>testt</label>
-                        </div>
-                        <div class="ui segment">
-                          <label>testt</label>
-                        </div>    
-                    </div>
-                  </div>
-                  
                 </div>
+                <div class="ui massive segment">
+                  <label>TERM 1 2019</label>
+                  <div class="ui divider"></div>
+                  <div class="ui indicating progress">
+                      <div class="bar"></div>
+                      <div class="label">Week</div>
+                  </div>
+                </div>
+                <div class="ui massive segment">
+                  <label>TERM 2 2019</label>
+                  <div class="ui divider"></div>
+                  <div class="ui indicating progress">
+                      <div class="bar"></div>
+                      <div class="label">Week</div>
+                  </div>
+                </div>
+
+                
               </div>
             </div>
         </div>
-        <a href="{{ url_for('main.logout') }}">
-          Logout
-      </a>
+        <script src="home.js"></script>
     </body>
 </html>
