@@ -13,10 +13,9 @@
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-        <script src="../semantic/dist/semantic.min.js"></script>
-
-
+        <script src="../static/semantic/dist/semantic.min.js"></script>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}">
+        <script src="../static/src/js/signup.js"></script>
     </head>
     <body>
         <div class="ui secondary menu">
@@ -58,8 +57,21 @@
                             </div>
                             <div class="twelve wide column">
                                 <div class="ui input">
-                                    <input type="password" name="password" placeholder="Password">
+                                    <input id="password" type="password" name="password" placeholder="Password">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="ui grid">
+                            <div class="four wide column">
+                                <label>Confirm Password</label>
+                            </div>
+                            <div class="twelve wide column">
+                                <div class="ui input">
+                                    <input id="repassword" type="password" name="password" placeholder="Re-enter Password">
+                                </div>
+                            </div>
+                            <div class="sixteen wide column">
+                                <div id="notif" class="ui fluid red message hidden">Passwords must match</div>
                             </div>
                         </div>
                         <div class="ui grid">

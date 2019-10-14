@@ -13,10 +13,12 @@
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-        <script src="../semantic/dist/semantic.min.js"></script>
+        <script src="{{url_for('static', filename='semantic/dist/semantic.min.js')}}"></script>
 
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}">
+
+        <script src="../static/src/js/home.js"></script>
     </head>
     <body>
         <div class="ui secondary menu">
@@ -27,11 +29,13 @@
         </div>
         <div class="ui centered container" id="scrollable">
             <div class="ui centered grid">
-              <div class="four wide left aligned column">
+              <div class="eight wide left aligned column">
                 <div class="ui massive segment">
                   <label>TERM 3 2018</label>
+                  <div class="ui button right floated" id="increment-button">Increment!</div>
                   <div class="ui divider"></div>
-                  <div class="ui indicating progress">
+                  
+                  <div class="ui indicating progress" data-value="1" data-total="10" id="example1">
                       <div class="bar"></div>
                       <div class="label">Week</div>
                   </div>
@@ -39,7 +43,17 @@
                 <div class="ui massive segment">
                   <label>TERM 1 2019</label>
                   <div class="ui divider"></div>
-                  <div class="ui indicating progress">
+                  <!-- <div class="ui horizontal segments">
+                      <div class="ui segment">Start</div>
+                      <div class="ui segment">End</div>
+                  </div> -->
+                  <div class="attached ui two item menu">
+                      <div class="item"></div>
+                      <div class="item"></div>
+                      <div class="item"></div>
+                  </div>
+                  <div class="ui divider"></div>
+                  <div class="ui indicating progress" data-value="1" data-total="10" id="example2">
                       <div class="bar"></div>
                       <div class="label">Week</div>
                   </div>
@@ -47,16 +61,18 @@
                 <div class="ui massive segment">
                   <label>TERM 2 2019</label>
                   <div class="ui divider"></div>
-                  <div class="ui indicating progress">
+                  <div class="ui indicating progress" data-value="1" data-total="10" id="example3">
                       <div class="bar"></div>
                       <div class="label">Week</div>
                   </div>
                 </div>
-
+                
+                <div class="ui fluid button teal" onclick="">
+                    <label>Add New Term</label>
+                </div>
                 
               </div>
             </div>
         </div>
-        <script src="home.js"></script>
     </body>
 </html>
