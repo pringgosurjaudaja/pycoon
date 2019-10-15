@@ -1,0 +1,9 @@
+<h1>Terms</h1>
+
+<ul>
+{% for term in terms %}
+    {% if event.type == 'course' %}
+        <li><a href="{{url_for('term', id=term.id)}}">{{term.title}}, courses: {{term.courses|length}}</a></li>
+    {% endif %}
+{% endfor %}
+</ul>
