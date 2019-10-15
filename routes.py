@@ -75,7 +75,8 @@ def add_term():
 @login_required
 def term(term_id):
     term = Term.query.filter_by(id=int(term_id)).first()
-    return render_template('term_dev.html',term=term)    
+    courses = Course.query.filter_by(term_id=term.id)
+    return render_template('term_dev.html',term=term, courses=courses)    
 
 @main.route('/add/course', methods=['GET', 'POST'])
 @login_required
