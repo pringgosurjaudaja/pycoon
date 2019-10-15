@@ -9,7 +9,8 @@ main = Blueprint('main',__name__)
 @main.route('/')
 @login_required
 def home():
-    return render_template('home.html')
+    terms = Term.query.filter_by(user_id=current_user.id)
+    return render_template('events.html',terms=terms)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -51,3 +52,4 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
