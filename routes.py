@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template,redirect, url_for,request
-from .models import User
+from .models import User, Term, Course, Assessment, Class
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,9 +9,8 @@ main = Blueprint('main',__name__)
 @main.route('/')
 @login_required
 def home():
-    # terms = Term.query.filter_by(user_id=current_user.id)
-    # return render_template('events.html',terms=terms)
-    return render_template('home.html')
+    terms = Term.query.filter_by(user_id=current_user.id)
+    return render_template('home_dev.html',terms=terms)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -53,4 +52,15 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+@main.route('/add/term')
+@login_required
+def add_term():
+    return render_template('add_term_dev.html')
+
+@main.route('/<id>')
+@login_required
+def terms(id):
+    terms = Term.query.filter_by(user_id=current_user.id)
+    return render_template('home_dev.html',terms=terms)    
 
