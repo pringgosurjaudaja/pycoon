@@ -42,7 +42,7 @@ class Assessment(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
 
 class Class(db.Model):
-    __tablename__ = "classe"
+    __tablename__ = "class"
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.Enum(ClassEnum), nullable=False)
     day = db.Column(db.Integer, nullable=False)
