@@ -9,7 +9,7 @@ main = Blueprint('main',__name__)
 @main.route('/')
 @login_required
 def home():
-    terms = Term.query.filter_by(user_id=current_user.id)
+    # terms = Term.query.filter_by(user_id=current_user.id)
     return render_template('events.html',terms=terms)
 
 @main.route('/login', methods=['GET', 'POST'])
