@@ -10,7 +10,8 @@ main = Blueprint('main',__name__)
 @login_required
 def home():
     # terms = Term.query.filter_by(user_id=current_user.id)
-    return render_template('events.html',terms=terms)
+    # return render_template('events.html',terms=terms)
+    render_template('home.html')
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
