@@ -1,56 +1,34 @@
 $(document).ready(function() {
     console.log( "ready!" );
     
-    $('#register').hover(()=>{
+    $('#register').click(function (event) {
         var name = $('#name').val();
         var email = $('#email').val();
 
-        if(name !== '' && email !== '') {
-            $('#notif').addClass('hidden');
-            $('#register').removeClass('disabled');
-        } else {
-            $('#notif').removeClass('hidden');
-            $('#register').addClass('disabled');
-        }
-    })
-
-    $('#name').keyup(()=>{
-        var name = $('#name').val();
-        var email = $('#email').val();
-
-        if(name !== '' && email !== '') {
-            $('#notif').addClass('hidden');
-            $('#register').removeClass('disabled');
-        } else {
-            $('#notif').removeClass('hidden');
-            $('#register').addClass('disabled');
-        }
-    })
-
-    $('#email').keyup(()=>{
-        var name = $('#name').val();
-        var email = $('#email').val();
-
-        if(name !== '' && email !== '') {
-            $('#notif').addClass('hidden');
-            $('#register').removeClass('disabled');
-        } else {
-            $('#notif').removeClass('hidden');
-            $('#register').addClass('disabled');
-        }
-    })
-    $('#repassword').keyup(()=>{
         var pass = $('#password').val();
         var repass = $('#repassword').val();
     
-        if(pass !== repass || pass === '' || repass === '') {
+
+        if(name.length == 0 
+            || email.length == 0 
+            || pass == 0 
+            || repass  == 0) {
+            $('#notif').removeClass('hidden');
+            $('#register').addClass('disabled');
+            return false;
+        } else {
+            $('#notif').addClass('hidden');
+            $('#register').removeClass('disabled');
+        }
+
+        if(pass !== repass && pass.length > 0 && repass.length > 0) {
             $('#notif1').removeClass('hidden');
             $('#register').addClass('disabled');
+            return false;
         } else {
             $('#notif1').addClass('hidden');
             $('#register').removeClass('disabled');
         }
-    })
-    
-    
+        return true;
+    });    
 });
