@@ -10,9 +10,11 @@ $(document).ready(function() {
         if(pass!==repass) {
             console.log("APPEAR!");
             $('#notif').removeClass('hidden');
+            $('#register').addClass('disabled');
         } else {
             console.log("DISAPPEAR!");
             $('#notif').addClass('hidden');
+            $('#register').removeClass('disabled');
         }
     })
     
