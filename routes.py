@@ -3,6 +3,7 @@ from .models import User, Term, Course, Assessment, Class
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 main = Blueprint('main',__name__)
 
@@ -61,9 +62,10 @@ def logout():
 def add_term():
     if request.method == 'POST':
         title = request.form.get('title')
-        start_date = request.form.get('start_date')
-        end_date = request.form.get('end_date')
-
+        start_date_string = request.form.get('start_date')
+        start_date = datetime.strptime(start_date_string, "%Y-%m-%d")
+        end_date_string = request.form.get('end_date')
+        end_date = datetime.strptime(end_date_string, "%Y-%m-%d")
         new_term = Term(title=title, start_date=start_date, end_date = end_date, user_id = current_user.id)
 
         db.session.add(new_term)
@@ -78,9 +80,15 @@ def term(term_id):
     courses = Course.query.filter_by(term_id=term.id)
     return render_template('term_dev.html',term=term, courses=courses)    
 
-@main.route('/add/course', methods=['GET', 'POST'])
+@main.route('/add/course<term_id>', methods=['GET', 'POST'])
 @login_required
-def add_course():
+def add_course(term_id):
+    if request.method == 'POST':
+        title = request.form.get('title')
+        new_course = Course(title = title, term_id = term_id)
+        db.session.add(new_course)
+        db.session.commit()
+        return redirect(url_for('main.term', term_id = term_id))
     return render_template('add_course_dev.html')
 
 @main.route('/course<course_id>')
