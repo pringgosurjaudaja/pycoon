@@ -1,4 +1,25 @@
 <!DOCTYPE html>
 <html>
+{% block body %}
 <h1>Add Term</h1>
+<div>
+  <form method="POST">
+    <div>
+      <input name="title" {% if form %}value={{form['title']}}{% endif %}>Title</input>
+      <br/>
+    </div>
+    <div>
+      <input type="datetime-local" name="start_date" {% if form %}value={{form['start_date']}}{% endif %}>Start Date</input>
+      <br/>
+      <input type="datetime-local" name="end_date" {% if form %}value={{form['end_date']}}{% endif %}>End Date</input>
+      <br/>
+    </div>
+    {% if error %}
+        {{error}}
+        <br/>
+    {% endif %}
+    <button name="confirm" type="submit">Confirm</button>
+  </form>
+</div>
+{% endblock %}
 </html>

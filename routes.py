@@ -21,12 +21,12 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
-            return redirect(url_for('main.home'))
+            return redirect(url_for('main.login'))
         login_user(user)
         return redirect(url_for('main.home'))
         
     if current_user.is_authenticated:
-        return render_template('home.html')
+        return redirect(url_for('main.home'))
     return render_template('login.html')    
 
 @main.route('/signup', methods=['GET', 'POST'])
@@ -45,6 +45,9 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('main.home'))
+
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))    
     return render_template('signup.html')    
 
 @main.route('/logout')
@@ -53,14 +56,34 @@ def logout():
     logout_user()
     return redirect(url_for('main.home'))
 
-@main.route('/add/term')
+@main.route('/add/term', methods=['GET', 'POST'])
 @login_required
 def add_term():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        start_date = request.form.get('start_date')
+        end_date = request.form.get('end_date')
+
+        new_term = Term(title=title, start_date=start_date, end_date = end_date, user_id = current_user.id)
+
+        db.session.add(new_term)
+        db.session.commit()
+        return redirect(url_for('main.home'))
     return render_template('add_term_dev.html')
 
-@main.route('/<id>')
+@main.route('/term<term_id>')
 @login_required
-def terms(id):
-    terms = Term.query.filter_by(user_id=current_user.id)
-    return render_template('home_dev.html',terms=terms)    
+def term(term_id):
+    term = Term.query.filter_by(id=int(term_id)).first()
+    return render_template('term_dev.html',term=term)    
 
+@main.route('/add/course', methods=['GET', 'POST'])
+@login_required
+def add_course():
+    return render_template('add_course_dev.html')
+
+@main.route('/course<course_id>')
+@login_required
+def course(course_id):
+    course = Course.query.filter_by(id=int(course_id)).first()
+    return render_template('course_dev.html',course=course)  

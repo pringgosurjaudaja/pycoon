@@ -4,13 +4,13 @@
 <ul>
 {% for term in terms %}
     
-    <li><a href="{{url_for('main.term', id=term.id)}}">{{term.title}}</a></li>
+    <li><a href="{{url_for('main.term', term_id=term.id)}}">{{term.title}}</a></li>
 
 {% endfor %}
 <a href="{{ url_for('main.logout') }}">
     Logout
-</a>
+</a></br>
 <a href="{{ url_for('main.add_term') }}">
-    add term
+    Add Term
 </a>
 </ul>

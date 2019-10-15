@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html>
+<h1>Term Page</h1>
 <h1>{{term.title}}</h1>
 <h1>{{term.id}}</h1>
+<ul>
+    {% for term in terms %}
+            
+        <li><a href="{{url_for('main.course', course_id=course.id)}}">{{course.title}}</a></li>
+        
+    {% endfor %}
+    <a href="{{ url_for('main.add_course') }}">
+        Add Course
+    </a>
+</ul>
 </html>
