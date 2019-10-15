@@ -21,8 +21,8 @@ class Term(db.Model):
     __tablename__= "term"
     id = db.Column(db.Integer, primary_key =True)
     title = db.Column(db.String(100), nullable=False)
-    start_date = db.Column(db.DateTime, nullable=False)
-    end_date = db.Column(db.DateTime, nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
     courses = db.relationship('Course', backref='term', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -38,7 +38,7 @@ class Assessment(db.Model):
     __tablename__="assessment"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100),nullable=False)
-    due_date = db.Column(db.DateTime, nullable = False)
+    due_date = db.Column(db.Date, nullable = False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
 
 class Class(db.Model):
