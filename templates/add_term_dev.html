@@ -9,9 +9,9 @@
       <br/>
     </div>
     <div>
-      <input type="datetime-local" name="start_date" {% if form %}value={{form['start_date']}}{% endif %}>Start Date</input>
+      <input type="date" name="start_date" {% if form %}value={{form['start_date']}}{% endif %}>Start Date</input>
       <br/>
-      <input type="datetime-local" name="end_date" {% if form %}value={{form['end_date']}}{% endif %}>End Date</input>
+      <input type="date" name="end_date" {% if form %}value={{form['end_date']}}{% endif %}>End Date</input>
       <br/>
     </div>
     {% if error %}
