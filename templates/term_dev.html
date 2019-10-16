@@ -6,11 +6,16 @@
 <ul>
     {% for course in courses %}
             
-        <li><a href="{{url_for('main.course', course_id=course.id)}}">{{course.title}}</a></li>
+        <li><a href="{{url_for('main.course', course_id=course.id)}}">{{course.code}} - {{course.title}}</a></li>
         
     {% endfor %}
     <a href="{{ url_for('main.add_course', term_id = term.id) }}">
         Add Course
+    </a>
+    <br/>
+    <br/>
+    <a href="{{ url_for('main.calendar', term_id = term.id) }}">
+        Go to Calendar
     </a>
 </ul>
 </html>

@@ -31,6 +31,7 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     code = db.Column(db.String(9), nullable=False)
+    color = db.Column(db.String(7), nullable=False)
     assessments = db.relationship('Assessment', backref='course', lazy=True)
     classes = db.relationship('Class', backref='course', lazy=True)
     term_id = db.Column(db.Integer, db.ForeignKey('term.id'), nullable = False)
