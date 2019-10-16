@@ -84,12 +84,14 @@ def term(term_id):
 @login_required
 def add_course(term_id):
     if request.method == 'POST':
-        title = request.form.get('title')
-        new_course = Course(title = title, term_id = term_id)
+        print("YES")
+        title = request.form.get('course-title')
+        code = request.form.get('course-code')
+        new_course = Course(title = title,code = code, term_id = term_id)
         db.session.add(new_course)
         db.session.commit()
         return redirect(url_for('main.term', term_id = term_id))
-    return render_template('add_course_dev.html')
+    return render_template('add_course.html', term_id = term_id)
 
 @main.route('/course<course_id>')
 @login_required

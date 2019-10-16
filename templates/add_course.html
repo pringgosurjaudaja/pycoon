@@ -28,7 +28,7 @@
         <div class="ui center aligned middle aligned grid" id="container">
             <div class="six wide column" id="add-course">
                 <h2>Add new course</h2>
-                <form method="POST" action="/add_course">
+                <form method="POST">
                     <div class="ui large form">
                         <div class="ui segment">
                             <div class="field">
@@ -41,10 +41,10 @@
                                     <input type="text" name="course-title" placeholder="Course Title">
                                 </div>
                             </div>
-                            <button class="medium ui button">
+                            <button type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.term', term_id=term_id) }}'">
                                 Cancel
                             </button>
-                            <button class="medium ui primary button" formaction="/add_course" onclick="window.location.href='{{ url_for('main.add_course', term_id=term_id) }}'">
+                            <button class="medium ui primary button" formmethod="POST" onclick="window.location.href='{{ url_for('main.add_course', term_id=term_id) }}'">
                                 Confirm
                             </button>
                         </div>
