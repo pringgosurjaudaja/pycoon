@@ -10,6 +10,8 @@
         <br/>
         <input name="code" {% if form %}value={{form['code']}}{% endif %}>Code</input>
         <br/>
+        <input type="color" name="color" {% if form %}value={{form['color']}}{% endif %}>Color</input>
+        <br/>
       </div>
       {% if error %}
           {{error}}

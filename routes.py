@@ -86,7 +86,8 @@ def add_course(term_id):
     if request.method == 'POST':
         title = request.form.get('title')
         code = request.form.get('code')
-        new_course = Course(title = title, code = code, term_id = term_id)
+        color = request.form.get('color')
+        new_course = Course(title = title, code = code, color = color, term_id = term_id)
         db.session.add(new_course)
         db.session.commit()
         return redirect(url_for('main.term', term_id = term_id))
