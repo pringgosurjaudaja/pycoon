@@ -17,6 +17,8 @@
 
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+
+        <script src="../static/src/js/add_course.js"></script>
      </head>
     <body>
         <div class="ui secondary menu">
@@ -33,20 +35,49 @@
                         <div class="ui segment">
                             <div class="field">
                                 <div class="ui input">
-                                    <input type="text" name="course-code" placeholder="Course Code">
+                                    <input type="text" name="code" placeholder="Course Code">
                                 </div>
                             </div>
                             <div class="field">
                                 <div class="ui input">
-                                    <input type="text" name="course-title" placeholder="Course Title">
+                                    <input type="text" name="title" placeholder="Course Title">
                                 </div>
                             </div>
-                            <button type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.term', term_id=term_id) }}'">
-                                Cancel
-                            </button>
-                            <button type="submit" class="medium ui primary button" onclick="window.location.href='{{ url_for('main.add_course', term_id=term_id) }}'">
-                                Confirm
-                            </button>
+                            <div class="field">
+                                <label>Color</label>
+                                <div class="ui simple selection dropdown">
+                                    <input type="hidden" name="color">
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">Select color</div>
+                                    <div class="menu">
+                                        <div class="item" data-value="red" data-text="Red">
+                                            <div class="ui red empty circular label"></div>
+                                            Red
+                                        </div>
+                                        <div class="item"  data-value="olive" data-text="Olive">
+                                            <div class="ui olive empty circular label"></div>
+                                            Olive
+                                        </div>
+                                        <div class="item"  data-value="purple" data-text="Purple">
+                                            <div class="ui purple empty circular label"></div>
+                                            Purple
+                                        </div>
+                                        <div class="item"  data-value="pink" data-text="Pink">
+                                            <div class="ui pink empty circular label"></div>
+                                            Pink
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </br></br>
+                            <div>
+                                <button type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.term', term_id=term_id) }}'">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="medium ui primary button" onclick="window.location.href='{{ url_for('main.add_course', term_id=term_id) }}'">
+                                    Confirm
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
