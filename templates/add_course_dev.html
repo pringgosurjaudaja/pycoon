@@ -8,6 +8,8 @@
       <div>
         <input name="title" {% if form %}value={{form['title']}}{% endif %}>Title</input>
         <br/>
+        <input name="code" {% if form %}value={{form['code']}}{% endif %}>Code</input>
+        <br/>
       </div>
       {% if error %}
           {{error}}

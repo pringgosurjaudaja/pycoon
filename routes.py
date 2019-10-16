@@ -80,12 +80,13 @@ def term(term_id):
     courses = Course.query.filter_by(term_id=term.id)
     return render_template('term_dev.html',term=term, courses=courses)    
 
-@main.route('/add/course<term_id>', methods=['GET', 'POST'])
+@main.route('/term<term_id>/add/course', methods=['GET', 'POST'])
 @login_required
 def add_course(term_id):
     if request.method == 'POST':
         title = request.form.get('title')
-        new_course = Course(title = title, term_id = term_id)
+        code = request.form.get('code')
+        new_course = Course(title = title, code = code, term_id = term_id)
         db.session.add(new_course)
         db.session.commit()
         return redirect(url_for('main.term', term_id = term_id))
