@@ -96,4 +96,30 @@ def add_course(term_id):
 @login_required
 def course(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
-    return render_template('course_dev.html',course=course)  
+    assessments = Assessment.query.filter_by(course_id=course.id)
+    return render_template('course_dev.html',course=course, assessments=assessments)  
+
+@main.route('/term<term_id>/calendar')
+@login_required
+def calendar(term_id):
+    term = Term.query.filter_by(id=int(term_id)).first()
+    return render_template('calendar_dev.html',term=term) 
+
+@main.route('/assessment<assessment_id>')
+@login_required
+def assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
+    return render_template('assessment_dev.html',assessment=assessment)    
+
+@main.route('/course<course_id>/add/assessment', methods=['GET', 'POST'])
+@login_required
+def add_assessment(course_id):
+    if request.method == 'POST':
+        title = request.form.get('title')
+        due_date_string = request.form.get('due_date')
+        due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
+        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id)
+        db.session.add(new_assessment)
+        db.session.commit()
+        return redirect(url_for('main.course', course_id = course_id))
+    return render_template('add_assessment_dev.html')      
