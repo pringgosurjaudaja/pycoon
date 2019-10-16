@@ -44,7 +44,7 @@
                             <button type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.term', term_id=term_id) }}'">
                                 Cancel
                             </button>
-                            <button class="medium ui primary button" formmethod="POST" onclick="window.location.href='{{ url_for('main.add_course', term_id=term_id) }}'">
+                            <button type="submit" class="medium ui primary button" onclick="window.location.href='{{ url_for('main.add_course', term_id=term_id) }}'">
                                 Confirm
                             </button>
                         </div>
