@@ -26,6 +26,14 @@ $(document).ready(function() {
                     label.innerHTML = data.terms[i].title;
                     segment.appendChild(label);
 
+                    var remove = document.createElement('a');
+                    remove.setAttribute('class', 'ui right corner red label');
+                    var icon = document.createElement('i');
+                    icon.setAttribute('class', 'remove icon');
+                    remove.appendChild(icon);
+                    segment.appendChild(remove);
+
+
                     var divider = document.createElement('div');
                     divider.setAttribute('class', 'ui divider');
                     segment.appendChild(divider);
@@ -118,7 +126,7 @@ $(document).ready(function() {
             }).then((data) => {
                 var prefix ="#example";
                 var prefix1 = "#button";
-                
+
                 for(var n = 0; n < data.terms.length; ++n) {
                     // Must Strictly use const, otherwise wont work
                     const num = data.terms[n].id;
