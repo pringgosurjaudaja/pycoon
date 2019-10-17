@@ -17,7 +17,7 @@ def home():
 @login_required
 def terms():
     qryresult = Term.query.filter_by(user_id=current_user.id)
-    return jsonify(json_list=[i.serialize for i in qryresult.all()])    
+    return jsonify(terms=[i.serialize for i in qryresult.all()])    
     # return jsonify(terms=terms)
 
 @main.route('/login', methods=['GET', 'POST'])
