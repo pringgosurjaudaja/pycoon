@@ -16,6 +16,7 @@ $(document).ready(function() {
 
             response.json()
             .then(function(data) {
+                console.log(data.terms)
                 for(var i = 0; i < data.terms.length; ++i) {
                     
                     var segment = document.createElement('div');
@@ -90,8 +91,6 @@ $(document).ready(function() {
                     progress.setAttribute('data-value', currentDiff);
                     progress.setAttribute('data-total', diff);
                     
-
-                    console.log(start+" "+end+" "+currentDiff+"/"+diff);
                     var bar = document.createElement('div');
                     bar.setAttribute('class', 'bar');
                     progress.appendChild(bar);
@@ -103,20 +102,39 @@ $(document).ready(function() {
 
                     segment.appendChild(progress);
 
+                    var view = document.createElement('button');
+                    var buttonId = 'button'+data.terms[i].id;
+                    view.setAttribute('class', 'fluid blue ui button')
+                    view.setAttribute('id', buttonId);
+                    view.innerHTML = 'View';
+                    
+                    segment.appendChild(view);
+
                     $('#list').append(segment);
 
                     count += 1;
                 }
-            }).then(() => {
+                return data;
+            }).then((data) => {
                 var prefix ="#example";
-                for(var i = 1; i<=count; ++i) {
-                    var id = prefix+i;
+                var prefix1 = "#button";
+                
+                for(var n = 0; n < data.terms.length; ++n) {
+                    // Must Strictly use const, otherwise wont work
+                    const num = data.terms[n].id;
+                    $(prefix1+num).click(() => {
+                        window.location.href = '/term'+num;
+                    })
+                }
+                for(var i = 1; i <= count-1; ++i) {
+                    var id = prefix + i;
                     $(id).progress({
                         text: {
                             active  : 'Week {value} of {total}',
                             success : 'End of Term! Week {value} of {total}',
                         }
                     });
+                    
                 }
             }).then(() => {
                 var button = document.createElement('div');
@@ -131,7 +149,8 @@ $(document).ready(function() {
                 $('#button').click(() => {
                     window.location.href = '/add/term';
                 })
-            }).catch((error)=> {
+            })
+            .catch((error)=> {
                 console.log('request failed : '+error);
             })
         })
