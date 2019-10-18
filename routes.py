@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,redirect, url_for,request
+from flask import Blueprint, render_template,redirect, url_for,request, jsonify
 from .models import User, Term, Course, Assessment, Class
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
@@ -11,7 +11,14 @@ main = Blueprint('main',__name__)
 @login_required
 def home():
     terms = Term.query.filter_by(user_id=current_user.id)
-    return render_template('home_dev.html',terms=terms)
+    return render_template('home.html',terms=terms)
+
+@main.route('/api/terms')
+@login_required
+def terms():
+    qryresult = Term.query.filter_by(user_id=current_user.id)
+    return jsonify(terms=[i.serialize for i in qryresult.all()])    
+    # return jsonify(terms=terms)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -22,7 +29,7 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
-            return redirect(url_for('main.login'))
+            return render_template('login.html', error = True, invalid='Invalid username or password')    
         login_user(user)
         return redirect(url_for('main.home'))
         
@@ -39,7 +46,7 @@ def signup():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            return redirect(url_for('main.signup'))
+            return render_template('signup.html', error = True, invalid='User with this email already exists') 
 
         new_user = User(email=email, name=name, password = generate_password_hash(password, method='sha256'))
 
@@ -140,3 +147,25 @@ def edit_course(course_id):
         return redirect(url_for('main.course', course_id = course_id))
     course = Course.query.filter_by(id = int(course_id)).first() 
     return render_template('edit_course_dev.html', title = course.title)
+    return render_template('add_assessment_dev.html')    
+
+@main.route('/class<class_id>')
+@login_required
+def class_page(class_id):
+    curr_class = Class.query.filter_by(id=int(class_id)).first()
+    return render_template('class_dev.html',curr_class=curr_class)    
+
+@main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
+@login_required
+def add_class(course_id):
+    if request.method == 'POST':
+        type = request.form.get('type')
+        day = request.form.get('day')
+        time_string = request.form.get('time')
+        time = datetime.strptime(time_string, "%H:%M")
+        weeks = request.form.get('weeks')
+        new_class = Class(type = type, day = day, time = time, weeks = weeks)
+        db.session.add(new_class)
+        db.session.commit()
+        return redirect(url_for('main.course', course_id = course_id))
+    return render_template('add_class_dev.html')

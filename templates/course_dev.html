@@ -15,6 +15,9 @@
     </a>
     <a href="{{url_for('main.edit_course', course_id = course.id)}}">
         Edit Course
+    </br>
+    <a href="{{ url_for('main.add_class', course_id = course.id) }}">
+        Add Class
     </a>
 </ul>    
 </html>

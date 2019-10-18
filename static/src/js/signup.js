@@ -1,34 +1,69 @@
 $(document).ready(function() {
-    console.log( "ready!" );
-    
-    $('#register').click(function (event) {
-        var name = $('#name').val();
-        var email = $('#email').val();
+ 
+    // $('#register').click(function () {
+    //     var name = $('#name').val();
+    //     var email = $('#email').val();
 
-        var pass = $('#password').val();
-        var repass = $('#repassword').val();
-    
+    //     var pass = $('#password').val();
+    //     var repass = $('#repassword').val();
+        
+    //     if(name.length == 0 
+    //         || email.length == 0 
+    //         || pass == 0 
+    //         || repass  == 0) {
+    //         alert('Please fill out empty fields');
+    //     }
+    //     if(pass !== repass && pass.length > 0 && repass.length > 0) {
 
-        if(name.length == 0 
-            || email.length == 0 
-            || pass == 0 
-            || repass  == 0) {
-            $('#notif').removeClass('hidden');
-            $('#register').addClass('disabled');
-            return false;
-        } else {
-            $('#notif').addClass('hidden');
-            $('#register').removeClass('disabled');
+    //         alert('Passwords do not match');
+    //     }
+    // });
+
+    $('.form')
+    .form({
+        fields: {
+          name: {
+            identifier: 'name',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your name'
+              }
+            ]
+          },
+          skills: {
+            identifier: 'email',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your email'
+              }
+            ]
+          },
+          
+          password: {
+            identifier: 'password',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter a password'
+              }
+            ]
+          },
+          repassword: {
+            identifier: 'repassword',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please re-confirm password'
+              },
+              {
+                type   : 'match[password]',
+                prompt : 'Password must match'
+              }
+            ]
+          }
         }
+      })
 
-        if(pass !== repass && pass.length > 0 && repass.length > 0) {
-            $('#notif1').removeClass('hidden');
-            $('#register').addClass('disabled');
-            return false;
-        } else {
-            $('#notif1').addClass('hidden');
-            $('#register').removeClass('disabled');
-        }
-        return true;
-    });    
 });

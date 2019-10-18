@@ -25,75 +25,39 @@
             </button>
         </div>
         <div class="ui center aligned middle aligned grid" id="container">
-            <div class="column" id="login">
+            
+            <div class="six wide column" id="login">
                 <h2 class="ui black image header">            
                     Register
                 </h2>
-                <form method="POST" action="/signup">
-                    <div class="ui large form">
-                        <div class="ui grid">
-                            <div class="four wide column">
-                                <label>Fullname</label>
-                            </div>
-                            <div class= "twelve wide column">
-                                <div class="ui input">
-                                        <input id="name" type="text" name="name" placeholder="Fullname">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ui grid">
-                            <div class="four wide column">
-                                <label>E-mail</label>
-                            </div>
-                            <div class="twelve wide column">
-                                <div class="ui input">
-                                    <input id="email" type="text" name="email" placeholder="E-mail">
-                                </div>
-                            </div>
-                            <div class="sixteen wide column">
-                                <div id="notif" class="ui fluid red message hidden">Please fill the empty field</div>
-                            </div>
-                        </div>
-                        <div class="ui grid">
-                            <div class="four wide column">
-                                <label>Password</label>
-                            </div>
-                            <div class="twelve wide column">
-                                <div class="ui input">
-                                    <input id="password" type="password" name="password" placeholder="Password">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ui grid">
-                            <div class="four wide column">
-                                <label>Confirm Password</label>
-                            </div>
-                            <div class="twelve wide column">
-                                <div class="ui input">
-                                    <input id="repassword" type="password" name="password" placeholder="Re-enter Password">
-                                </div>
-                            </div>
-                            <div class="sixteen wide column">
-                                <div id="notif1" class="ui fluid red message hidden">Passwords must match</div>
-                            </div>
-                        </div>
-                        <div class="ui grid">
-                            <div class="sixteen wide column">
-                                <div class="ui buttons">
-                                    <button type="button" class="medium ui button" formaction="/" onclick="window.location.href='{{url_for('main.login')}}'">
-                                        Back to Login
-                                    </button>
-                                    <button id="register" class="medium ui primary button" onclick="window.location.href='{{url_for('main.signup')}}'">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                                
-                        </div>
-                    </div>
-                </form>
-                
+                <form class="ui form left aligned segment" method="POST" action="/signup">
                     
+                    <div class="field">
+                        <label>Fullname</label>
+                        <input id="name" placeholder="Fullname" name="name" type="text">
+                    </div>
+                    <div class="field">
+                        <label>Email</label>
+                        <input id="email" placeholder="E-mail" name="email" type="text">
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <input id="password" type="password" placeholder="Password" name="password" type="text">
+                    </div>
+                    <div class="field">
+                        <label>Confirm Password</label>
+                        <input id="repassword" type="password" placeholder="Re-Enter Password" name="repassword" type="text">
+                    </div>
+                    <!-- <div class="ui buttons "> -->
+                    <button type="button" class="medium ui button" formaction="/" onclick="window.location.href='{{url_for('main.login')}}'">
+                        Back to Login
+                    </button>
+                    <button id="register" class="medium ui primary button right floated">
+                        Register
+                    </button>
+                    <div class="ui error message"></div>
+                    <!-- </div> -->
+                </form>
             </div>
         </div>
     </body>
