@@ -124,3 +124,19 @@ def add_assessment(course_id):
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
     return render_template('add_assessment_dev.html')      
+
+@main.route('/course<course_id>/edit', methods=['POST', 'GET'])
+@login_required
+def edit_course(course_id):
+    if request.method == 'POST':
+        course = Course.query.filter_by(id = int(course_id)).first()
+        new_code = request.form.get('code')
+        new_title = request.form.get('title')
+        new_color = request.form.get('color')
+        course.code = new_code
+        course.title = new_title
+        course.color = new_color
+        db.session.commit()
+        return redirect(url_for('main.course', course_id = course_id))
+    course = Course.query.filter_by(id = int(course_id)).first() 
+    return render_template('edit_course_dev.html', title = course.title)
