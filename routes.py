@@ -29,7 +29,7 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
-            return redirect(url_for('main.login'))
+            return render_template('login.html', error = True, invalid='Invalid username or password')    
         login_user(user)
         return redirect(url_for('main.home'))
         
@@ -46,7 +46,7 @@ def signup():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            return redirect(url_for('main.signup'))
+            return render_template('signup.html', error = True, invalid='User with this email already exists') 
 
         new_user = User(email=email, name=name, password = generate_password_hash(password, method='sha256'))
 
