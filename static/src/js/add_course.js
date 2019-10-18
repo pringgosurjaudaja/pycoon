@@ -3,6 +3,10 @@ $(document).ready(function() {
     
     $('#color-select').dropdown();
 
+    var ccode = $('#code').val();
+    var ctitle = $('#title').val();
+    var ccolor = $('#color').val();
+
     $('.ui.form')
         .form({
             fields: {
@@ -15,7 +19,7 @@ $(document).ready(function() {
                       },
                       {
                         type   : 'regExp[/^[A-Z]{4}[0-9]{4}$/]',
-                        prompt : 'Course code must be in the form of 4 captial letters followed by 4 digits'
+                        prompt : 'Course code must be in the form of 4 capital letters followed by 4 digits'
                       }
                     ]
                 },
@@ -32,7 +36,7 @@ $(document).ready(function() {
                     identifier  : 'dropdown',
                     rules: [
                       {
-                        type   : 'minCount[1]',
+                        type   : 'empty',
                         prompt : 'Please select a color'
                       }
                     ]
