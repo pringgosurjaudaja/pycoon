@@ -130,4 +130,25 @@ def add_assessment(course_id):
         db.session.add(new_assessment)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
-    return render_template('add_assessment_dev.html')      
+    return render_template('add_assessment_dev.html')    
+
+@main.route('/class<class_id>')
+@login_required
+def class_page(class_id):
+    curr_class = Class.query.filter_by(id=int(class_id)).first()
+    return render_template('class_dev.html',curr_class=curr_class)    
+
+@main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
+@login_required
+def add_class(course_id):
+    if request.method == 'POST':
+        type = request.form.get('type')
+        day = request.form.get('day')
+        time_string = request.form.get('time')
+        time = datetime.strptime(time_string, "%H:%M")
+        weeks = request.form.get('weeks')
+        new_class = Class(type = type, day = day, time = time, weeks = weeks)
+        db.session.add(new_class)
+        db.session.commit()
+        return redirect(url_for('main.course', course_id = course_id))
+    return render_template('add_class_dev.html')

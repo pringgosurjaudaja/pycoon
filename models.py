@@ -66,5 +66,5 @@ class Class(db.Model):
     type = db.Column(db.Enum(ClassEnum), nullable=False)
     day = db.Column(db.Integer, nullable=False)
     time = db.Column(db.Time, nullable=False)
-    # class_weeks = db.Column(db.ARRAY(db.Integer()))
+    weeks = db.Column(db.String(100), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
