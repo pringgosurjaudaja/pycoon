@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,redirect, url_for,request
+from flask import Blueprint, render_template,redirect, url_for,request, jsonify
 from .models import User, Term, Course, Assessment, Class
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
@@ -11,7 +11,14 @@ main = Blueprint('main',__name__)
 @login_required
 def home():
     terms = Term.query.filter_by(user_id=current_user.id)
-    return render_template('home_dev.html',terms=terms)
+    return render_template('home.html',terms=terms)
+
+@main.route('/api/terms')
+@login_required
+def terms():
+    qryresult = Term.query.filter_by(user_id=current_user.id)
+    return jsonify(terms=[i.serialize for i in qryresult.all()])    
+    # return jsonify(terms=terms)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():

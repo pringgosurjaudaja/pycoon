@@ -3,6 +3,12 @@ from flask_login import UserMixin
 from sqlalchemy import Enum
 import enum
 
+def dump_datetime(value):
+    """Deserialize datetime object into string form for JSON processing."""
+    if value is None:
+        return None
+    return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
+
 class ClassEnum(enum.Enum):
     lecture = 1
     tutorial = 2
@@ -25,6 +31,17 @@ class Term(db.Model):
     end_date = db.Column(db.Date, nullable=False)
     courses = db.relationship('Course', backref='term', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    @property
+    def serialize(self):
+       """Return object data in easily serializable format"""
+       return {
+           'id'         : self.id,
+           'title'      : self.title,
+           'start_date' : dump_datetime(self.start_date),
+           'end_date' : dump_datetime(self.end_date),
+           'courses' : self.courses,
+           'user_id' : self.user_id,
+       }
 
 class Course(db.Model):
     __tablename__="course"
