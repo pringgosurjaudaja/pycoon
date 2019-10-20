@@ -39,7 +39,7 @@ class Term(db.Model):
            'title'      : self.title,
            'start_date' : dump_datetime(self.start_date),
            'end_date' : dump_datetime(self.end_date),
-           'courses' : self.courses,
+        #    'courses' : self.courses,
            'user_id' : self.user_id,
        }
 
@@ -52,6 +52,18 @@ class Course(db.Model):
     assessments = db.relationship('Assessment', backref='course', lazy=True)
     classes = db.relationship('Class', backref='course', lazy=True)
     term_id = db.Column(db.Integer, db.ForeignKey('term.id'), nullable = False)
+    @property
+    def serialize(self):
+       """Return object data in easily serializable format"""
+       return {
+           'id'             : self.id,
+           'title'          : self.title,
+           'code'           : self.code,
+           'color'          : self.color,
+        #    'assessments'    : self.assessments,
+        #    'classes'        : self.classes,
+           'term_id'        : self.term_id,
+       }
 
 class Assessment(db.Model):
     __tablename__="assessment"

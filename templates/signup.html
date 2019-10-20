@@ -56,6 +56,9 @@
                         Register
                     </button>
                     <div class="ui error message"></div>
+                    {% if invalid %}
+                        <div class="ui red message">{{ invalid }}</div>
+                    {% endif %}
                     <!-- </div> -->
                 </form>
             </div>
