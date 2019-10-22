@@ -123,4 +123,4 @@ def add_assessment(course_id):
         db.session.add(new_assessment)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
-    return render_template('add_assessment_dev.html')      
+    return render_template('add_assessment.html')      
