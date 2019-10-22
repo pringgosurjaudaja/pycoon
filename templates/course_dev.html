@@ -10,11 +10,12 @@
         <li><a href="{{url_for('main.assessment', assessment_id=assessment.id)}}">{{assessment.title}}</a></li>
         
     {% endfor %}
+    <a href="{{url_for('main.edit_course', course_id = course.id)}}">
+        Edit Course
+    </br>
     <a href="{{ url_for('main.add_assessment', course_id = course.id) }}">
         Add Assessment
     </a>
-    <a href="{{url_for('main.edit_course', course_id = course.id)}}">
-        Edit Course
     </br>
     <a href="{{ url_for('main.add_class', course_id = course.id) }}">
         Add Class
