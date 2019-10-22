@@ -7,7 +7,8 @@
 <ul>
     {% for assessment in assessments %}
             
-        <li><a href="{{url_for('main.assessment', assessment_id=assessment.id)}}">{{assessment.title}}</a></li>
+        <li><a href="{{url_for('main.assessment', assessment_id=assessment.id)}}">{{assessment.title}}</a>
+            || <a href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">Delete</a></li>
         
     {% endfor %}
     <a href="{{url_for('main.edit_course', course_id = course.id)}}">

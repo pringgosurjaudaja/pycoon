@@ -4,6 +4,8 @@
 <h1>{{assessment.title}}</h1>
 <h1>Due : {{assessment.due_date}}</h1>
 <a href="{{url_for('main.edit_assessment', assessment_id = assessment.id)}}">
-    Edit Assessment
+    Edit
 </br>
+<a href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">
+    Delete</a>
 </html>

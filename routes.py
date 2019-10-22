@@ -184,7 +184,7 @@ def add_class(course_id):
         return redirect(url_for('main.course', course_id = course_id))
     return render_template('add_class_dev.html')
 
-@main.route('/course<course_id>/delete', methods=['GET'])
+@main.route('/course<course_id>/delete')
 @login_required
 def delete_course(course_id):
     course = Course.query.filter_by(id = int(course_id)).first() 
@@ -192,3 +192,12 @@ def delete_course(course_id):
     db.session.delete(course)
     db.session.commit()
     return redirect(url_for('main.term', term_id = term_id))      
+
+@main.route('/assessment<assessment_id>/delete')
+@login_required
+def delete_assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
+    course_id = assessment.course_id
+    db.session.delete(assessment)
+    db.session.commit()
+    return redirect(url_for('main.course', course_id = course_id))          
