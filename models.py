@@ -39,7 +39,7 @@ class Term(db.Model):
            'title'      : self.title,
            'start_date' : dump_datetime(self.start_date),
            'end_date' : dump_datetime(self.end_date),
-           'courses' : self.courses,
+        #    'courses' : self.courses,
            'user_id' : self.user_id,
        }
 

@@ -11,7 +11,13 @@
         
     {% endfor %}
     <a href="{{url_for('main.edit_course', course_id = course.id)}}">
-        Edit Course
+        Edit 
+    </a>
+    </br>
+    <a href="{{url_for('main.delete_course', course_id=course.id)}}">
+        Delete
+    </a>    
+    </br>
     </br>
     <a href="{{ url_for('main.add_assessment', course_id = course.id) }}">
         Add Assessment
