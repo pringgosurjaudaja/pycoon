@@ -17,7 +17,7 @@
 <!--    <div class="ui container"> -->
     
     <div class="ui secondary menu">
-        <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.term', term_id=term_id)}}'">
+        <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.course', course_id=course_id)}}'">
             <i class="left arrow icon"></i>
                 Back
         </button>
@@ -27,7 +27,7 @@
         <div class="six wide column" id="add-course">
             <h2>Add New Assessment</h2>
 
-            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_course', term_id=term_id) }}">
+            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_assessment', course_id=course_id) }}">
                 <div class="field dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
                     <label>Course</label> 
                     <select style="width: 50%;border-radius: 0.5rem!important;">
@@ -48,10 +48,10 @@
                 </br></br>
 
                 <div class="wrapper">
-                    <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.term', term_id=term_id) }}'">
+                    <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.course', course_id=course_id) }}'">
                         Cancel
                     </button>
-                    <button name="confirm" type="submit" class="medium ui primary button" onclick="window.location.href='{{ url_for('main.add_course', term_id=term_id) }}'">
+                    <button name="confirm" type="submit" class="medium ui primary button" >
                           Confirm
                     </button>
                 </div> 
