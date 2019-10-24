@@ -4,6 +4,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import time
 
 main = Blueprint('main',__name__)
 
@@ -78,7 +79,7 @@ def add_term():
         db.session.add(new_term)
         db.session.commit()
         return redirect(url_for('main.home'))
-    return render_template('add_term_dev.html')
+    return render_template('add_term.html')
 
 @main.route('/term<term_id>')
 @login_required
@@ -105,7 +106,8 @@ def add_course(term_id):
 def course(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
     assessments = Assessment.query.filter_by(course_id=course.id)
-    return render_template('course_dev.html',course=course, assessments=assessments)  
+    classes = Class.query.filter_by(course_id = course_id)
+    return render_template('course_dev.html',course=course, assessments=assessments, classes=classes)  
 
 @main.route('/term<term_id>/calendar')
 @login_required
@@ -178,13 +180,41 @@ def add_class(course_id):
         type = request.form.get('type')
         day = request.form.get('day')
         time_string = request.form.get('time')
-        time = datetime.strptime(time_string, "%H:%M")
+        time = datetime.strptime(time_string, "%H:%M").time()
         weeks = request.form.get('weeks')
-        new_class = Class(type = type, day = day, time = time, weeks = weeks)
+        new_class = Class(type = type, day = day, time = time, weeks = weeks, course_id = course_id)
         db.session.add(new_class)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
     return render_template('add_class_dev.html')
+
+@main.route('/class<class_id>/edit', methods=['POST', 'GET'])
+@login_required
+def edit_class(class_id):
+    if request.method == 'POST':
+        class_curr = Class.query.filter_by(id = int(class_id)).first()
+        new_type = request.form.get('type')
+        new_weeks = request.form.get('weeks')
+        new_day = request.form.get('day')
+        new_time_string = request.form.get('time')
+        new_time = datetime.strptime(new_time_string, "%H:%M:%S").time()
+        class_curr.type = new_type
+        class_curr.day = new_day
+        class_curr.time = new_time
+        class_curr.weeks = new_weeks
+        db.session.commit()
+        return redirect(url_for('main.class_page', class_id = class_id))
+    class_curr = Class.query.filter_by(id = int(class_id)).first() 
+    return render_template('edit_class_dev.html', class_curr = class_curr)
+
+@main.route('/class<class_id>/delete')
+@login_required
+def delete_class(class_id):
+    class_del = Class.query.filter_by(id = int(class_id)).first()
+    course_id = class_del.course_id
+    db.session.delete(class_del)
+    db.session.commit()
+    return redirect(url_for('main.course', course_id = course_id))
 
 @main.route('/course<course_id>/delete')
 @login_required
@@ -202,4 +232,4 @@ def delete_assessment(assessment_id):
     course_id = assessment.course_id
     db.session.delete(assessment)
     db.session.commit()
-    return redirect(url_for('main.course', course_id = course_id))          
+    return redirect(url_for('main.course', course_id = course_id))

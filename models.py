@@ -52,6 +52,18 @@ class Course(db.Model):
     assessments = db.relationship('Assessment', cascade="all,delete", backref='course', lazy=True)
     classes = db.relationship('Class', cascade="all,delete", backref='course', lazy=True)
     term_id = db.Column(db.Integer, db.ForeignKey('term.id'), nullable = False)
+    @property
+    def serialize(self):
+       """Return object data in easily serializable format"""
+       return {
+           'id'             : self.id,
+           'title'          : self.title,
+           'code'           : self.code,
+           'color'          : self.color,
+        #    'assessments'    : self.assessments,
+        #    'classes'        : self.classes,
+           'term_id'        : self.term_id,
+       }
 
 class Assessment(db.Model):
     __tablename__="assessment"

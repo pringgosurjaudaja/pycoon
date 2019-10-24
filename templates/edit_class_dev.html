@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<h1>Edit Class</h1>
+<div>
+        <form method="POST">
+          <div>
+                <input name="type" value = {{class_curr.type.name}}{% if form %}value={{form['type']}}{% endif %}>Type</input>
+                <br/>
+                <input type="number" value = {{class_curr.day}} name="day" {% if form %}value={{form['day']}}{% endif %}>Day</input>
+                <br/>
+                <input type="time" value = {{class_curr.time}} name="time" {% if form %}value={{form['time']}}{% endif %}>Time</input>
+                <br/>
+                <input name="weeks" value = {{class_curr.weeks}} {% if form %}value={{form['weeks']}}{% endif %}>Weeks</input>
+                <br/>
+            <br/>
+          </div>
+          {% if error %}
+              {{error}}
+              <br/>
+          {% endif %}
+          <button name="confirm" type="submit">Confirm</button>
+        </form>
+      </div>
+</html>8

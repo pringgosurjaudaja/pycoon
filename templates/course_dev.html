@@ -5,6 +5,13 @@
 <h1>{{course.title}}</h1>
 <h1>{{course.id}}</h1>
 <ul>
+    {% for class in classes %}
+            
+        <li><a href="{{url_for('main.class_page', class_id = class.id)}}">{{class.day}} - {{class.type.name}}--{{class.time}}-{{class.weeks}}</a>
+            <a href="{{url_for('main.delete_class', class_id = class.id)}}">Delete Class</a>
+        </li>
+
+    {% endfor %}
     {% for assessment in assessments %}
             
         <li><a href="{{url_for('main.assessment', assessment_id=assessment.id)}}">{{assessment.title}}</a>

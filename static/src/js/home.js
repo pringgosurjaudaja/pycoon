@@ -1,9 +1,4 @@
 $(document).ready(function() {
-    
-    
-    $('#increment-button').click(()=>{
-        $('#example1').progress('increment')
-    });
 
     var count = 1;
 
@@ -26,10 +21,13 @@ $(document).ready(function() {
                     label.innerHTML = data.terms[i].title;
                     segment.appendChild(label);
 
+
+                    var removeId = 'remove'+data.terms[i].id;
                     var remove = document.createElement('a');
                     remove.setAttribute('class', 'ui right corner red label');
                     var icon = document.createElement('i');
                     icon.setAttribute('class', 'remove icon');
+                    remove.setAttribute('id', removeId);
                     remove.appendChild(icon);
                     segment.appendChild(remove);
 
@@ -37,9 +35,6 @@ $(document).ready(function() {
                     var divider = document.createElement('div');
                     divider.setAttribute('class', 'ui divider');
                     segment.appendChild(divider);
-
-
-                    
 
                     var horizontal = document.createElement('div');
                     horizontal.setAttribute('class', 'ui horizontal segments');
@@ -126,13 +121,18 @@ $(document).ready(function() {
             }).then((data) => {
                 var prefix ="#example";
                 var prefix1 = "#button";
-
+                var prefix2 = "#remove"
                 for(var n = 0; n < data.terms.length; ++n) {
                     // Must Strictly use const, otherwise wont work
                     const num = data.terms[n].id;
                     $(prefix1+num).click(() => {
                         window.location.href = '/term'+num;
                     })
+                    $(prefix2+num).click(() => {
+
+                        window.location.href = '/term'+num;
+                    })
+                    
                 }
                 for(var i = 1; i <= count-1; ++i) {
                     var id = prefix + i;

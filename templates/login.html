@@ -46,6 +46,11 @@
                         <button type="button" class="medium ui button" formaction="/signup" onclick="window.location.href='{{ url_for('main.signup') }}'">
                             Register
                         </button>
+
+                        {% if invalid %}
+                            <div class="ui red message">{{ invalid }}</div>
+                        {% endif %}
+                        
                     </div>
                 </form>
                 
