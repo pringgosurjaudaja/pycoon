@@ -12,8 +12,8 @@ $(document).ready(function() {
               }
             ]
           },
-          start: {
-            identifier: 'start',
+          start_date: {
+            identifier: 'start_date',
             rules: [
               {
                 type   : 'empty',
@@ -22,8 +22,8 @@ $(document).ready(function() {
             ]
           },
           
-          end: {
-            identifier: 'end',
+          end_date: {
+            identifier: 'end_date',
             rules: [
               {
                 type   : 'empty',
@@ -31,20 +31,6 @@ $(document).ready(function() {
               }
             ]
           }
-        //   ,
-        //   repassword: {
-        //     identifier: 'repassword',
-        //     rules: [
-        //       {
-        //         type   : 'empty',
-        //         prompt : 'Please re-confirm password'
-        //       },
-        //       {
-        //         type   : 'match[password]',
-        //         prompt : 'Password must match'
-        //       }
-        //     ]
-        //   }
         }
       })
 });

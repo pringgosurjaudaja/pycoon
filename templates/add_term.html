@@ -39,16 +39,19 @@
                     
                     <div class="field">
                         <label>Start Date</label>
-                        <input id="start" type="date" placeholder="Enter Start Date" name="start_date">
+                        <input id="start_date" type="date" placeholder="Enter Start Date" name="start_date">
                     </div>
                     <div class="field">
                         <label>Confirm Password</label>
-                        <input id="end" type="date" placeholder="Enter End Date" name="end_date">
+                        <input id="end_date" type="date" placeholder="Enter End Date" name="end_date">
                     </div>
-                    <button id="submit" class="medium ui primary button">
-                        Submit
+                    <button id="confirm" class="medium ui primary button">
+                        Confirm
                     </button>
                     <div class="ui error message"></div>
+                    {% if invalid %}
+                        <div class="ui red message">{{ invalid }}</div>
+                    {% endif %}
                 </form>
               </div>
             </div>
