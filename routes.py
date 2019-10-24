@@ -132,7 +132,38 @@ def add_assessment(course_id):
         db.session.add(new_assessment)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
-    return render_template('add_assessment_dev.html')    
+    return render_template('add_assessment_dev.html')   
+
+@main.route('/assessment<assessment_id>/edit', methods=['POST', 'GET'])
+@login_required
+def edit_assessment(assessment_id):
+    if request.method == 'POST':
+        assessment = Assessment.query.filter_by(id = int(assessment_id)).first()
+        new_title = request.form.get('title')
+        due_date_string = request.form.get('due_date')
+        new_due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
+        assessment.title = new_title
+        assessment.due_date = new_due_date
+        db.session.commit()
+        return redirect(url_for('main.assessment', assessment_id = assessment_id))
+    assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
+    return render_template('edit_assessment_dev.html', assessment = assessment)        
+
+@main.route('/course<course_id>/edit', methods=['POST', 'GET'])
+@login_required
+def edit_course(course_id):
+    if request.method == 'POST':
+        course = Course.query.filter_by(id = int(course_id)).first()
+        new_code = request.form.get('code')
+        new_title = request.form.get('title')
+        new_color = request.form.get('color')
+        course.code = new_code
+        course.title = new_title
+        course.color = new_color
+        db.session.commit()
+        return redirect(url_for('main.course', course_id = course_id))
+    course = Course.query.filter_by(id = int(course_id)).first() 
+    return render_template('edit_course_dev.html', course = course)   
 
 @main.route('/class<class_id>')
 @login_required
@@ -180,5 +211,23 @@ def delete_class(class_id):
     class_del = Class.query.filter_by(id = int(class_id)).first()
     course_id = class_del.course_id
     db.session.delete(class_del)
+    db.session.commit()
+    return redirect(url_for('main.course', course_id = course_id))
+
+@main.route('/course<course_id>/delete')
+@login_required
+def delete_course(course_id):
+    course = Course.query.filter_by(id = int(course_id)).first() 
+    term_id = course.term_id
+    db.session.delete(course)
+    db.session.commit()
+    return redirect(url_for('main.term', term_id = term_id))      
+
+@main.route('/assessment<assessment_id>/delete')
+@login_required
+def delete_assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
+    course_id = assessment.course_id
+    db.session.delete(assessment)
     db.session.commit()
     return redirect(url_for('main.course', course_id = course_id))

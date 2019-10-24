@@ -29,7 +29,7 @@ class Term(db.Model):
     title = db.Column(db.String(100), nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
-    courses = db.relationship('Course', backref='term', lazy=True)
+    courses = db.relationship('Course', cascade="all,delete", backref='term', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     @property
     def serialize(self):
@@ -49,8 +49,8 @@ class Course(db.Model):
     title = db.Column(db.String(100), nullable=False)
     code = db.Column(db.String(9), nullable=False)
     color = db.Column(db.String(7), nullable=False)
-    assessments = db.relationship('Assessment', backref='course', lazy=True)
-    classes = db.relationship('Class', backref='course', lazy=True)
+    assessments = db.relationship('Assessment', cascade="all,delete", backref='course', lazy=True)
+    classes = db.relationship('Class', cascade="all,delete", backref='course', lazy=True)
     term_id = db.Column(db.Integer, db.ForeignKey('term.id'), nullable = False)
     @property
     def serialize(self):
