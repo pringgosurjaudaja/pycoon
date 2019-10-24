@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,redirect, url_for,request
+from flask import Blueprint, render_template,redirect, url_for,request, jsonify
 from .models import User, Term, Course, Assessment, Class
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
@@ -11,7 +11,14 @@ main = Blueprint('main',__name__)
 @login_required
 def home():
     terms = Term.query.filter_by(user_id=current_user.id)
-    return render_template('home_dev.html',terms=terms)
+    return render_template('home.html',terms=terms)
+
+@main.route('/api/terms')
+@login_required
+def terms():
+    qryresult = Term.query.filter_by(user_id=current_user.id)
+    return jsonify(terms=[i.serialize for i in qryresult.all()])    
+    # return jsonify(terms=terms)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -22,7 +29,7 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
-            return redirect(url_for('main.login'))
+            return render_template('login.html', error = True, invalid='Invalid username or password')    
         login_user(user)
         return redirect(url_for('main.home'))
         
@@ -39,7 +46,7 @@ def signup():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            return redirect(url_for('main.signup'))
+            return render_template('signup.html', error = True, invalid='User with this email already exists') 
 
         new_user = User(email=email, name=name, password = generate_password_hash(password, method='sha256'))
 
@@ -80,19 +87,119 @@ def term(term_id):
     courses = Course.query.filter_by(term_id=term.id)
     return render_template('term_dev.html',term=term, courses=courses)    
 
-@main.route('/add/course<term_id>', methods=['GET', 'POST'])
+@main.route('/term<term_id>/add/course', methods=['GET', 'POST'])
 @login_required
 def add_course(term_id):
     if request.method == 'POST':
         title = request.form.get('title')
-        new_course = Course(title = title, term_id = term_id)
+        code = request.form.get('code')
+        color = request.form.get('color')
+        new_course = Course(title = title, code = code, color = color, term_id = term_id)
         db.session.add(new_course)
         db.session.commit()
         return redirect(url_for('main.term', term_id = term_id))
-    return render_template('add_course_dev.html')
+    return render_template('add_course.html', term_id = term_id)
 
 @main.route('/course<course_id>')
 @login_required
 def course(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
-    return render_template('course_dev.html',course=course)  
+    assessments = Assessment.query.filter_by(course_id=course.id)
+    return render_template('course_dev.html',course=course, assessments=assessments)  
+
+@main.route('/term<term_id>/calendar')
+@login_required
+def calendar(term_id):
+    term = Term.query.filter_by(id=int(term_id)).first()
+    return render_template('calendar_dev.html',term=term) 
+
+@main.route('/assessment<assessment_id>')
+@login_required
+def assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
+    return render_template('assessment_dev.html',assessment=assessment)    
+
+@main.route('/course<course_id>/add/assessment', methods=['GET', 'POST'])
+@login_required
+def add_assessment(course_id):
+    if request.method == 'POST':
+        title = request.form.get('title')
+        due_date_string = request.form.get('due_date')
+        due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
+        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id)
+        db.session.add(new_assessment)
+        db.session.commit()
+        return redirect(url_for('main.course', course_id = course_id))
+    
+    return render_template('add_assessment.html', course_id=course_id)      
+
+
+@main.route('/assessment<assessment_id>/edit', methods=['POST', 'GET'])
+@login_required
+def edit_assessment(assessment_id):
+    if request.method == 'POST':
+        assessment = Assessment.query.filter_by(id = int(assessment_id)).first()
+        new_title = request.form.get('title')
+        due_date_string = request.form.get('due_date')
+        new_due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
+        assessment.title = new_title
+        assessment.due_date = new_due_date
+        db.session.commit()
+        return redirect(url_for('main.assessment', assessment_id = assessment_id))
+    assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
+    return render_template('edit_assessment_dev.html', assessment = assessment)        
+
+@main.route('/course<course_id>/edit', methods=['POST', 'GET'])
+@login_required
+def edit_course(course_id):
+    if request.method == 'POST':
+        course = Course.query.filter_by(id = int(course_id)).first()
+        new_code = request.form.get('code')
+        new_title = request.form.get('title')
+        new_color = request.form.get('color')
+        course.code = new_code
+        course.title = new_title
+        course.color = new_color
+        db.session.commit()
+        return redirect(url_for('main.course', course_id = course_id))
+    course = Course.query.filter_by(id = int(course_id)).first() 
+    return render_template('edit_course_dev.html', course = course)   
+
+@main.route('/class<class_id>')
+@login_required
+def class_page(class_id):
+    curr_class = Class.query.filter_by(id=int(class_id)).first()
+    return render_template('class_dev.html',curr_class=curr_class)    
+
+@main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
+@login_required
+def add_class(course_id):
+    if request.method == 'POST':
+        type = request.form.get('type')
+        day = request.form.get('day')
+        time_string = request.form.get('time')
+        time = datetime.strptime(time_string, "%H:%M")
+        weeks = request.form.get('weeks')
+        new_class = Class(type = type, day = day, time = time, weeks = weeks)
+        db.session.add(new_class)
+        db.session.commit()
+        return redirect(url_for('main.course', course_id = course_id))
+    return render_template('add_class_dev.html')
+
+@main.route('/course<course_id>/delete')
+@login_required
+def delete_course(course_id):
+    course = Course.query.filter_by(id = int(course_id)).first() 
+    term_id = course.term_id
+    db.session.delete(course)
+    db.session.commit()
+    return redirect(url_for('main.term', term_id = term_id))      
+
+@main.route('/assessment<assessment_id>/delete')
+@login_required
+def delete_assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
+    course_id = assessment.course_id
+    db.session.delete(assessment)
+    db.session.commit()
+    return redirect(url_for('main.course', course_id = course_id))          

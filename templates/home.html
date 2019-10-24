@@ -24,53 +24,38 @@
         <div class="ui secondary menu">
             <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.logout')}}'">
                 <i class="left arrow icon"></i>
-                Back
+                Logout
             </button>
         </div>
         <div class="ui centered container" id="scrollable">
             <div class="ui centered grid">
-              <div class="eight wide left aligned column">
-                <div class="ui massive segment">
-                  <label>TERM 3 2018</label>
-                  <div class="ui button right floated" id="increment-button">Increment!</div>
-                  <div class="ui divider"></div>
+              <div id="list" class="ten wide left aligned column">
                   
-                  <div class="ui indicating progress" data-value="1" data-total="10" id="example1">
-                      <div class="bar"></div>
-                      <div class="label">Week</div>
-                  </div>
-                </div>
-                <div class="ui massive segment">
-                  <label>TERM 1 2019</label>
-                  <div class="ui divider"></div>
-                  <!-- <div class="ui horizontal segments">
-                      <div class="ui segment">Start</div>
-                      <div class="ui segment">End</div>
+                 <!-- DO NOT REMOVE YET, MAYBE NEEDED IN THE FUTURE -->
+                <!-- <div class="ui massive segment">
+                    <a class="ui right corner red label">
+                        <i class="remove icon"></i>
+                    </a>
+                    <label>TERM</label>
+                    <div class="ui divider"></div>
+                    <div class="ui horizontal segments">
+                        <div class="ui segment">
+                            <div class="ui orange horizontal label">Start</div>
+                            Date
+                        </div>
+                        <div class="ui segment">
+                            <div class="ui blue horizontal label">end</div>
+                            Date
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="ui indicating progress" data-value="1" data-total="10" id="example4">
+                        <div class="bar"></div>
+                        <div class="label">Week</div>
+                    </div>
+                    
+                    <button type="button" class="fluid blue ui button">View</button>
                   </div> -->
-                  <div class="attached ui two item menu">
-                      <div class="item"></div>
-                      <div class="item"></div>
-                      <div class="item"></div>
-                  </div>
-                  <div class="ui divider"></div>
-                  <div class="ui indicating progress" data-value="1" data-total="10" id="example2">
-                      <div class="bar"></div>
-                      <div class="label">Week</div>
-                  </div>
-                </div>
-                <div class="ui massive segment">
-                  <label>TERM 2 2019</label>
-                  <div class="ui divider"></div>
-                  <div class="ui indicating progress" data-value="1" data-total="10" id="example3">
-                      <div class="bar"></div>
-                      <div class="label">Week</div>
-                  </div>
-                </div>
-                
-                <div class="ui fluid button teal" onclick="">
-                    <label>Add New Term</label>
-                </div>
-                
               </div>
             </div>
         </div>

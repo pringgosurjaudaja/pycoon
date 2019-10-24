@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html>
 <h1>Course Page</h1>
+<h1>{{course.code}}</h1>
 <h1>{{course.title}}</h1>
 <h1>{{course.id}}</h1>
+<ul>
+    {% for assessment in assessments %}
+            
+        <li><a href="{{url_for('main.assessment', assessment_id=assessment.id)}}">{{assessment.title}}</a>
+            || <a href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">Delete</a></li>
+        
+    {% endfor %}
+    <a href="{{url_for('main.edit_course', course_id = course.id)}}">
+        Edit 
+    </a>
+    </br>
+    <a href="{{url_for('main.delete_course', course_id=course.id)}}">
+        Delete
+    </a>    
+    </br>
+    </br>
+    <a href="{{ url_for('main.add_assessment', course_id = course.id) }}">
+        Add Assessment
+    </a>
+    </br>
+    <a href="{{ url_for('main.add_class', course_id = course.id) }}">
+        Add Class
+    </a>
+</ul>    
 </html>
