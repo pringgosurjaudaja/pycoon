@@ -1,22 +1,140 @@
 <!DOCTYPE html>
 <html>
-{% block body %}
-<h1>Add Assessment</h1>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.dropbtn {
+  background-color: #ffffff;
+  color: black;
+  padding: 2px;
+  font-size: 12px;
+  border: yes;
+  cursor: pointer;
+  text-align: right;
+}
 
-<div>
-    <form method="POST">
-      <div>
-        <input name="title" {% if form %}value={{form['title']}}{% endif %}>Title</input>
-        <br/>
-        <input type="date" name="due_date" {% if form %}value={{form['due_date']}}{% endif %}>Due Date</input>
-        <br/>
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+    
+.field {
+    text-align: center;
+}  
+ 
+.wrapper {
+    text-align: center;
+}
+    
+.centerTable { margin: 0px auto; }
+    
+</style>
+</head>
+<body>
+
+    <div class="ui secondary menu">
+        <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.term', term_id=term_id)}}'">
+            <i class="left arrow icon"></i>
+            Back
+        </button>
+    </div>
+
+
+    <h2 align="center">Add Assessment COMPXXXX</h2>
+
+
+            
+<form>
+  <table class="centerTable">
+      <tr>
+      <div class="dropdown">
+      Type: <button onclick="myFunction()" class="dropbtn">Dropdown (click me)</button>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="#home">Lecture</a>
+        <a href="#about">Tutorial</a>
+        <a href="#contact">Lab</a>
+        <a href="#contact">Seminar</a>
+        <a href="#contact">Assessment</a>
       </div>
-      {% if error %}
-          {{error}}
-          <br/>
-      {% endif %}
-      <button name="confirm" type="submit">Confirm</button>
-    </form>
-  </div>
-{% endblock %}
+    </div>
+      </tr>
+      
+      
+    <tr>
+      <td align="centre">Title:</td>
+      <td align="centre"><input type="text" name="title" placeholder="Assessment Name"/></td>
+    </tr>
+    <tr>
+      <td align="centre">Due Date:</td>
+      <td align="centre"><input type="date" name="due_date" /></td>
+    </tr>
+    <tr>
+      <td align="centre">Week:</td>
+      <td align="centre"><input type="text" name="week" placeholder="Week 1, 2, 3, ..."/></td>
+    </tr>
+  </table>
+</form>
+    
+     <br/><br/><br/><br/><br/>
+           
+    <div class="wrapper">
+          <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.term', term_id=term_id) }}'">
+            Cancel
+          </button>
+          <button name="confirm" type="submit" class="medium ui primary button" onclick="window.location.href='{{ url_for('main.add_course', term_id=term_id) }}'">
+              Confirm
+          </button>
+    </div>      
+
+    
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+</body>
 </html>
+
