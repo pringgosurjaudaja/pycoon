@@ -79,7 +79,7 @@ def add_term():
         db.session.add(new_term)
         db.session.commit()
         return redirect(url_for('main.home'))
-    return render_template('add_term_dev.html')
+    return render_template('add_term.html')
 
 @main.route('/term<term_id>')
 @login_required
