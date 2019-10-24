@@ -98,7 +98,7 @@ def add_course(term_id):
         db.session.add(new_course)
         db.session.commit()
         return redirect(url_for('main.term', term_id = term_id))
-    return render_template('add_course_dev.html')
+    return render_template('add_course.html', term_id = term_id)
 
 @main.route('/course<course_id>')
 @login_required
