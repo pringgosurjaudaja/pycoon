@@ -10,7 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <link rel="stylesheet" href="styles.css"> 
-
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="../../static/src/js/add_assessment.js"></script>
+    <script src="../../static/semantic/dist/semantic.min.js"></script>
+    
 </head>
 <body>
     
@@ -24,11 +30,12 @@
     </div>
     
     <div class="ui center aligned middle aligned grid" id="container">
-        <div class="six wide column" id="add-course">
+        <div class="six wide column" id="add-assessment">
             <h2>Add New Assessment</h2>
 
-            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_assessment', course_id=course_id) }}">
-                <div class="field dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
+            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_assessment', course_id=course_id) }}"
+                  name="myForm" onsubmit="return validateForm()">
+                <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
                     <label>Course</label> 
                     <select style="width: 50%;border-radius: 0.5rem!important;">
                         <option value="Course 1">Course 1</option>
@@ -47,14 +54,15 @@
                 </div>
                 </br></br>
 
-                <div class="wrapper">
+                <!-- <div class="wrapper"> -->
                     <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.course', course_id=course_id) }}'">
                         Cancel
                     </button>
-                    <button name="confirm" type="submit" class="medium ui primary button" >
+                    <button name="confirm" type="submit" value ="submit" class="medium ui primary button" >
                           Confirm
                     </button>
-                </div> 
+                <!-- </div> -->
+                <div class="ui error message"></div>
             </form>
         </div>
     </div>
