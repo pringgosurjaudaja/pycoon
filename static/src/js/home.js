@@ -1,9 +1,4 @@
 $(document).ready(function() {
-    
-    
-    $('#increment-button').click(()=>{
-        $('#example1').progress('increment')
-    });
 
     var count = 1;
 
@@ -134,7 +129,7 @@ $(document).ready(function() {
                         window.location.href = '/term'+num;
                     })
                     $(prefix2+num).click(() => {
-                        
+
                         window.location.href = '/term'+num;
                     })
                     
