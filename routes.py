@@ -76,6 +76,9 @@ def add_term():
         end_date = datetime.strptime(end_date_string, "%Y-%m-%d")
         new_term = Term(title=title, start_date=start_date, end_date = end_date, user_id = current_user.id)
 
+        if start_date > end_date:
+            return render_template('add_term.html', invalid="Invalid Date")
+
         db.session.add(new_term)
         db.session.commit()
         return redirect(url_for('main.home'))
