@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+{% block body %}
+<h1>Add Class</h1>
+
+<div>
+    <form method="POST">
+      <div>
+        <input name="type" {% if form %}value={{form['type']}}{% endif %}>Type</input>
+        <br/>
+        <input type="number" name="day" {% if form %}value={{form['day']}}{% endif %}>Day</input>
+        <br/>
+        <input type="time" name="time" {% if form %}value={{form['time']}}{% endif %}>Time</input>
+        <br/>
+        <input name="weeks" {% if form %}value={{form['weeks']}}{% endif %}>Weeks</input>
+        <br/>
+      </div>
+      {% if error %}
+          {{error}}
+          <br/>
+      {% endif %}
+      <button name="confirm" type="submit">Confirm</button>
+    </form>
+  </div>
+{% endblock %}
+</html>
