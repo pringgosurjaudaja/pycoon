@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Pycoon</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- semantic UI -->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="../../static/semantic/dist/semantic.min.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+
+        <script src="../static/src/js/term.js"></script>
+    </head>
+    <body>
+        <div class="ui secondary menu">
+            <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.home')}}'">
+                <i class="left arrow icon"></i>
+                Back
+            </button>
+        </div>
+        
+        <h1 class="ui center aligned header">{{term.title}}</h1>
+        </br></br>
+        <div class="ui centered container" id="scrollable">
+            {% for course in courses %}
+                <div class="ui centered card">
+                    <a href="{{url_for('main.course', course_id=course.id)}}"><div style="background-color: {{course.color}}" class="ui link card">
+                        <div class="content">
+                            <!-- <i style="color: {{course.color}}" class="large left floated square icon"></i> -->
+                            <i style="color: grey" class="large right floated times icon"></i>
+                            <div style="color: white" class="header">{{course.code}}</div>
+                            <div style="color: white" class="meta">{{course.title}}</div>
+                            </div>
+                            <p></p>
+                            </div>
+                        </div>
+                    </div></a>
+                </div>
+            {% endfor %}
+            </br></br>
+            <div class="ui centered grid">
+                <a href="{{ url_for('main.add_course', term_id = term.id) }}"><button class="huge circular ui icon button" data-content="Add Course">
+                    <i class="plus icon"></i>
+                </button></a>
+                <a href="{{ url_for('main.calendar', term_id = term.id) }}"><button class="huge circular ui icon button" data-content="Go to Calendar">
+                    <i class="calendar icon"></i>
+                </button></a>
+            </div>
+        </div>
+
+    </body>
+</html>
