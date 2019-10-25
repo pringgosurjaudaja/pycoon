@@ -33,18 +33,41 @@
         <div class="ui centered container" id="scrollable">
             {% for course in courses %}
                 <div class="ui centered card">
-                    <a href="{{url_for('main.course', course_id=course.id)}}"><div style="background-color: {{course.color}}" class="ui link card">
-                        <div class="content">
-                            <!-- <i style="color: {{course.color}}" class="large left floated square icon"></i> -->
-                            <i style="color: grey" class="large right floated times icon"></i>
-                            <div style="color: white" class="header">{{course.code}}</div>
-                            <div style="color: white" class="meta">{{course.title}}</div>
+                    <div style="background-color: {{course.color}}" class="ui link card">
+                        
+                        <a class="item" href="{{url_for('main.course', course_id=course.id)}}">
+                            <div class="content">
+                                <a class="item" href="{{url_for('main.delete_course', course_id=course.id)}}">
+                                    <div class="mini right floated circular ui icon button" id="delete-course">
+                                        <i style="color: grey" class="times icon"></i>
+                                    </div>
+                                </a>
+                                <div style="color: white" class="header">{{course.code}}</div>
+                                <div style="color: white" class="meta">{{course.title}}</div>
+                                
                             </div>
-                            <p></p>
-                            </div>
-                        </div>
-                    </div></a>
+                        </a>
+                        
+                    </div>
                 </div>
+
+                <!-- <div class="ui modal">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Delete Course
+                    </div>
+                    <div class="description">
+                        Are you sure you want to delete {{course.title}}?
+                    </div>
+                    <div class="actions">
+                        <button class="ui black deny button">
+                        Cancel
+                        </button>
+                        <button class="ui primary button"  onclick="window.location.href='{{url_for('main.delete_course', course_id=course.id)}}'"></button>>
+                        Confirm
+                        </button>
+                    </div>
+                </div> -->
             {% endfor %}
             </br></br>
             <div class="ui centered grid">
@@ -56,6 +79,5 @@
                 </button></a>
             </div>
         </div>
-
     </body>
 </html>
