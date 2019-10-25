@@ -32,22 +32,15 @@
         </br></br>
         <div class="ui centered container" id="scrollable">
             {% for course in courses %}
-                <div class="ui centered card">
-                    <div style="background-color: {{course.color}}" class="ui link card">
-                        
-                        <a class="item" href="{{url_for('main.course', course_id=course.id)}}">
-                            <div class="content">
-                                <a class="item" href="{{url_for('main.delete_course', course_id=course.id)}}">
-                                    <div class="mini right floated circular ui icon button" id="delete-course">
-                                        <i style="color: grey" class="times icon"></i>
-                                    </div>
-                                </a>
-                                <div style="color: white" class="header">{{course.code}}</div>
-                                <div style="color: white" class="meta">{{course.title}}</div>
-                                
-                            </div>
+                <div style="background-color: {{course.color}}" class="ui centered link card" onclick="window.location.href='{{url_for('main.course', course_id=course.id)}}'">
+                    <div class="content">
+                        <a class="tiny right floated ui circular icon button" id="delete-course" href="{{url_for('main.delete_course', course_id=course.id)}}">
+                            <i class="x icon"></i>
                         </a>
-                        
+                        <div style="opacity: 0.8; color: white;" class="header">{{course.code}}</div>
+                        <div class="meta">
+                            <span class="category">{{course.title}}</span>
+                        </div>
                     </div>
                 </div>
 
