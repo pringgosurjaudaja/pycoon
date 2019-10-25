@@ -11,7 +11,11 @@ $(document).ready(function() {
                     rules: [
                       {
                         type   : 'empty',
-                        prompt : 'Please enter a course code (e.g. COMP1234)'
+                        prompt : 'Please enter a course code'
+                      },
+                      {
+                        type   : 'regExp[/^[A-Z]{4}[0-9]{4}$/]',
+                        prompt : 'Course code must be 4 capital letters followed by 4 digits'
                       }
                     ]
                 },
