@@ -91,6 +91,14 @@ def term(term_id):
     courses = Course.query.filter_by(term_id=term.id)
     return render_template('term_dev.html',term=term, courses=courses)    
 
+@main.route('/term<term_id>/delete')
+@login_required
+def delete_term(term_id):
+    term_del = Term.query.filter_by(id = int(term_id)).first()
+    db.session.delete(term_del)
+    db.session.commit()
+    return redirect(url_for('main.home'))
+
 @main.route('/term<term_id>/add/course', methods=['GET', 'POST'])
 @login_required
 def add_course(term_id):
