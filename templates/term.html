@@ -35,7 +35,7 @@
                 <div style="background-color: {{course.color}}" class="ui centered link card" onclick="window.location.href='{{url_for('main.course', course_id=course.id)}}'">
                     <div class="content">
                         <a class="floating ui circular label" id="delete-course" href="{{url_for('main.delete_course', course_id=course.id)}}">
-                            X
+                            x
                         </a>
                         <div style="opacity: 0.8; color: white;" class="header">{{course.code}}</div>
                         <div class="meta">
