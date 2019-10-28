@@ -123,10 +123,25 @@ def course(course_id):
 @main.route('/term<term_id>/calendar')
 @login_required
 def calendar(term_id):
-    term = Term.query.filter_by(id=int(term_id)).first()
-
-    terms = jsonify(terms=[i.serialize for i in term.all()])
-    return render_template('calendar_dev.html',term=terms) 
+    url = str(request.referrer)
+    # term = Term.query.filter_by(id=int(term_id))
+    course = Course.query.filter_by(term_id=int(term_id))
+    result_class = []
+    result_assessment = []
+    
+    for c in course.all():
+        classes = Class.query.filter_by(course_id=int(c.id))
+        assessments = Assessment.query.filter_by(course_id=int(c.id))
+        for cl in classes.all():
+            # print(cl.type)
+            result_class.append(cl.serialize)
+        for ass in assessments.all():
+            # print(ass.title)
+            result_assessment.append(ass.serialize)
+    print("\n\n\nTEST\n\n\n")
+    # result_assessment = jsonify(assessment=[i.serialize for i in result_assessment])
+    
+    return render_template('calendar.html', assessment=result_assessment, classes=result_class) 
 
 
 @main.route('/assessment<assessment_id>')

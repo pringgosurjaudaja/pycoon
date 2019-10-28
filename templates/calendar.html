@@ -274,9 +274,12 @@
         
         
     </body>
-    <!-- <script>
-        var term = {{ term | tojson }};
-        console.log(term);
-    </script> -->
+    <script>
+            var assessments = {{ assessment|tojson }};
+            var classes = {{ classes|tojson }}
+            console.log(assessments);
+            console.log(classes)
+        
+    </script>
 
 </html>

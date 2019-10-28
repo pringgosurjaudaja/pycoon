@@ -9,6 +9,16 @@ def dump_datetime(value):
         return None
     return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
 
+def dump_enum(enum):
+    if enum == ClassEnum.lecture:
+        return "lecture"
+    elif enum == ClassEnum.tutorial:
+        return "tutorial"
+    elif enum == ClassEnum.lab:
+        return "lab"
+    else:
+        return "seminar"
+
 class ClassEnum(enum.Enum):
     lecture = 1
     tutorial = 2
@@ -94,7 +104,7 @@ class Class(db.Model):
     def serialize(self):
         return{
             'id'            : self.id,
-            'type'          : self.type,
+            'type'          : dump_enum(self.type),
             'day'           : self.day,
             'time'          : dump_datetime(self.time),
             'weeks'         : self.weeks,
