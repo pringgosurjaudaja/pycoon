@@ -71,6 +71,16 @@ class Assessment(db.Model):
     title = db.Column(db.String(100),nullable=False)
     due_date = db.Column(db.Date, nullable = False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    @property
+    def serialize(self):
+        return{
+            'id'            : self.id,
+            'title'         : self.title,
+            'start'         : self.due_date,
+            'course_id' : self.course_id,
+            'user_id'   : self.user_id,
+        }
 
 class Class(db.Model):
     __tablename__ = "class"
@@ -80,3 +90,13 @@ class Class(db.Model):
     time = db.Column(db.Time, nullable=False)
     weeks = db.Column(db.String(100), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
+    @property
+    def serialize(self):
+        return{
+            'id'            : self.id,
+            'type'          : self.type,
+            'day'           : self.day,
+            'time'          : dump_datetime(self.time),
+            'weeks'         : self.weeks,
+            'course_id'     : self.course_id,
+        }
