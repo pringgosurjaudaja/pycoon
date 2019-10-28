@@ -116,7 +116,7 @@ def add_course(term_id):
 @login_required
 def course(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
-    assessments = Assessment.query.filter_by(course_id=course.id)
+    assessments = Assessment.query.filter_by(course_id=course.id, user_id = current_user.id)
     classes = Class.query.filter_by(course_id = course_id)
     return render_template('course_dev.html',course=course, assessments=assessments, classes=classes)  
 
@@ -124,7 +124,10 @@ def course(course_id):
 @login_required
 def calendar(term_id):
     term = Term.query.filter_by(id=int(term_id)).first()
-    return render_template('calendar.html',term=term) 
+
+    terms = jsonify(terms=[i.serialize for i in term.all()])
+    return render_template('calendar_dev.html',term=terms) 
+
 
 @main.route('/assessment<assessment_id>')
 @login_required
@@ -139,7 +142,7 @@ def add_assessment(course_id):
         title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
-        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id)
+        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id, user_id = current_user.id)
         db.session.add(new_assessment)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
@@ -161,6 +164,13 @@ def edit_assessment(assessment_id):
         return redirect(url_for('main.assessment', assessment_id = assessment_id))
     assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
     return render_template('edit_assessment_dev.html', assessment = assessment)        
+
+@main.route('/api/calendars')
+@login_required
+def calendars():
+    qryresult1 = Assessment.query.filter_by(user_id = current_user.id)
+    qryresult2 = Class.query.filter_by(ter)
+    return jsonify(calendars = [i.serialize for i in qryresult])
 
 @main.route('/course<course_id>/edit', methods=['POST', 'GET'])
 @login_required
