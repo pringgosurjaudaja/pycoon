@@ -124,7 +124,7 @@ def course(course_id):
 @login_required
 def calendar(term_id):
     term = Term.query.filter_by(id=int(term_id)).first()
-    return render_template('calendar_dev.html',term=term) 
+    return render_template('calendar.html',term=term) 
 
 @main.route('/assessment<assessment_id>')
 @login_required

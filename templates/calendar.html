@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Pycoon</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- semantic UI -->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="../../static/semantic/dist/semantic.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+
+         <link href='../static/fullcalendar-4.3.1/packages/core/main.css' rel='stylesheet' />
+        <link href='../static/fullcalendar-4.3.1/packages/daygrid/main.css' rel='stylesheet' />
+
+        <script src='../static/fullcalendar-4.3.1/packages/core/main.js'></script>
+        <script src='../static/fullcalendar-4.3.1/packages/daygrid/main.js'></script>
+
+
+        <script src="../static/src/js/calendar.js"></script>
+    </head>
+    <body>
+        <div class="ui secondary menu">
+            <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.home')}}'">
+                <i class="left arrow icon"></i>
+                Back
+            </button>
+            
+        </div>
+        <div class="ui stackable two column grid">
+            <div class="ten wide column">
+                <!-- <div class="ui fluid container"> -->
+                    <div id="calendar"></div>
+                <!-- </div> -->
+                
+            </div>
+            <div class="six wide column">
+                <div class="right attached large rail">
+                    <!-- <div class="ui massive blue inverted segment">
+                        <label>assessment</label>
+                        <div class="ui divider"></div>
+                        <p>Loren ipsum dolor sit amer</p>
+                    </div>
+                    <div class="ui massive teal inverted segment">
+                        <label>class something</label>
+                        <div class="ui divider"></div>
+                        <p>Loren ipsum dolor sit amer</p>
+                    </div> -->
+
+                    <div class="ui comments">
+                        <h3 class="ui dividing header">To Dos</h3>
+                        <div style="overflow-y:scroll; height:80vh;">
+                            <div class="ui message blue">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Lecture Summaries</a>
+                                        <div class="metadata">
+                                            <span class="date" id="date">Due at 31/10/2019 at 11:59pm</span>
+                                        </div>
+                                        <div class="text">
+                                        COMP4920 summaries
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+        
+                            <div class="ui message red">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Assignment 2 Summaries</a>
+                                        <div class="metadata">
+                                            <span class="date" id="date">Due at 2/11/2019 at 11:59pm</span>
+                                        </div>
+                                        <div class="text">
+                                        Context Scenario
+                                        </div>
+                                    </div>
+                                </div>   
+                            </div>
+    
+                            <div class="ui message green">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Matt</a>
+                                        <div class="metadata">
+                                        <span class="date" id="date">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text">
+                                        How artistic!
+                                        </div>
+                                        <div class="actions">
+                                        <a class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+    
+                            <div class="ui message blue">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Lecture Summaries</a>
+                                        <div class="metadata">
+                                            <span class="date" id="date">Due at 31/10/2019 at 11:59pm</span>
+                                        </div>
+                                        <div class="text">
+                                        COMP4920 summaries
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+    
+                            <div class="ui message red">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Matt</a>
+                                        <div class="metadata">
+                                        <span class="date">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text">
+                                        How artistic!
+                                        </div>
+                                        <div class="actions">
+                                        <a class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+    
+                            <div class="ui message green">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Matt</a>
+                                        <div class="metadata">
+                                        <span class="date" id="date">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text">
+                                        How artistic!
+                                        </div>
+                                        <div class="actions">
+                                        <a class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+        
+                            <div class="ui message blue">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Lecture Summaries</a>
+                                        <div class="metadata">
+                                            <span class="date" id="date">Due at 31/10/2019 at 11:59pm</span>
+                                        </div>
+                                        <div class="text">
+                                        COMP4920 summaries
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+    
+                            <div class="ui message red">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Matt</a>
+                                        <div class="metadata">
+                                        <span class="date">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text">
+                                        How artistic!
+                                        </div>
+                                        <div class="actions">
+                                        <a class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+    
+                            <div class="ui message green">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Matt</a>
+                                        <div class="metadata">
+                                        <span class="date" id="date">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text">
+                                        How artistic!
+                                        </div>
+                                        <div class="actions">
+                                        <a class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+    
+                            <div class="ui message blue">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Lecture Summaries</a>
+                                        <div class="metadata">
+                                            <span class="date" id="date">Due at 31/10/2019 at 11:59pm</span>
+                                        </div>
+                                        <div class="text">
+                                        COMP4920 summaries
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+    
+                            <div class="ui message red">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Matt</a>
+                                        <div class="metadata">
+                                        <span class="date">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text">
+                                        How artistic!
+                                        </div>
+                                        <div class="actions">
+                                        <a class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+    
+                            <div class="ui message green">
+                                <i class="close icon"></i>
+                                <div class="comment">
+                                    <div class="content">
+                                        <a class="author">Matt</a>
+                                        <div class="metadata">
+                                        <span class="date" id="date">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text">
+                                        How artistic!
+                                        </div>
+                                        <div class="actions">
+                                        <a class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="ui fluid button teal">
+                            <label>Add new event</label>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        
+        </div>
+        
+        
+        
+    </body>
+    <!-- <script>
+        var term = {{ term | tojson }};
+        console.log(term);
+    </script> -->
+
+</html>
