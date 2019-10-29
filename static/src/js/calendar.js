@@ -46,7 +46,8 @@ $(document).ready(function() {
             date.setSeconds(seconds);
             var e = {
                 title: o.type,
-                start: date
+                start: date,
+                color: 'red'
             }
             ev.push(e)
         }
