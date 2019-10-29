@@ -118,7 +118,8 @@ def course(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
     assessments = Assessment.query.filter_by(course_id=course.id)
     classes = Class.query.filter_by(course_id = course_id)
-    return render_template('course_dev.html',course=course, assessments=assessments, classes=classes)  
+    term_id = course.term_id
+    return render_template('course_page.html', term_id=term_id, course=course, assessments=assessments, classes=classes)  
 
 @main.route('/term<term_id>/calendar')
 @login_required
