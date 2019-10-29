@@ -76,12 +76,12 @@
                         <h3 align="left">Assessment:</h3>
                         <div class="ui centered container" id="scrollable">
                             {% for assessment in assessments %}
-                            <div style="background-color: {{course.color}}; opacity: 0.8" class="ui centered link card" onclick="window.location.href='{{url_for('main.assessment', assessment_id=assessment.id)}}'">
+                            <div style="background-color: {{course.color}}; opacity: 0.95" class="ui centered link card" onclick="window.location.href='{{url_for('main.assessment', assessment_id=assessment.id)}}'">
                                 <div class="content">
                                     <a class="floating ui circular label" id="delete-assessment" href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">
                                         x
                                     </a>
-                                    <div style="opacity: 0.95; color: white; font-size: 13px;" class="header">   {{assessment.title}}</div>
+                                    <div style="opacity: 0.8; color: white; font-size: 13px;" class="header">   {{assessment.title}}</div>
                                     <div class="meta">
                                         <span class="category" style="font-size: 13px; opacity: 0.8; color: white;">{{assessment.due_date}}</span>
                                     </div>
