@@ -178,7 +178,7 @@ def edit_assessment(assessment_id):
         db.session.commit()
         return redirect(url_for('main.assessment', assessment_id = assessment_id))
     assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
-    return render_template('edit_assessment_dev.html', assessment = assessment)        
+    return render_template('edit_assessment.html', assessment = assessment)        
 
 @main.route('/api/calendars')
 @login_required
