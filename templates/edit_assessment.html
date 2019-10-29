@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="description" content="Timetable webapp for UNSW students">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pycoon Edit Assessment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <link rel="stylesheet" href="styles.css"> 
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="../../static/src/js/edit_assessment.js"></script>
+    <script src="../../static/semantic/dist/semantic.min.js"></script>
+    
+</head>
+<body>
+    
+<!--    <div class="ui container"> -->
+    
+    <div class="ui secondary menu">
+        <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.assessment', assessment_id=assessment.id)}}'">
+            <i class="left arrow icon"></i>
+                Back
+        </button>
+    </div>
+    
+    <div class="ui center aligned middle aligned grid" id="container">
+        <div class="six wide column" id="add-assessment">
+            <h2>Edit Assessment</h2>
+
+            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.edit_assessment', assessment_id = assessment.id) }}"
+                  name="myForm" onsubmit="return validateForm()">
+                <div class="field">
+                    <label>Title</label>
+                    <input type="text" name="title" value="{{assessment.title}}" placeholder="Assessment Name">
+                </div>
+                <div class="field">
+                    <label>Due Date</label>
+                    <input type="date" value="{{assessment.due_date}}" name="due_date">
+                </div>
+                </br></br>
+
+                <!-- <div class="wrapper"> -->
+                    <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.course', course_id=course_id) }}'">
+                        Cancel
+                    </button>
+                    <button name="confirm" type="submit" value ="submit" class="medium ui primary button" >
+                        Confirm
+                    </button>
+                <!-- </div> -->
+                <div class="ui error message"></div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
