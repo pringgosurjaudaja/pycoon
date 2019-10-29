@@ -9,6 +9,13 @@ def dump_datetime(value):
         return None
     return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
 
+def dump_time(value):
+    """Deserialize datetime object into string form for JSON processing."""
+    if value is None:
+        return None
+    return [value.strftime("%H:%M:%S")]
+
+
 def dump_enum(enum):
     if enum == ClassEnum.lecture:
         return "lecture"
@@ -106,7 +113,7 @@ class Class(db.Model):
             'id'            : self.id,
             'type'          : dump_enum(self.type),
             'day'           : self.day,
-            'time'          : dump_datetime(self.time),
+            'time'          : dump_time(self.time),
             'weeks'         : self.weeks,
             'course_id'     : self.course_id,
         }

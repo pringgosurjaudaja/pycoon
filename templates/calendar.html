@@ -24,7 +24,7 @@
         <script src='../static/fullcalendar-4.3.1/packages/daygrid/main.js'></script>
 
 
-        <script src="../static/src/js/calendar.js"></script>
+        
     </head>
     <body>
         <div class="ui secondary menu">
@@ -57,7 +57,23 @@
                     <div class="ui comments">
                         <h3 class="ui dividing header">To Dos</h3>
                         <div style="overflow-y:scroll; height:80vh;">
-                            <div class="ui message blue">
+                            {% for task in assessment %}
+                                <div class="ui message blue">
+                                    <i id={{ task.id }} class="close icon"></i>
+                                    <div class="comment">
+                                        <div class="content">
+                                            <a class="author">{{ task.title }}</a>
+                                            <div class="metadata">
+                                                <span class="date" id="date">{{ task.start }}</span>
+                                            </div>
+                                            <div class="text">
+                                            Description
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                            {% endfor %}
+                            <!-- <div class="ui message blue">
                                 <i class="close icon"></i>
                                 <div class="comment">
                                     <div class="content">
@@ -256,7 +272,7 @@
                                         </div>
                                     </div>
                                 </div>    
-                            </div>
+                            </div> -->
                             
                             
                         </div>
@@ -277,9 +293,8 @@
     <script>
             var assessments = {{ assessment|tojson }};
             var classes = {{ classes|tojson }}
-            console.log(assessments);
-            console.log(classes)
-        
+            var terms = {{ terms|tojson }}
+            
     </script>
-
+    <script src="../static/src/js/calendar.js"></script>
 </html>

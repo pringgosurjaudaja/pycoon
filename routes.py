@@ -5,7 +5,7 @@ from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import time
-
+import re
 main = Blueprint('main',__name__)
 
 @main.route('/')
@@ -123,8 +123,8 @@ def course(course_id):
 @main.route('/term<term_id>/calendar')
 @login_required
 def calendar(term_id):
-    url = str(request.referrer)
-    # term = Term.query.filter_by(id=int(term_id))
+    # url = str(request.referrer)
+    term = Term.query.filter_by(id=int(term_id))
     course = Course.query.filter_by(term_id=int(term_id))
     result_class = []
     result_assessment = []
@@ -138,10 +138,10 @@ def calendar(term_id):
         for ass in assessments.all():
             # print(ass.title)
             result_assessment.append(ass.serialize)
-    print("\n\n\nTEST\n\n\n")
+    # print("\n\n\nTEST\n\n\n")
     # result_assessment = jsonify(assessment=[i.serialize for i in result_assessment])
     
-    return render_template('calendar.html', assessment=result_assessment, classes=result_class) 
+    return render_template('calendar.html', assessment=result_assessment, classes=result_class, terms=[i.serialize for i in term.all()]) 
 
 
 @main.route('/assessment<assessment_id>')
@@ -269,3 +269,12 @@ def delete_assessment(assessment_id):
     db.session.delete(assessment)
     db.session.commit()
     return redirect(url_for('main.course', course_id = course_id))
+
+@main.route('/api/delete/assessment<assessment_id>')
+@login_required
+def delete_an_assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
+    course_id = assessment.course_id
+    db.session.delete(assessment)
+    db.session.commit()
+
