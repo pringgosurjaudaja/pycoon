@@ -198,7 +198,7 @@ def edit_course(course_id):
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
     course = Course.query.filter_by(id = int(course_id)).first() 
-    return render_template('edit_course_dev.html', course = course)   
+    return render_template('edit_course.html', course = course, term_id = course.term_id)   
 
 @main.route('/class<class_id>')
 @login_required
