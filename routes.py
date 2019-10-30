@@ -129,19 +129,16 @@ def calendar(term_id):
     result_class = []
     result_assessment = []
     
+
     for c in course.all():
         classes = Class.query.filter_by(course_id=int(c.id))
         assessments = Assessment.query.filter_by(course_id=int(c.id))
         for cl in classes.all():
-            # print(cl.type)
             result_class.append(cl.serialize)
         for ass in assessments.all():
-            # print(ass.title)
             result_assessment.append(ass.serialize)
-    # print("\n\n\nTEST\n\n\n")
-    # result_assessment = jsonify(assessment=[i.serialize for i in result_assessment])
     
-    return render_template('calendar.html', assessment=result_assessment, classes=result_class, terms=[i.serialize for i in term.all()]) 
+    return render_template('calendar.html', assessment=result_assessment, classes=result_class, terms=[i.serialize for i in term.all()], courses=[i.serialize for i in course.all()]) 
 
 
 @main.route('/assessment<assessment_id>')
