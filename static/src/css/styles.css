@@ -20,3 +20,8 @@
     text-align: left;
 }
 
+#date {
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+}

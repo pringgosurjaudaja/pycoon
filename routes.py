@@ -5,7 +5,7 @@ from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import time
-
+import re
 main = Blueprint('main',__name__)
 
 @main.route('/')
@@ -116,15 +116,30 @@ def add_course(term_id):
 @login_required
 def course(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
-    assessments = Assessment.query.filter_by(course_id=course.id)
+    assessments = Assessment.query.filter_by(course_id=course.id, user_id = current_user.id)
     classes = Class.query.filter_by(course_id = course_id)
     return render_template('course_dev.html',course=course, assessments=assessments, classes=classes)  
 
 @main.route('/term<term_id>/calendar')
 @login_required
 def calendar(term_id):
-    term = Term.query.filter_by(id=int(term_id)).first()
-    return render_template('calendar_dev.html',term=term) 
+    # url = str(request.referrer)
+    term = Term.query.filter_by(id=int(term_id))
+    course = Course.query.filter_by(term_id=int(term_id))
+    result_class = []
+    result_assessment = []
+    
+
+    for c in course.all():
+        classes = Class.query.filter_by(course_id=int(c.id))
+        assessments = Assessment.query.filter_by(course_id=int(c.id))
+        for cl in classes.all():
+            result_class.append(cl.serialize)
+        for ass in assessments.all():
+            result_assessment.append(ass.serialize)
+    
+    return render_template('calendar.html', assessment=result_assessment, classes=result_class, terms=[i.serialize for i in term.all()], courses=[i.serialize for i in course.all()]) 
+
 
 @main.route('/assessment<assessment_id>')
 @login_required
@@ -139,7 +154,7 @@ def add_assessment(course_id):
         title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
-        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id)
+        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id, user_id = current_user.id)
         db.session.add(new_assessment)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
@@ -160,7 +175,14 @@ def edit_assessment(assessment_id):
         db.session.commit()
         return redirect(url_for('main.assessment', assessment_id = assessment_id))
     assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
-    return render_template('edit_assessment_dev.html', assessment = assessment)        
+    return render_template('edit_assessment.html', assessment = assessment)        
+
+@main.route('/api/calendars')
+@login_required
+def calendars():
+    qryresult1 = Assessment.query.filter_by(user_id = current_user.id)
+    qryresult2 = Class.query.filter_by(ter)
+    return jsonify(calendars = [i.serialize for i in qryresult])
 
 @main.route('/course<course_id>/edit', methods=['POST', 'GET'])
 @login_required
@@ -244,3 +266,12 @@ def delete_assessment(assessment_id):
     db.session.delete(assessment)
     db.session.commit()
     return redirect(url_for('main.course', course_id = course_id))
+
+@main.route('/api/delete/assessment<assessment_id>')
+@login_required
+def delete_an_assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
+    course_id = assessment.course_id
+    db.session.delete(assessment)
+    db.session.commit()
+

@@ -129,8 +129,7 @@ $(document).ready(function() {
                         window.location.href = '/term'+num;
                     })
                     $(prefix2+num).click(() => {
-
-                        window.location.href = '/term'+num;
+                        window.location.href = '/term'+num+'/delete';
                     })
                     
                 }
@@ -157,6 +156,7 @@ $(document).ready(function() {
                 $('#button').click(() => {
                     window.location.href = '/add/term';
                 })
+
             })
             .catch((error)=> {
                 console.log('request failed : '+error);

@@ -9,6 +9,23 @@ def dump_datetime(value):
         return None
     return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
 
+def dump_time(value):
+    """Deserialize datetime object into string form for JSON processing."""
+    if value is None:
+        return None
+    return [value.strftime("%H:%M:%S")]
+
+
+def dump_enum(enum):
+    if enum == ClassEnum.lecture:
+        return "lecture"
+    elif enum == ClassEnum.tutorial:
+        return "tutorial"
+    elif enum == ClassEnum.lab:
+        return "lab"
+    else:
+        return "seminar"
+
 class ClassEnum(enum.Enum):
     lecture = 1
     tutorial = 2
@@ -71,6 +88,16 @@ class Assessment(db.Model):
     title = db.Column(db.String(100),nullable=False)
     due_date = db.Column(db.Date, nullable = False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    @property
+    def serialize(self):
+        return{
+            'id'            : self.id,
+            'title'         : self.title,
+            'start'         : self.due_date,
+            'course_id' : self.course_id,
+            'user_id'   : self.user_id,
+        }
 
 class Class(db.Model):
     __tablename__ = "class"
@@ -80,3 +107,13 @@ class Class(db.Model):
     time = db.Column(db.Time, nullable=False)
     weeks = db.Column(db.String(100), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
+    @property
+    def serialize(self):
+        return{
+            'id'            : self.id,
+            'type'          : dump_enum(self.type),
+            'day'           : self.day,
+            'time'          : dump_time(self.time),
+            'weeks'         : self.weeks,
+            'course_id'     : self.course_id,
+        }

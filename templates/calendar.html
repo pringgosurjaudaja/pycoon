@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Pycoon</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- semantic UI -->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="../../static/semantic/dist/semantic.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+
+         <link href='../static/fullcalendar-4.3.1/packages/core/main.css' rel='stylesheet' />
+        <link href='../static/fullcalendar-4.3.1/packages/daygrid/main.css' rel='stylesheet' />
+
+        <script src='../static/fullcalendar-4.3.1/packages/core/main.js'></script>
+        <script src='../static/fullcalendar-4.3.1/packages/daygrid/main.js'></script>
+
+
+        
+    </head>
+    <body>
+        <div class="ui secondary menu">
+            <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.home')}}'">
+                <i class="left arrow icon"></i>
+                Back
+            </button>
+            
+        </div>
+        <div class="ui stackable two column grid">
+            <div class="ten wide column">
+                <!-- <div class="ui fluid container"> -->
+                    <div id="calendar"></div>
+                <!-- </div> -->
+                
+            </div>
+            <div class="six wide column">
+                <div class="right attached large rail">
+                    <!-- <div class="ui massive blue inverted segment">
+                        <label>assessment</label>
+                        <div class="ui divider"></div>
+                        <p>Loren ipsum dolor sit amer</p>
+                    </div>
+                    <div class="ui massive teal inverted segment">
+                        <label>class something</label>
+                        <div class="ui divider"></div>
+                        <p>Loren ipsum dolor sit amer</p>
+                    </div> -->
+
+                    <div class="ui comments">
+                        <h3 id="root" class="ui dividing header">To Dos</h3>
+                        <div id="todo" style="overflow-y:scroll; height:80vh;">
+                            <!-- {% for task in assessment %}
+                                <div class="ui message">
+                                    <i id={{ task.id }} class="close icon"></i>
+                                    <div class="comment">
+                                        <div class="content">
+                                            <a class="author">{{ task.title }}</a>
+                                            <div class="metadata">
+                                                <span class="date" id="date">{{ task.start }}</span>
+                                            </div>
+                                            <div class="text">
+                                            Description
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                            {% endfor %} -->
+                            
+                            
+                            
+                        </div>
+                        <!-- <div class="ui fluid button teal">
+                            <label>Add new event</label>
+                        </div> -->
+                        
+                    </div>
+                </div>
+            </div>
+            
+        
+        </div>
+        
+        
+        
+    </body>
+    <script>
+            var assessments = {{ assessment | tojson }};
+            var classes = {{ classes | tojson }}
+            var terms = {{ terms | tojson }}
+            var courses = {{ courses | tojson }}
+    </script>
+    <script src="../static/src/js/calendar.js"></script>
+</html>
