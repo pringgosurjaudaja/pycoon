@@ -116,7 +116,7 @@ $(document).ready(function() {
         
         var text =  document.createElement('div');
         text.setAttribute('class', 'text');
-        text.innerHTML = 'Description';
+        text.innerText = o.description;
 
         meta.appendChild(span);
         content.appendChild(author);
