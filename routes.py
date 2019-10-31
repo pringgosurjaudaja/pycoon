@@ -154,7 +154,8 @@ def add_assessment(course_id):
         title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
-        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id, user_id = current_user.id)
+        description = request.form.get('description')
+        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id, user_id = current_user.id, description= description)
         db.session.add(new_assessment)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
@@ -170,8 +171,10 @@ def edit_assessment(assessment_id):
         new_title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         new_due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
+        description = request.form.get('description')
         assessment.title = new_title
         assessment.due_date = new_due_date
+        assessment.description = description
         db.session.commit()
         return redirect(url_for('main.assessment', assessment_id = assessment_id))
     assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
