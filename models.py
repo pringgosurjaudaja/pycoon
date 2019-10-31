@@ -87,6 +87,7 @@ class Assessment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100),nullable=False)
     due_date = db.Column(db.Date, nullable = False)
+    description = db.Column(db.String, nullable = True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
     @property
@@ -97,6 +98,7 @@ class Assessment(db.Model):
             'start'         : self.due_date,
             'course_id' : self.course_id,
             'user_id'   : self.user_id,
+            'description': self.description
         }
 
 class Class(db.Model):
