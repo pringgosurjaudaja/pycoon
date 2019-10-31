@@ -3,19 +3,20 @@
 <head>
     
     <meta charset="utf-8">
-    <meta name="description" content="Timetable webapp for UNSW students">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pycoon Add Assessment</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <link rel="stylesheet" href="styles.css"> 
-    <script
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Pycoon</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- semantic UI -->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
+        <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-    <script src="../../static/src/js/add_assessment.js"></script>
-    <script src="../../static/semantic/dist/semantic.min.js"></script>
+        <script src="../../static/semantic/dist/semantic.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
     
 </head>
 <body>
@@ -35,15 +36,7 @@
 
             <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_assessment', course_id=course_id) }}"
                   name="myForm" onsubmit="return validateForm()">
-                <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
-                    <label>Course</label> 
-                    <select style="width: 50%;border-radius: 0.5rem!important;">
-                        <option value="Course 1">Course 1</option>
-                        <option value="Course 2">Course 2</option>
-                        <option value="Course 3">Course 3</option>
-                        <option value="Course 4">Course 4</option>
-                    </select>
-                </div>
+                
                 <div class="field">
                     <label>Title</label>
                     <input type="text" name="title" placeholder="Assessment Name">
@@ -51,6 +44,10 @@
                 <div class="field">
                     <label>Due Date</label>
                     <input type="date" name="due_date">
+                </div>
+                <div class="field">
+                    <label>Notes</label>
+                    <input type="text" name="notes" placeholder="Optional">
                 </div>
                 </br></br>
 
