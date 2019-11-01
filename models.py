@@ -123,6 +123,7 @@ class Class(db.Model):
     day = db.Column(db.Integer, nullable=False)
     time = db.Column(db.Time, nullable=False)
     weeks = db.Column(db.String(100), nullable=False)
+    location = db.Column(db.String(100))
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     @property
     def serialize(self):
@@ -132,5 +133,6 @@ class Class(db.Model):
             'day'           : self.day,
             'time'          : dump_time(self.time),
             'weeks'         : self.weeks,
+            'location'      : self.location,
             'course_id'     : self.course_id,
         }

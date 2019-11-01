@@ -14,6 +14,8 @@
         <br/>
         <input name="weeks" {% if form %}value={{form['weeks']}}{% endif %}>Weeks</input>
         <br/>
+        <input name="location" {% if form %}value={{form['location']}}{% endif %}>Location</input>
+        <br/>
       </div>
       {% if error %}
           {{error}}
