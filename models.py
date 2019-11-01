@@ -48,6 +48,13 @@ class Term(db.Model):
     end_date = db.Column(db.Date, nullable=False)
     courses = db.relationship('Course', cascade="all,delete", backref='term', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    @property
+    def weeks(self):
+        diff = self.start_date - self.end_date
+        num_weeks = diff.days / 7
+        return round(num_weeks)
+
     @property
     def serialize(self):
        """Return object data in easily serializable format"""
