@@ -97,6 +97,7 @@ class Assessment(db.Model):
     description = db.Column(db.String, nullable = True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    attachments = db.relationship('Attachment', cascade="all,delete", backref='assessment', lazy=True)
     @property
     def serialize(self):
         return{
@@ -107,6 +108,13 @@ class Assessment(db.Model):
             'user_id'   : self.user_id,
             'description': self.description
         }
+
+class Attachment(db.Model):
+    __tablename__="attachment"
+    id = db.Column(db.Integer, primary_key=True)  
+    name = db.Column(db.String(300), nullable = False)
+    data = db.Column(db.LargeBinary, nullable = False)
+    assessment_id = db.Column(db.Integer, db.ForeignKey('assessment.id'), nullable= False)
 
 class Class(db.Model):
     __tablename__ = "class"

@@ -9,4 +9,24 @@
 </br>
 <a href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">
     Delete</a>
+
+<h1>Attachments</h1>
+
+{% for attachment in attachments %}
+            
+    <li>
+        <a href="{{url_for('main.attachment', attachment_id = attachment.id)}}">{{attachment.name}}</a>
+        <a href="{{url_for('main.delete_attachment', attachment_id = attachment.id)}}"> | Delete</a>
+    </li>
+
+{% endfor %}
+
+    <h1>Add Attachment</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div>
+          <input name="inputFile" type="file"></input>
+          <br/>
+        </div>
+        <button name="confirm" type="submit">Confirm</button>
+      </form>
 </html>
