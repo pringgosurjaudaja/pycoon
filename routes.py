@@ -160,6 +160,7 @@ def attachment(attachment_id):
     file_data = Attachment.query.filter_by(id = attachment_id).first()
     return send_file(BytesIO(file_data.data), attachment_filename=file_data.name, as_attachment=True)
 
+
 @main.route('/course<course_id>/add/assessment', methods=['GET', 'POST'])
 @login_required
 def add_assessment(course_id):
