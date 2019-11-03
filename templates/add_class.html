@@ -14,8 +14,10 @@
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-    <script src="../../static/src/js/add_assessment.js"></script>
     <script src="../../static/semantic/dist/semantic.min.js"></script>
+    
+    <script src="../../static/src/js/add_class.js"></script>
+
     
 </head>
 <body>
@@ -39,6 +41,7 @@
                 <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
                     <label>Type</label> 
                     <select style="width: 50%;border-radius: 0.5rem!important;" name="type">
+                        <option disabled selected value> -- select a class type -- </option>
                         <option value="Lecture">Lecture</option>
                         <option value="Tutorial">Tutorial</option>
                         <option value="Lab">Lab</option>
@@ -54,6 +57,7 @@
                 <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
                     <label>Day</label> 
                     <select style="width: 50%;border-radius: 0.5rem!important;" name="day">
+                        <option disabled selected value> -- select a day -- </option>
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>
@@ -78,18 +82,45 @@
                 <div class="field">
                     <label>Weeks</label>
               <!--      <input type="text" name="weeks" placeholder="Weeks">  -->
-                </div>
-                <div class="ui checkbox">
+                
+   <!--             <div class="ui inline checkbox">
                     <input type="checkbox" name="weeks">
                     <label value="1">Week 1</label>
+                    <input type="checkbox" name="weeks">
                     <label value="2">Week 2</label>
+                    <input type="checkbox" name="weeks">
                     <label value="3">Week 3</label>
+                </div>      -->
                     
                 <!--    {% for week in weeks %}
                     {{week}}
                     {% endfor %} -->
+                
+                    <div class="list">
+                      <div class="item">
+                        <div class="ui child checkbox">
+                          <input type="checkbox" name="weeks">
+                          <label>Week 1</label>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="ui child checkbox">
+                          <input type="checkbox" name="week2">
+                          <label>Week 2</label>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="ui child checkbox">
+                          <input type="checkbox" name="week3">
+                          <label>Week 3</label>
+                        </div>
+                      </div>
+                    </div>
+                    
                 </div>
-
+                
+                 
+                
                 </br></br>
 
                 <!-- <div class="wrapper"> -->
