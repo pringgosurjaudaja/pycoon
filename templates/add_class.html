@@ -50,13 +50,25 @@
                     <label>Location</label>
                     <input type="text" name="location" placeholder="Location">
                 </div>
-                <div class="field">
-                    <label>Date</label>
-                    <input type="date" name="date">
+                <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
+                    <label>Day</label> 
+                    <select style="width: 50%;border-radius: 0.5rem!important;">
+                        <option value="Type 1">Monday</option>
+                        <option value="Type 2">Tuesday</option>
+                        <option value="Type 3">Wednesday</option>
+                        <option value="Type 4">Thursday</option>
+                        <option value="Type 5">Friday</option>
+                        <option value="Type 6">Saturday</option>
+                        <option value="Type 7">Sunday</option>
+                    </select>
                 </div>
                 <div class="field">
-                    <label>Time</label>
-                    <input type="time" name="time" placeholder="Time">
+                    <label>Start Time</label>
+                    <input type="time" name="start_time">
+                </div>
+                <div class="field">
+                    <label>End Time</label>
+                    <input type="time" name="end_time">
                 </div>
                 <div class="field">
                     <label>Notes (optional)</label>
@@ -64,7 +76,7 @@
                 </div>
                 <div class="field">
                     <label>Weeks</label>
-                    <input type="text" name="weeks" placeholder="Weeks">
+              <!--      <input type="text" name="weeks" placeholder="Weeks">  -->
                 </div>
                 <div class="ui checkbox">
                     <input type="checkbox" name="example">

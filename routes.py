@@ -237,7 +237,7 @@ def add_class(course_id):
         db.session.add(new_class)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
-    return render_template('add_class_dev.html')
+    return render_template('add_class.html')
 
 @main.route('/class<class_id>/edit', methods=['POST', 'GET'])
 @login_required
