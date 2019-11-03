@@ -229,7 +229,7 @@ def add_class(course_id):
     if request.method == 'POST':
         type = request.form.get('type')
         day = request.form.get('day')
-        time_string = request.form.get('time')
+        time_string = request.form.get('start_time')
         time = datetime.strptime(time_string, "%H:%M").time()
         weeks = request.form.get('weeks')
         location = request.form.get('location')

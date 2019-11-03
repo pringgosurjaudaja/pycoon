@@ -38,13 +38,13 @@
 
                 <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
                     <label>Type</label> 
-                    <select style="width: 50%;border-radius: 0.5rem!important;">
-                        <option value="Type 1">Lecture</option>
-                        <option value="Type 2">Tutorial</option>
-                        <option value="Type 3">Lab</option>
-                        <option value="Type 4">Seminar</option>
-                        <option value="Type 4">Meeting</option>
-                        <option value="Type 4">Other</option>
+                    <select style="width: 50%;border-radius: 0.5rem!important;" name="type">
+                        <option value="Lecture">Lecture</option>
+                        <option value="Tutorial">Tutorial</option>
+                        <option value="Lab">Lab</option>
+                        <option value="Seminar">Seminar</option>
+                        <option value="Meeting">Meeting</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="field">
@@ -53,14 +53,14 @@
                 </div>
                 <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
                     <label>Day</label> 
-                    <select style="width: 50%;border-radius: 0.5rem!important;">
-                        <option value="Type 1">Monday</option>
-                        <option value="Type 2">Tuesday</option>
-                        <option value="Type 3">Wednesday</option>
-                        <option value="Type 4">Thursday</option>
-                        <option value="Type 5">Friday</option>
-                        <option value="Type 6">Saturday</option>
-                        <option value="Type 7">Sunday</option>
+                    <select style="width: 50%;border-radius: 0.5rem!important;" name="day">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
                     </select>
                 </div>
                 <div class="field">
@@ -80,10 +80,10 @@
               <!--      <input type="text" name="weeks" placeholder="Weeks">  -->
                 </div>
                 <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label>Week 1</label>
-                    <label>Week 2</label>
-                    <label>Week 3</label>
+                    <input type="checkbox" name="weeks">
+                    <label value="1">Week 1</label>
+                    <label value="2">Week 2</label>
+                    <label value="3">Week 3</label>
                     
                 <!--    {% for week in weeks %}
                     {{week}}
