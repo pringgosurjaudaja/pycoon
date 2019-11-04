@@ -36,15 +36,6 @@ $(document).ready(function() {
         ev.push(e);
     });
 
-    Push.create("Hello world!", {
-        body: "How's it hangin'?",
-        // icon: '/icon.png',
-        timeout: 4000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
-    });
 
     // =============== Recurring classes ================= //
     classes.forEach(function(o) {
@@ -162,6 +153,21 @@ $(document).ready(function() {
             
         })
 
+        // =============== Notification ================= //
+        Push.Permission.request();
+        if (getNotification(o.start)) {
+            Push.create(o.title, {
+                body: "Due on " + o.start,
+                icon: "/static/assets/assessment.png",
+                tag: 'assessment',
+                timeout: 8000,
+                onClick: function () {
+                    window.focus();
+                    this.close();
+                }
+            });
+        }
+
     })
     var button = document.createElement('div');
     var label = document.createElement('label');
@@ -177,7 +183,24 @@ $(document).ready(function() {
         // console.log(url);
         window.location.href = url;
     })
+
 });
+
+function getNotification(date) {
+    var prevDay = new Date(date);
+    prevDay.setDate(prevDay.getDate()-1);
+
+    var curr_date = new Date();
+
+    if (curr_date.getDate() == prevDay.getDate()
+        && curr_date.getMonth() == prevDay.getMonth()
+        && curr_date.getFullYear() == prevDay.getFullYear()) {
+        console.log("good to notify");
+        return true;
+    }
+
+    return false;
+}
 
 function getColor(color) {
     if (color == "#ca3b33") {
