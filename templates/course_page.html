@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="description" content="Timetable webapp for UNSW students">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pycoon Course Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <link rel="stylesheet" href="styles.css"> 
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="../../static/src/js/course_page.js"></script>
+    <script src="../../static/semantic/dist/semantic.min.js"></script>
+    
+    
+</head>
+<body>
+        
+    <div class="ui secondary menu">
+        <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.term', term_id=term_id)}}'">
+            <i class="left arrow icon"></i>
+                Back
+        </button>
+    </div>
+    
+    <h1 style="text-align:center">{{course.code}} - {{course.title}}</h1>
+    <div class="ui center aligned middle aligned grid" id="container">
+        <div class="twelve wide column" id="course-page">
+ 
+            <button name="confirm" type="submit" value ="submit" class="mini medium ui secondary button" onclick="window.location.href='{{url_for('main.edit_course', course_id = course.id)}}'">
+                          Edit Course
+            </button>
+            <button name="confirm" type="submit" value ="submit" class="mini medium ui secondary button" onclick="window.location.href='{{url_for('main.delete_course', course_id=course.id)}}'">
+                          Delete Course
+            </button>
+
+            <!-- SEGMENT -->
+            
+            <div class="ui segment" >
+                <div class="ui two column very relaxed grid" >
+                    <div class="column">
+                        
+                        <!-- Class Section -->
+                        <h3 align="left">Class:</h3>
+                        <div class="ui centered container" id="scrollable">
+                            {% for class in classes %}
+                                <div style="background-color: {{course.color}}" class="ui centered link card" onclick="window.location.href='{{url_for('main.class_page', class_id = class.id)}}'">
+                                    <div class="content">
+                                        <a class="floating ui circular label" id="delete-class" href="{{url_for('main.delete_class', class_id = class.id)}}">
+                                            x
+                                        </a>
+                                        <div style="opacity: 0.8; color: white; font-size: 13px;" class="header">{{class.type.name}}--{{class.time}}-{{class.weeks}}</div>
+                                        <div class="meta">
+                                            <span class="category" style="font-size: 13px;">{{class.day}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                        </br>
+                        <button name="confirm" type="submit" value ="submit" class="small ui primary button" onclick="window.location.href='{{ url_for('main.add_class', course_id = course.id) }}'">
+                                      Add New Class
+                        </button>
+                  
+                    </div>
+                    <div class="column">
+                        
+                        <!-- Assessment Section -->
+                        <h3 align="left">Assessment:</h3>
+                        <div class="ui centered container" id="scrollable">
+                            {% for assessment in assessments %}
+                            <div style="background-color: {{course.color}}; opacity: 0.95" class="ui centered link card" onclick="window.location.href='{{url_for('main.assessment', assessment_id=assessment.id)}}'">
+                                <div class="content">
+                                    <a class="floating ui circular label" id="delete-assessment" href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">
+                                        x
+                                    </a>
+                                    <div style="opacity: 0.8; color: white; font-size: 13px;" class="header">   {{assessment.title}}</div>
+                                    <div class="meta">
+                                        <span class="category" style="font-size: 13px; opacity: 0.8; color: white;">{{assessment.due_date}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div> 
+                    </br>
+
+                    <button name="confirm" type="submit" value ="submit" class="small ui primary button" onclick="window.location.href='{{ url_for('main.add_assessment', course_id = course.id) }}'">
+                                Add New Assessment
+                    </button>
+
+                  <p></p>
+                </div>
+              </div>
+              <div class="ui vertical divider">
+                
+              </div>
+            </div>
+            
+            <!-- END OF SEGMENT -->
+    
+
+    
+            </br>
+    
+        </div>
+    </div>   
+    
+    
+</body>
+</html>
+s

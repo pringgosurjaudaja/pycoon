@@ -10,15 +10,6 @@ $(document).ready(function() {
     $('.ui.form')
         .form({
             fields: {
-                due_date: {
-                    identifier: 'due_date',
-                    rules: [
-                      {
-                        type   : 'empty',
-                        prompt : 'Please enter an assessment date'
-                      }
-                    ]
-                },
                 title: {
                     identifier  : 'title',
                     rules: [
@@ -28,15 +19,25 @@ $(document).ready(function() {
                       }
                     ]
                 },
-                dropdown: {
-                    identifier  : 'dropdown',
+                due_date: {
+                    identifier: 'due_date',
                     rules: [
                       {
                         type   : 'empty',
-                        prompt : 'Please select a course'
+                        prompt : 'Please enter a due date'
                       }
                     ]
                 },
+                due_time: {
+                    identifier: 'due_time',
+                    rules: [
+                      {
+                        type   : 'empty',
+                        prompt : 'Please enter a due time'
+                      }
+                    ]
+                },
+               
             }
         })
     ;

@@ -1,23 +1,25 @@
 $(document).ready(function() {
     console.log("ready");
-    // console.log(assessments);
-    // console.log(classes);
-    // console.log(terms)
-    const start_date = new Date(terms[0].start_date);
+    
+    let start_date = new Date(terms[0].start_date);
+    
+    var day_of_week = start_date.getDay();
+    
+    // Rounding down the date to the nearest monday
+    if(start_date.getDay() != 0) {
+        start_date = new Date(start_date.setDate(start_date.getDate() - day_of_week));
+    }
+
+    
     const start = Date.parse(terms[0].start_date);
     const end = Date.parse(terms[0].end_date);
     var diff = end-start;
     diff = Math.ceil(diff / (1000 * 60 * 60 * 24 * 7));
 
-    // console.log(diff)
-    // // console.log(end)
-    // console.log(courses);
 
     var ev = []
-    
 
     assessments.forEach(function(o) {
-        console.log(o.start)
         var date = new Date(o.start);
         date.setHours(0)
         date.setMinutes(0);
@@ -33,20 +35,34 @@ $(document).ready(function() {
         }
         ev.push(e);
     });
+
+    Push.create("Hello world!", {
+        body: "How's it hangin'?",
+        // icon: '/icon.png',
+        timeout: 4000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
+
+    // =============== Recurring classes ================= //
     classes.forEach(function(o) {
 
         var days = o.day;
+        var weeks = o.weeks.split(',').map(Number);
         var pieces = o.time.toString().split(":");
         var hour, minute, second;
         hours = parseInt(pieces[0], 10);
         minutes = parseInt(pieces[1], 10);
         seconds = parseInt(pieces[2], 10);
 
-        // console.log(class_time);
-        // console.log("HERE "+days)
-        for (var n = 1 ; n<=days; ++n) {
-            
-            var date = new Date(start_date.getTime() + (n*86400000*7));
+
+        for (var n in weeks) {
+            // n returns the index
+            // weeks[n] returns the correct value
+            var date = new Date(start_date.getTime()+ (weeks[n]*7*86400000));
+            date.setDate(date.getDate()+days);
             date.setHours(+hours)
             date.setMinutes(minutes);
             date.setSeconds(seconds);
@@ -55,8 +71,6 @@ $(document).ready(function() {
                 return el.id == o.course_id
             });
 
-            // console.log("HERE "+JSON.stringify(col))
-            // var color = col[0].color;
             var e = {
                 title: o.type,
                 start: date,
@@ -67,7 +81,7 @@ $(document).ready(function() {
         }
         
     });
-    console.log(ev)
+
     var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           plugins: [ 'dayGrid'],
@@ -83,6 +97,8 @@ $(document).ready(function() {
     
 
 
+    // =============== To Do List ================= //
+    
     assessments.forEach(function(o) {
         var message = document.createElement('div');
         var color = courses.filter((el) => {
@@ -99,12 +115,13 @@ $(document).ready(function() {
 
         var comment = document.createElement('div');
         comment.setAttribute('class', 'comment');
-
+        
         var content = document.createElement('div');
         content.setAttribute('class', 'content');
-
+        
         var author = document.createElement('a');
         author.setAttribute('class', 'author');
+        author.setAttribute('id', o.id);
         author.innerHTML = o.title;
 
         var meta = document.createElement('div');
@@ -116,7 +133,7 @@ $(document).ready(function() {
         
         var text =  document.createElement('div');
         text.setAttribute('class', 'text');
-        text.innerHTML = 'Description';
+        text.innerText = o.description;
 
         meta.appendChild(span);
         content.appendChild(author);
@@ -127,15 +144,23 @@ $(document).ready(function() {
         $('#todo').append(message);
 
 
-        // console.log("IOI "+getColor(color));
-        
+        // =============== Create Modal ================= //
 
-        $('#'+o.id).click(() => {
+        $('i#'+o.id).click(() => {
             fetch('/api/delete/assessment'+o.id);
             window.location.reload(true);
         })
 
         
+        $('#'+o.id+'.author').click(()=>{
+            var str = "/assessment"+o.id;
+            // console.log(str);
+            // window.location.href = str;
+
+            // $('.ui.modal').modal('toggle');
+            console.log(str);
+            
+        })
 
     })
     var button = document.createElement('div');
@@ -174,5 +199,20 @@ function getColor(color) {
     } else {
         return "pink";
     }
-        
+} 
+
+
+// Gets the previous closest monday
+function getMonday(date)
+{
+    var day = date.getDay();
+    var monday;
+    if(date.getDay() == 0){
+        return date;
+    }
+    else{
+        monday = new Date().setDate(date.getDate() - day);
+    }
+
+    return monday;
 }

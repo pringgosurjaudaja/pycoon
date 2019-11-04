@@ -2,7 +2,7 @@
 <html>
 {% block body %}
 <h1>Add Class</h1>
-
+<h1>Term Weeks = {{term.weeks}}</h1>
 <div>
     <form method="POST">
       <div>
@@ -13,6 +13,8 @@
         <input type="time" name="time" {% if form %}value={{form['time']}}{% endif %}>Time</input>
         <br/>
         <input name="weeks" {% if form %}value={{form['weeks']}}{% endif %}>Weeks</input>
+        <br/>
+        <input name="location" {% if form %}value={{form['location']}}{% endif %}>Location</input>
         <br/>
       </div>
       {% if error %}

@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template,redirect, url_for,request, jsonify
-from .models import User, Term, Course, Assessment, Class
+from flask import Blueprint, render_template,redirect, url_for,request, jsonify, send_file
+from .models import User, Term, Course, Assessment, Class, Attachment
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from io import BytesIO
 import time
 import re
 main = Blueprint('main',__name__)
@@ -118,7 +119,8 @@ def course(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
     assessments = Assessment.query.filter_by(course_id=course.id, user_id = current_user.id)
     classes = Class.query.filter_by(course_id = course_id)
-    return render_template('course_dev.html',course=course, assessments=assessments, classes=classes)  
+    term_id = course.term_id
+    return render_template('course_page.html', term_id=term_id, course=course, assessments=assessments, classes=classes)  
 
 @main.route('/term<term_id>/calendar')
 @login_required
@@ -141,11 +143,23 @@ def calendar(term_id):
     return render_template('calendar.html', assessment=result_assessment, classes=result_class, terms=[i.serialize for i in term.all()], courses=[i.serialize for i in course.all()]) 
 
 
-@main.route('/assessment<assessment_id>')
+@main.route('/assessment<assessment_id>', methods=['GET', 'POST'])
 @login_required
 def assessment(assessment_id):
+    if request.method == 'POST':
+        file = request.files['inputFile']
+        new_attachment = Attachment(name=file.filename,data=file.read(),assessment_id=assessment_id)
+        db.session.add(new_attachment)
+        db.session.commit()   
     assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
-    return render_template('assessment_dev.html',assessment=assessment)    
+    attachments = Attachment.query.filter_by(assessment_id=assessment_id)
+    return render_template('assessment_dev.html',assessment=assessment, attachments=attachments)    
+
+@main.route('/attachment<attachment_id>')
+def attachment(attachment_id):
+    file_data = Attachment.query.filter_by(id = attachment_id).first()
+    return send_file(BytesIO(file_data.data), attachment_filename=file_data.name, as_attachment=True)
+
 
 @main.route('/course<course_id>/add/assessment', methods=['GET', 'POST'])
 @login_required
@@ -154,7 +168,8 @@ def add_assessment(course_id):
         title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
-        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id, user_id = current_user.id)
+        description = request.form.get('description')
+        new_assessment = Assessment(title = title, due_date = due_date, course_id = course_id, user_id = current_user.id, description= description)
         db.session.add(new_assessment)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
@@ -170,8 +185,10 @@ def edit_assessment(assessment_id):
         new_title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         new_due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
+        description = request.form.get('description')
         assessment.title = new_title
         assessment.due_date = new_due_date
+        assessment.description = description
         db.session.commit()
         return redirect(url_for('main.assessment', assessment_id = assessment_id))
     assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
@@ -209,17 +226,20 @@ def class_page(class_id):
 @main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
 @login_required
 def add_class(course_id):
+    course = Course.query.filter_by(id=int(course_id)).first()
+    term = course.term
     if request.method == 'POST':
         type = request.form.get('type')
         day = request.form.get('day')
-        time_string = request.form.get('time')
+        time_string = request.form.get('start_time')
         time = datetime.strptime(time_string, "%H:%M").time()
         weeks = request.form.get('weeks')
-        new_class = Class(type = type, day = day, time = time, weeks = weeks, course_id = course_id)
+        location = request.form.get('location')
+        new_class = Class(type = type, day = day, time = time, weeks = weeks, location = location ,course_id = course_id)
         db.session.add(new_class)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
-    return render_template('add_class_dev.html')
+    return render_template('add_class.html', course_id = course_id, term=term)
 
 @main.route('/class<class_id>/edit', methods=['POST', 'GET'])
 @login_required
@@ -266,6 +286,15 @@ def delete_assessment(assessment_id):
     db.session.delete(assessment)
     db.session.commit()
     return redirect(url_for('main.course', course_id = course_id))
+
+@main.route('/attachment<attachment_id>/delete')
+@login_required
+def delete_attachment(attachment_id):
+    attachment = Attachment.query.filter_by(id = int(attachment_id)).first() 
+    assessment_id = attachment.assessment_id
+    db.session.delete(attachment)
+    db.session.commit()
+    return redirect(url_for('main.assessment', assessment_id = assessment_id))    
 
 @main.route('/api/delete/assessment<assessment_id>')
 @login_required

@@ -23,14 +23,20 @@ def dump_enum(enum):
         return "tutorial"
     elif enum == ClassEnum.lab:
         return "lab"
-    else:
+    elif enum == ClassEnum.lab:
         return "seminar"
+    elif enum == ClassEnum.lab:
+        return "meeting"
+    else:
+        return "other"
 
 class ClassEnum(enum.Enum):
     lecture = 1
     tutorial = 2
     lab = 3
     seminar = 4
+    meeting = 5
+    other = 6
 
 class User(UserMixin, db.Model):
     __tablename__="user"
@@ -48,6 +54,13 @@ class Term(db.Model):
     end_date = db.Column(db.Date, nullable=False)
     courses = db.relationship('Course', cascade="all,delete", backref='term', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    @property
+    def weeks(self):
+        diff = self.end_date - self.start_date
+        num_weeks = diff.days / 7
+        return round(num_weeks)
+
     @property
     def serialize(self):
        """Return object data in easily serializable format"""
@@ -87,8 +100,10 @@ class Assessment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100),nullable=False)
     due_date = db.Column(db.Date, nullable = False)
+    description = db.Column(db.String, nullable = True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    attachments = db.relationship('Attachment', cascade="all,delete", backref='assessment', lazy=True)
     @property
     def serialize(self):
         return{
@@ -97,7 +112,15 @@ class Assessment(db.Model):
             'start'         : self.due_date,
             'course_id' : self.course_id,
             'user_id'   : self.user_id,
+            'description': self.description
         }
+
+class Attachment(db.Model):
+    __tablename__="attachment"
+    id = db.Column(db.Integer, primary_key=True)  
+    name = db.Column(db.String(300), nullable = False)
+    data = db.Column(db.LargeBinary, nullable = False)
+    assessment_id = db.Column(db.Integer, db.ForeignKey('assessment.id'), nullable= False)
 
 class Class(db.Model):
     __tablename__ = "class"
@@ -106,6 +129,7 @@ class Class(db.Model):
     day = db.Column(db.Integer, nullable=False)
     time = db.Column(db.Time, nullable=False)
     weeks = db.Column(db.String(100), nullable=False)
+    location = db.Column(db.String(100))
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     @property
     def serialize(self):
@@ -115,5 +139,6 @@ class Class(db.Model):
             'day'           : self.day,
             'time'          : dump_time(self.time),
             'weeks'         : self.weeks,
+            'location'      : self.location,
             'course_id'     : self.course_id,
         }
