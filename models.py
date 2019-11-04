@@ -113,7 +113,7 @@ class Assessment(db.Model):
             'start'         : self.due_date,
             'course_id' : self.course_id,
             'user_id'   : self.user_id,
-            'description': self.description
+            'description': self.description,
             'due_time': dump_time(self.due_time)
         }
 
