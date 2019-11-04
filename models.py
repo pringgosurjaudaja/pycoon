@@ -23,14 +23,20 @@ def dump_enum(enum):
         return "tutorial"
     elif enum == ClassEnum.lab:
         return "lab"
-    else:
+    elif enum == ClassEnum.lab:
         return "seminar"
+    elif enum == ClassEnum.lab:
+        return "meeting"
+    else:
+        return "other"
 
 class ClassEnum(enum.Enum):
     lecture = 1
     tutorial = 2
     lab = 3
     seminar = 4
+    meeting = 5
+    other = 6
 
 class User(UserMixin, db.Model):
     __tablename__="user"
@@ -51,7 +57,7 @@ class Term(db.Model):
     
     @property
     def weeks(self):
-        diff = self.start_date - self.end_date
+        diff = self.end_date - self.start_date
         num_weeks = diff.days / 7
         return round(num_weeks)
 

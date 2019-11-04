@@ -226,7 +226,8 @@ def class_page(class_id):
 @main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
 @login_required
 def add_class(course_id):
-    tweeks = Term.weeks
+    course = Course.query.filter_by(id=int(course_id)).first()
+    term = course.term
     if request.method == 'POST':
         type = request.form.get('type')
         day = request.form.get('day')
@@ -238,7 +239,7 @@ def add_class(course_id):
         db.session.add(new_class)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
-    return render_template('add_class.html', course_id = course_id, tweeks=tweeks)
+    return render_template('add_class.html', course_id = course_id, term=term)
 
 @main.route('/class<class_id>/edit', methods=['POST', 'GET'])
 @login_required
