@@ -21,9 +21,7 @@
     
 </head>
 <body>
-    
-<!--    <div class="ui container"> -->
-    
+        
     <div class="ui secondary menu">
         <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.course', course_id=course_id)}}'">
             <i class="left arrow icon"></i>
@@ -42,12 +40,12 @@
                     <label>Type</label> 
                     <select style="width: 50%;border-radius: 0.5rem!important;" name="type">
                         <option disabled selected value> -- select a class type -- </option>
-                        <option value="Lecture">Lecture</option>
-                        <option value="Tutorial">Tutorial</option>
-                        <option value="Lab">Lab</option>
-                        <option value="Seminar">Seminar</option>
-                        <option value="Meeting">Meeting</option>
-                        <option value="Other">Other</option>
+                        <option value="lecture">Lecture</option>
+                        <option value="tutorial">Tutorial</option>
+                        <option value="lab">Lab</option>
+                        <option value="seminar">Seminar</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
                 <div class="field">
@@ -81,7 +79,7 @@
                 </div>
                 <div class="field">
                     <label>Weeks</label>
-              <!--      <input type="text" name="weeks" placeholder="Weeks">  -->
+                    <input type="text" name="weeks" placeholder="Weeks"> 
                 
    <!--             <div class="ui inline checkbox">
                     <input type="checkbox" name="weeks">
@@ -92,11 +90,11 @@
                     <label value="3">Week 3</label>
                 </div>      -->
                     
-                <!--    {% for week in weeks %}
+                <!--    {% for week in tweeks %}
                     {{week}}
                     {% endfor %} -->
                 
-                    <div class="list">
+         <!--           <div class="list">
                       <div class="item">
                         <div class="ui child checkbox">
                           <input type="checkbox" name="weeks">
@@ -115,11 +113,11 @@
                           <label>Week 3</label>
                         </div>
                       </div>
-                    </div>
+                    </div>   -->
                     
                 </div>
                 
-                 
+                
                 
                 </br></br>
 

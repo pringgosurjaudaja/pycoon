@@ -52,7 +52,7 @@ $(document).ready(function() {
                       }
                     ]
                 },
-                weeks: {
+              /*  weeks: {
                     identifier: 'weeks',
                     rules: [
                       {
@@ -60,7 +60,7 @@ $(document).ready(function() {
                         prompt : 'You must check at least 1 week'
                       }
                     ]
-                  }
+                  } */
                 
             }
         })
