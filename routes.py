@@ -390,9 +390,12 @@ def ics_import():
             week_counter = (week_start.days/7)+1
             freq = y['RRULE']['FREQ']
             weeks = ''
+            print(week_amount)
             if('WEEKLY' in str(freq)):
                 for x in range(0,int(week_amount)):
                     weeks = weeks+str(week_counter)
+                    if(x != int(week_amount)-1):
+                        weeks = weeks+','
                     week_counter+=1
                 print(weeks)
             location = y['LOCATION']
