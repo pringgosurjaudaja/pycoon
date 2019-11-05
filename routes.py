@@ -4,9 +4,12 @@ from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from datetime import timedelta
 from io import BytesIO
+from icalendar import Calendar
 import time
 import re
+import math
 main = Blueprint('main',__name__)
 
 @main.route('/')
@@ -233,9 +236,11 @@ def add_class(course_id):
         day = request.form.get('day')
         time_string = request.form.get('start_time')
         time = datetime.strptime(time_string, "%H:%M").time()
+        time_string_end = request.form.get('end_time')
+        end_time = datetime.strptime(time_string_end, "%H:%M").time() 
         weeks = request.form.get('weeks')
         location = request.form.get('location')
-        new_class = Class(type = type, day = day, time = time, weeks = weeks, location = location ,course_id = course_id)
+        new_class = Class(type = type, day = day, time = time,end_time=end_time, weeks = weeks, location = location ,course_id = course_id)
         db.session.add(new_class)
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
@@ -251,10 +256,13 @@ def edit_class(class_id):
         new_day = request.form.get('day')
         new_time_string = request.form.get('time')
         new_time = datetime.strptime(new_time_string, "%H:%M:%S").time()
+        time_string_end = request.form.get('end_time')
+        end_time = datetime.strptime(time_string_end, "%H:%M:%S").time() 
         class_curr.type = new_type
         class_curr.day = new_day
         class_curr.time = new_time
         class_curr.weeks = new_weeks
+        class_curr.end_time = end_time
         db.session.commit()
         return redirect(url_for('main.class_page', class_id = class_id))
     class_curr = Class.query.filter_by(id = int(class_id)).first() 
@@ -304,3 +312,93 @@ def delete_an_assessment(assessment_id):
     db.session.delete(assessment)
     db.session.commit()
 
+@main.route('/home', methods=['POST'])
+@login_required
+def ics_import():
+    ics = request.files['ics']
+    # print(type(ics))
+    # g = open(ics, 'rb')
+    gcal = Calendar.from_ical(ics.read())
+    course_dict = dict()
+    class_dict = dict()
+    color_dict = ('#50b2ac', '#5c3dc2','#e27737','#baca45')
+    color_i = 0
+    for x in  gcal.walk():
+        if(x.name =="VEVENT"):
+            summ = str(x.get('summary'))
+            if('Term' in summ):
+                term_start = x['DTSTART'].dt
+                term_end = term_start + timedelta(weeks = 11)
+                start_term = datetime.strptime(str(term_start).split(' ',1)[0], "%Y-%m-%d").date()
+                end_term = datetime.strptime(str(term_end).split(' ',1)[0], "%Y-%m-%d").date() 
+                print(start_term)
+                title = summ.split(' ', 2)[-1]
+                new_term = Term(title=title, start_date=start_term, end_date = end_term, user_id = current_user.id)
+                save_term_start = start_term
+                db.session.add(new_term)
+                db.session.commit()
+                term_id = new_term.id
+            else:
+                summ = str(x.get('summary'))
+                desc = str(x.get('description'))
+                course = summ.split(' ',1)[0]
+                course_desc = desc.split(' ', 1)[1]
+                course_desc = course_desc.rsplit(' ',2)[0]
+                term_start = x['DTSTART'].dt
+                term_end = x['DTEND'].dt
+                start_term = datetime.strptime(str(term_start).split(' ',1)[0], "%Y-%m-%d").date()
+                end_term = datetime.strptime(str(term_end).split(' ',1)[0], "%Y-%m-%d").date()  
+                if(summ in class_dict):
+                    class_i= class_dict[summ]
+                    class_dict[summ] = class_i+1
+                else:
+                    class_dict[summ]=1
+                class_info = (course, summ.split(' ')[-2], )
+                if (Course.query.filter_by(code = course,term_id = int(term_id)).first() == None):
+                    new_course = Course(title = course_desc, code = course, color = color_dict[color_i], term_id = term_id)
+                    db.session.add(new_course)
+                    db.session.commit() 
+                    color_i+=1
+                    course_dict[course] = new_course.id
+    print(class_dict)
+    for y in gcal.walk():
+        if(y.name == 'VEVENT'and 'Term' not in str(y.get('summary'))):
+            summ = str(y.get('summary'))
+            course = summ.split(' ',1)[0]
+            if('Lecture' in summ):
+                type = 'lecture'
+            elif ('Tutorial' in summ):
+                type = 'tutorial'
+            elif('Laboratory' in summ):
+                type = 'lab'
+            start_date = y['DTSTART'].dt
+            end_date = y['DTEND'].dt
+            class_date = datetime.strptime(str(start_date).split(' ',1)[0], "%Y-%m-%d").date()
+            end_class_date = y['RRULE']['UNTIL'][0]
+            end_class = datetime.strptime(str(end_class_date).split(' ',1)[0], "%Y-%m-%d").date()
+            start_day_name = class_date.strftime('%A')
+            time = str(start_date).split(' ',1)[-1]
+            class_time = datetime.strptime(time[0:4],"%H:%M").time()
+            end_time = str(end_date).split(' ',1)[-1]
+            class_time_end = datetime.strptime(end_time[0:4],"%H:%M").time()
+            week_start = class_date - save_term_start
+            class_subtract = end_class - class_date
+            print(class_subtract.days)
+            num_weeks = class_subtract.days
+            week = str(num_weeks).split(' ',1)[0]
+            week_amount = math.ceil(float(week)/7)
+            week_counter = (week_start.days/7)+1
+            freq = y['RRULE']['FREQ']
+            weeks = ''
+            if('WEEKLY' in str(freq)):
+                for x in range(0,int(week_amount)):
+                    weeks = weeks+str(week_counter)
+                    week_counter+=1
+                print(weeks)
+            location = y['LOCATION']
+            new_class = Class(type = type, day = start_day_name, time = class_time,end_time = class_time_end, weeks = weeks, location = location ,course_id = course_dict[course])
+            db.session.add(new_class)
+            db.session.commit()
+    print("ICS")
+    print(ics)
+    return redirect(url_for('main.home'))

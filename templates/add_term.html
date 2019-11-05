@@ -56,5 +56,13 @@
               </div>
             </div>
         </div>
+        <h1>Add ICS</h1>
+        <form method="POST" enctype="multipart/form-data" action = "{{url_for('main.ics_import')}}">
+            <div>
+            <input name="ics" type="file"></input>
+            <br/>
+            </div>
+            <button name="confirm" type="submit">Confirm</button>
+        </form>
     </body>
 </html>
