@@ -142,12 +142,79 @@ $(document).ready(function() {
         })
 
         
+        var modal = document.createElement('div');
+        modal.setAttribute('class', 'ui modal');
+        modal.setAttribute('id', o.id);
+
+        var micon = document.createElement('i');
+        micon.setAttribute('class', 'close icon');
+
+        var mheader = document.createElement('div');
+        mheader.setAttribute('class', 'header');
+        mheader.innerText = o.title;
+
+        var content = document.createElement('div');
+        content.setAttribute('class', 'content');
+
+        var desc = document.createElement('div');
+        desc.setAttribute('class', 'description');
+        desc.innerText = o.description;
+
+        var list = document.createElement('div');
+        list.setAttribute('class', 'ui list');
+        
+        fetch('/api/assessment'+o.id)
+            .then(function (response) {
+                if(response.status != 200) {
+                    console.log("error. Status code "+response.status);
+                    return;
+                }
+                
+                response.json().then(function (data) {
+                    console.log(data.attachments)
+                    for (var at in data.attachments) {
+                        var item = document.createElement('div');
+                        item.setAttribute('class', 'item');
+
+                        var icon = document.createElement('i');
+                        icon.setAttribute('class', 'file icon');
+
+                        var content = document.createElement('div');
+                        content.setAttribute('class', 'content');
+
+                        var a = document.createElement('a');
+                        a.setAttribute('class', 'header');
+                        a.setAttribute('href', '/attachment'+at.id);
+                        
+                        content.appendChild(a);
+                        item.appendChild(icon);
+                        item.appendChild(content);
+
+                        list.appendChild(item);
+                        
+                    }
+                })
+            });
+        
+            desc.appendChild(list);
+            content.appendChild(desc);
+
+
+            modal.appendChild(micon);
+            modal.appendChild(mheader);
+            modal.appendChild(content);
+
+            $('body').append(modal);
+            
+            
+
         $('#'+o.id+'.author').click(()=>{
             var str = "/assessment"+o.id;
+            
             // console.log(str);
             // window.location.href = str;
 
-            // $('.ui.modal').modal('toggle');
+            $('#'+o.id+'.ui.modal').modal('toggle');
             console.log(str);
             
         })

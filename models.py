@@ -121,7 +121,12 @@ class Attachment(db.Model):
     name = db.Column(db.String(300), nullable = False)
     data = db.Column(db.LargeBinary, nullable = False)
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessment.id'), nullable= False)
-
+    @property
+    def serialize(self):
+        return{
+            'id'            : self.id,
+            'assessment_id': self.assessment_id
+        }
 class Class(db.Model):
     __tablename__ = "class"
     id = db.Column(db.Integer, primary_key=True)

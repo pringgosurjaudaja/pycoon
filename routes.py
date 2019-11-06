@@ -304,3 +304,12 @@ def delete_an_assessment(assessment_id):
     db.session.delete(assessment)
     db.session.commit()
 
+
+@main.route('/api/assessment<assessment_id>')
+@login_required
+def get_assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
+    attachments = Attachment.query.filter_by(assessment_id=assessment_id)
+    return jsonify(assessment=assessment.serialize, attachments=[i.serialize for i in attachments])    
+# [i.serialize for i in qryresult]
+
