@@ -100,6 +100,7 @@ class Assessment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100),nullable=False)
     due_date = db.Column(db.Date, nullable = False)
+    due_time = db.Column(db.Time, nullable = True)
     description = db.Column(db.String, nullable = True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
@@ -112,7 +113,8 @@ class Assessment(db.Model):
             'start'         : self.due_date,
             'course_id' : self.course_id,
             'user_id'   : self.user_id,
-            'description': self.description
+            'description': self.description,
+            'due_time': dump_time(self.due_time)
         }
 
 class Attachment(db.Model):
@@ -121,7 +123,13 @@ class Attachment(db.Model):
     name = db.Column(db.String(300), nullable = False)
     data = db.Column(db.LargeBinary, nullable = False)
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessment.id'), nullable= False)
-
+    @property
+    def serialize(self):
+        return{
+            'id'            : self.id,
+            'assessment_id' : self.assessment_id,
+            'name'          : self.name
+        }
 class Class(db.Model):
     __tablename__ = "class"
     id = db.Column(db.Integer, primary_key=True)

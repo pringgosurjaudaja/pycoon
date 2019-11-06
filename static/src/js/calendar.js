@@ -21,9 +21,16 @@ $(document).ready(function() {
 
     assessments.forEach(function(o) {
         var date = new Date(o.start);
-        date.setHours(0)
-        date.setMinutes(0);
-        date.setSeconds(0);
+        var pieces = o.due_time.toString().split(":");
+        var hour, minute, second;
+        hours = parseInt(pieces[0], 10);
+        minutes = parseInt(pieces[1], 10);
+        seconds = parseInt(pieces[2], 10);
+
+        date.setHours(hours)
+        date.setMinutes(minutes);
+        date.setSeconds(seconds);
+
         var col = courses.filter((el) => {
             return el.id == o.course_id
         });
@@ -137,19 +144,98 @@ $(document).ready(function() {
 
         // =============== Create Modal ================= //
 
-        $('i#'+o.id).click(() => {
+        $('#'+o.id+'.close').click(() => {
             fetch('/api/delete/assessment'+o.id);
             window.location.reload(true);
         })
 
         
+        var modal = document.createElement('div');
+        modal.setAttribute('class', 'ui modal');
+        modal.setAttribute('id', o.id);
+
+        var micon = document.createElement('i');
+        micon.setAttribute('class', 'close icon');
+
+        var mheader = document.createElement('div');
+        mheader.setAttribute('class', 'header');
+        // console.log("HERE");
+        var d = new Date(o.start);
+        
+        var pieces = o.due_time.toString().split(":");
+        var hour, minute, second;
+        hours = parseInt(pieces[0], 10);
+        minutes = parseInt(pieces[1], 10);
+        seconds = parseInt(pieces[2], 10);
+
+        d.setHours(hours)
+        d.setMinutes(minutes);
+        d.setSeconds(seconds);
+        mheader.innerText = o.title+' | Due at '+d.getHours()+':'+d.getMinutes()+' '+d.getDate()+'/'+d.getMonth()+'/'+d.getFullYear();
+
+        var content = document.createElement('div');
+        content.setAttribute('class', 'content');
+
+        var desc = document.createElement('div');
+        desc.setAttribute('class', 'description');
+        desc.innerText = o.description;
+
+        var list = document.createElement('div');
+        list.setAttribute('class', 'ui list');
+        
+        fetch('/api/assessment'+o.id)
+            .then(function (response) {
+                if(response.status != 200) {
+                    console.log("error. Status code "+response.status);
+                    return;
+                }
+                
+                response.json().then(function (data) {
+                    for (var at in data.attachments) {
+                        var item = document.createElement('div');
+                        item.setAttribute('class', 'item');
+
+                        var icon = document.createElement('i');
+                        icon.setAttribute('class', 'file icon');
+
+                        var content = document.createElement('div');
+                        content.setAttribute('class', 'content');
+
+                        var a = document.createElement('a');
+                        a.setAttribute('class', 'header');
+                        a.setAttribute('href', '/attachment'+data.attachments[at].id);
+                        a.innerHTML = data.attachments[at].name;
+                        
+                        content.appendChild(a);
+                        item.appendChild(icon);
+                        item.appendChild(content);
+
+                        list.appendChild(item);
+                        
+                    }
+                })
+            });
+        
+            desc.appendChild(list);
+            content.appendChild(desc);
+
+
+            modal.appendChild(micon);
+            modal.appendChild(mheader);
+            modal.appendChild(content);
+
+            $('body').append(modal);
+            
+            
+
         $('#'+o.id+'.author').click(()=>{
             var str = "/assessment"+o.id;
+            
             // console.log(str);
             // window.location.href = str;
 
-            // $('.ui.modal').modal('toggle');
-            console.log(str);
+            $('#'+o.id+'.ui.modal').modal('toggle');
+            // console.log(str);
             
         })
 
