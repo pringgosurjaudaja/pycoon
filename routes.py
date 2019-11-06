@@ -247,18 +247,20 @@ def edit_class(class_id):
     if request.method == 'POST':
         class_curr = Class.query.filter_by(id = int(class_id)).first()
         new_type = request.form.get('type')
+        new_location = request.form.get('location')
         new_weeks = request.form.get('weeks')
         new_day = request.form.get('day')
-        new_time_string = request.form.get('time')
+        new_time_string = request.form.get('start_time')
         new_time = datetime.strptime(new_time_string, "%H:%M:%S").time()
         class_curr.type = new_type
+        class_curr.location = new_location
         class_curr.day = new_day
         class_curr.time = new_time
         class_curr.weeks = new_weeks
         db.session.commit()
         return redirect(url_for('main.class_page', class_id = class_id))
     class_curr = Class.query.filter_by(id = int(class_id)).first() 
-    return render_template('edit_class_dev.html', class_curr = class_curr)
+    return render_template('edit_class.html', class_curr = class_curr, class_id=class_id)
 
 @main.route('/class<class_id>/delete')
 @login_required
