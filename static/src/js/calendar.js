@@ -21,9 +21,16 @@ $(document).ready(function() {
 
     assessments.forEach(function(o) {
         var date = new Date(o.start);
-        date.setHours(0)
-        date.setMinutes(0);
-        date.setSeconds(0);
+        var pieces = o.due_time.toString().split(":");
+        var hour, minute, second;
+        hours = parseInt(pieces[0], 10);
+        minutes = parseInt(pieces[1], 10);
+        seconds = parseInt(pieces[2], 10);
+
+        date.setHours(hours)
+        date.setMinutes(minutes);
+        date.setSeconds(seconds);
+
         var col = courses.filter((el) => {
             return el.id == o.course_id
         });
@@ -151,7 +158,19 @@ $(document).ready(function() {
 
         var mheader = document.createElement('div');
         mheader.setAttribute('class', 'header');
-        mheader.innerText = o.title;
+        // console.log("HERE");
+        var d = new Date(o.start);
+        
+        var pieces = o.due_time.toString().split(":");
+        var hour, minute, second;
+        hours = parseInt(pieces[0], 10);
+        minutes = parseInt(pieces[1], 10);
+        seconds = parseInt(pieces[2], 10);
+
+        d.setHours(hours)
+        d.setMinutes(minutes);
+        d.setSeconds(seconds);
+        mheader.innerText = o.title+' | Due at '+d.getHours()+':'+d.getMinutes()+' '+d.getDate()+'/'+d.getMonth()+'/'+d.getFullYear();
 
         var content = document.createElement('div');
         content.setAttribute('class', 'content');
@@ -215,7 +234,7 @@ $(document).ready(function() {
             // window.location.href = str;
 
             $('#'+o.id+'.ui.modal').modal('toggle');
-            console.log(str);
+            // console.log(str);
             
         })
 
