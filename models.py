@@ -131,6 +131,7 @@ class Class(db.Model):
     end_time = db.Column(db.Time,nullable=False)
     weeks = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(100))
+    notes = db.Column(db.String)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     @property
     def serialize(self):
