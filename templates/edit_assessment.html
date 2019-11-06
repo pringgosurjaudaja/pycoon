@@ -3,19 +3,21 @@
 <head>
     
     <meta charset="utf-8">
-    <meta name="description" content="Timetable webapp for UNSW students">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pycoon Edit Assessment</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <link rel="stylesheet" href="styles.css"> 
+    <title>Pycoon</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- semantic UI -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
     <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-    <script src="../../static/src/js/edit_assessment.js"></script>
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
     <script src="../../static/semantic/dist/semantic.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+    
+    <script src="../static/src/js/edit_assessment.js"></script>
     
 </head>
 <body>
@@ -34,7 +36,7 @@
             <h2>Edit Assessment</h2>
 
             <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.edit_assessment', assessment_id = assessment.id) }}"
-                  name="myForm" onsubmit="return validateForm()">
+                  name="myForm">
                 <div class="field">
                     <label>Title</label>
                     <input type="text" name="title" value="{{assessment.title}}" placeholder="Assessment Name">
@@ -42,6 +44,10 @@
                 <div class="field">
                     <label>Due Date</label>
                     <input type="date" value="{{assessment.due_date}}" name="due_date">
+                </div>
+                <div class="field">
+                    <label>Due Time</label>
+                    <input type="time" name="due_time">
                 </div>
                 <div class="field">
                     <label>Description</label>

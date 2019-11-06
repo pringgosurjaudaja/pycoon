@@ -37,6 +37,15 @@ $(document).ready(function() {
                       }
                     ]
                 },
+                due_time: {
+                    identifier: 'due_time',
+                    rules: [
+                      {
+                        type   : 'empty',
+                        prompt : 'Please enter a due time'
+                      }
+                    ]
+                },
             }
         })
     ;

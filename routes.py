@@ -188,9 +188,15 @@ def edit_assessment(assessment_id):
         new_title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         new_due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
+
+        time_string = request.form.get('due_time')
+        time = datetime.strptime(time_string, "%H:%M").time()
+        
+
         description = request.form.get('description')
         assessment.title = new_title
         assessment.due_date = new_due_date
+        assessment.due_time = time
         assessment.description = description
         db.session.commit()
         return redirect(url_for('main.assessment', assessment_id = assessment_id))
