@@ -241,9 +241,11 @@ $(document).ready(function() {
 
         // =============== Notification ================= //
         Push.Permission.request();
+
+        var tomorrow = new Date(o.start).toDateString();;
         if (getNotification(o.start)) {
             Push.create(o.title, {
-                body: "Due on " + o.start,
+                body: "Due on " + tomorrow + " " + o.due_time,
                 icon: "/static/assets/assessment.png",
                 tag: 'assessment',
                 timeout: 8000,
