@@ -125,7 +125,8 @@ class Attachment(db.Model):
     def serialize(self):
         return{
             'id'            : self.id,
-            'assessment_id': self.assessment_id
+            'assessment_id' : self.assessment_id,
+            'name'          : self.name
         }
 class Class(db.Model):
     __tablename__ = "class"

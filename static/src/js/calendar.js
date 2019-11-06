@@ -136,7 +136,7 @@ $(document).ready(function() {
 
         // =============== Create Modal ================= //
 
-        $('i#'+o.id).click(() => {
+        $('#'+o.id+'.close').click(() => {
             fetch('/api/delete/assessment'+o.id);
             window.location.reload(true);
         })
@@ -171,7 +171,6 @@ $(document).ready(function() {
                 }
                 
                 response.json().then(function (data) {
-                    console.log(data.attachments)
                     for (var at in data.attachments) {
                         var item = document.createElement('div');
                         item.setAttribute('class', 'item');
@@ -184,7 +183,8 @@ $(document).ready(function() {
 
                         var a = document.createElement('a');
                         a.setAttribute('class', 'header');
-                        a.setAttribute('href', '/attachment'+at.id);
+                        a.setAttribute('href', '/attachment'+data.attachments[at].id);
+                        a.innerHTML = data.attachments[at].name;
                         
                         content.appendChild(a);
                         item.appendChild(icon);
