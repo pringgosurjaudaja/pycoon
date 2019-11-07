@@ -17,11 +17,18 @@
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
 
-         <link href='../static/fullcalendar-4.3.1/packages/core/main.css' rel='stylesheet' />
+        <link href='../static/fullcalendar-4.3.1/packages/core/main.css' rel='stylesheet' />
         <link href='../static/fullcalendar-4.3.1/packages/daygrid/main.css' rel='stylesheet' />
+        <link href='../static/fullcalendar-4.3.1/packages/timegrid/main.css' rel='stylesheet' />
+        <link href='../static/fullcalendar-4.3.1/packages/list/main.css' rel='stylesheet' />
+
 
         <script src='../static/fullcalendar-4.3.1/packages/core/main.js'></script>
         <script src='../static/fullcalendar-4.3.1/packages/daygrid/main.js'></script>
+        <script src='../static/fullcalendar-4.3.1/packages/timegrid/main.js'></script>
+        <script src='../static/fullcalendar-4.3.1/packages/list/main.js'></script>
+        
+
 
         <script src='../static/push.js-1.0.11/bin/push.js'></script>
         <script src='../static/push.js-1.0.11/bin/push.min.js'></script>
@@ -116,10 +123,10 @@
         
     </body>
     <script>
-            var assessments = {{ assessment | tojson }};
-            var classes = {{ classes | tojson }}
-            var terms = {{ terms | tojson }}
-            var courses = {{ courses | tojson }}
+        var assessments = {{ assessment | tojson }};
+        var classes = {{ classes | tojson }}
+        var terms = {{ terms | tojson }}
+        var courses = {{ courses | tojson }}
     </script>
     <script src="../static/src/js/calendar.js"></script>
 </html>

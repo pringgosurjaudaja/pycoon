@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    // import { Calendar } from '@fullcalendar/core';
+    // import timeGridPlugin from '@fullcalendar/timegrid';
+
     console.log("ready");
     
     let start_date = new Date(terms[0].start_date);
@@ -47,7 +50,8 @@ $(document).ready(function() {
     // =============== Recurring classes ================= //
     classes.forEach(function(o) {
 
-        var days = o.day;
+        var days = getDay(o.day);
+        
         var weeks = o.weeks.split(',').map(Number);
         var pieces = o.time.toString().split(":");
         var hour, minute, second;
@@ -60,11 +64,11 @@ $(document).ready(function() {
             // n returns the index
             // weeks[n] returns the correct value
             var date = new Date(start_date.getTime()+ (weeks[n]*7*86400000));
+            
             date.setDate(date.getDate()+days);
             date.setHours(+hours)
             date.setMinutes(minutes);
             date.setSeconds(seconds);
-
             var col = courses.filter((el) => {
                 return el.id == o.course_id
             });
@@ -82,7 +86,13 @@ $(document).ready(function() {
 
     var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid'],
+          plugins: [ 'dayGrid', 'timeGrid', 'list' ],
+          defaultView: 'dayGridMonth',
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          },
           eventSources: [
             {
                 events: ev
@@ -326,4 +336,24 @@ function getMonday(date)
     }
 
     return monday;
+}
+
+function getDay(d) {
+    if(d == 'Monday') {
+        return 1;
+    } else if (d == 'Tuesday') {
+        return 2;
+    } else if (d == 'Wednesday') {
+        return 3;
+    } else if (d == 'Thursday') {
+        return 4;
+    } else if (d == 'Friday') {
+        return 5;
+    } else if (d == 'Saturday') {
+        return 6;
+    } else if (d == 'Sunday') {
+        return 7;
+    } else {
+        return d;
+    }
 }
