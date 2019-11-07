@@ -269,9 +269,17 @@ def edit_class(class_id):
         new_weeks = ",".join(new_weeks)
         new_day = request.form.get('day')
         new_time_string = request.form.get('start_time')
-        new_time = datetime.strptime(new_time_string, "%H:%M").time()
+        time_re = re.compile(r'^(([01]\d|2[0-3]):([0-5]\d)|24:00)$')
+        if(bool(time_re.match(new_time_string))):
+            new_time = datetime.strptime(new_time_string, "%H:%M").time()
+        else:
+            new_time = datetime.strptime(new_time_string, "%H:%M:%S").time() 
+        
         time_string_end = request.form.get('end_time')
-        end_time = datetime.strptime(time_string_end, "%H:%M").time() 
+        if(bool(time_re.match(time_string_end))):
+            end_time = datetime.strptime(time_string_end, "%H:%M").time() 
+        else:
+            end_time = datetime.strptime(time_string_end, "%H:%M:%S").time()  
         class_curr.type = new_type
         class_curr.day = new_day
         class_curr.time = new_time
