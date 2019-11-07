@@ -1,7 +1,11 @@
 $(document).ready(function() {
     // import { Calendar } from '@fullcalendar/core';
     // import timeGridPlugin from '@fullcalendar/timegrid';
-
+    $('#back').click(()=> {
+        var str = new String(window.location.href);
+        str = str.replace('/calendar','');
+        window.location.href = str;
+    })
     console.log("ready");
     
     let start_date = new Date(terms[0].start_date);
