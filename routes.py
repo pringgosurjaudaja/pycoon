@@ -275,7 +275,7 @@ def edit_class(class_id):
         db.session.commit()
         return redirect(url_for('main.class_page', class_id = class_id))
     class_curr = Class.query.filter_by(id = int(class_id)).first() 
-    return render_template('edit_class_dev.html', class_curr = class_curr)
+    return render_template('edit_class.html', class_curr = class_curr)
 
 @main.route('/class<class_id>/delete')
 @login_required
