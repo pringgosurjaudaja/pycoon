@@ -100,6 +100,7 @@ class Assessment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100),nullable=False)
     due_date = db.Column(db.Date, nullable = False)
+    due_time = db.Column(db.Time, nullable = True)
     description = db.Column(db.String, nullable = True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
@@ -112,7 +113,8 @@ class Assessment(db.Model):
             'start'         : self.due_date,
             'course_id' : self.course_id,
             'user_id'   : self.user_id,
-            'description': self.description
+            'description': self.description,
+            'due_time': dump_time(self.due_time)
         }
 
 class Attachment(db.Model):
@@ -134,8 +136,10 @@ class Class(db.Model):
     type = db.Column(db.Enum(ClassEnum), nullable=False)
     day = db.Column(db.Integer, nullable=False)
     time = db.Column(db.Time, nullable=False)
+    end_time = db.Column(db.Time,nullable=False)
     weeks = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(100))
+    notes = db.Column(db.String)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable= False)
     @property
     def serialize(self):
@@ -144,6 +148,7 @@ class Class(db.Model):
             'type'          : dump_enum(self.type),
             'day'           : self.day,
             'time'          : dump_time(self.time),
+            'end_time'      : dump_time(self.end_time),
             'weeks'         : self.weeks,
             'location'      : self.location,
             'course_id'     : self.course_id,
