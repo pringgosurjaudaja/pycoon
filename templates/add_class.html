@@ -3,18 +3,18 @@
 <head>
     
     <meta charset="utf-8">
-    <meta name="description" content="Timetable webapp for UNSW students">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Pycoon Add Class</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <link rel="stylesheet" href="styles.css"> 
+    <meta name="description" content="Timetable webapp for UNSW students">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- semantic UI -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
     <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-    <script src="../../static/semantic/dist/semantic.min.js"></script>
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='semantic/dist/semantic.min.js')}}"></script>
     
     <script src="../../static/src/js/add_class.js"></script>
 
@@ -33,8 +33,9 @@
         <div class="six wide column" id="add-assessment">
             <h2>Add New Class</h2>
 
-            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_class', course_id=course_id) }}"
-                  name="myForm" onsubmit="return validateForm()">
+     <!--       <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_class', course_id=course_id) }}"
+                  name="myForm" onsubmit="return validateForm()"> -->
+            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_class', course_id=course_id) }}">
 
                 <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
                     <label>Type</label> 
@@ -77,9 +78,9 @@
                     <label>Notes (optional)</label>
                     <input type="text" name="notes" placeholder="Notes">
                 </div>
-                <div class="field">
+           <!--     <div class="field">
                     <label>Weeks</label>
-           <!--         <input type="text" name="weeks" placeholder="Weeks">    -->
+                    <input type="text" name="weeks" placeholder="Weeks">    -->
                 
    <!--             <div class="ui inline checkbox">
                     <input type="checkbox" name="weeks">
@@ -118,24 +119,26 @@
                 
                 
           <!--      {{term.weeks}}-->
-              
-                <div id="demo"></div>
-                
-                <script>
-                    var x ="", i;
-                    for (i=1; i<=2; i++) {
-                        
-                      x = x + "<div class='item'>" +
-                        "<div class='ui child checkbox'>" +
-                          "<input type='checkbox' name='weeks'>" +
-                          "<label>Week " + i + "</label>" +
-                        "</div>" +
-                      "</div>"
-                        
+                <div class="field">
+                    <label>Weeks</label>
                     
-                    }
-                    document.getElementById("demo").innerHTML = x;
-                </script>  
+                    <div id="demo"></div>
+
+                    <script>
+                        var x ="", i;
+                        for (i=1; i<=2; i++) {
+
+                          x = x + "<div class='item'>" +
+                            "<div class='ui child checkbox'>" +
+                              "<input type='checkbox' name='weeks' value='" + i + "'>" +
+                              "<label>Week " + i + "</label>" +
+                            "</div>" +
+                          "</div>"
+
+
+                        }
+                        document.getElementById("demo").innerHTML = x;
+                    </script>  
                 
                 </div>
                 
@@ -155,3 +158,12 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

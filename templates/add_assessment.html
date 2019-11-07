@@ -36,8 +36,9 @@
         <div class="six wide column" id="add-assessment">
             <h2>Add New Assessment</h2>
 
-            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_assessment', course_id=course_id) }}"
-                  name="myForm" onsubmit="return validateForm()">
+       <!--     <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_assessment', course_id=course_id) }}"
+                  name="myForm" onsubmit="return validateForm()"> -->
+            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_assessment', course_id=course_id) }}">      
                 
                 <div class="field">
                     <label>Title</label>

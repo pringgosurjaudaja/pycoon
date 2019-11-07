@@ -1,6 +1,7 @@
 $(document).ready(function() {
     console.log( "ready!" );
     
+    
     $('#course-select').dropdown();
 
     
