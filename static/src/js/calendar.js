@@ -52,7 +52,7 @@ $(document).ready(function() {
     // =============== Recurring classes ================= //
     classes.forEach(function(o) {
 
-        var days = getDay(o.day);
+        var days = getDay(o.day)-1;
         
         var weeks = o.weeks.split(',').map(Number);
         var pieces = o.time.toString().split(":");

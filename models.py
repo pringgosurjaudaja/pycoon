@@ -23,9 +23,9 @@ def dump_enum(enum):
         return "tutorial"
     elif enum == ClassEnum.lab:
         return "lab"
-    elif enum == ClassEnum.lab:
+    elif enum == ClassEnum.seminar:
         return "seminar"
-    elif enum == ClassEnum.lab:
+    elif enum == ClassEnum.meeting:
         return "meeting"
     else:
         return "other"
