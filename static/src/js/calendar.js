@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    $('#back').click(()=> {
+        var str = new String(window.location.href);
+        str = str.replace('/calendar','');
+        window.location.href = str;
+    })
     console.log("ready");
     
     let start_date = new Date(terms[0].start_date);
@@ -6,7 +11,7 @@ $(document).ready(function() {
     var day_of_week = start_date.getDay();
     
     // Rounding down the date to the nearest monday
-    if(start_date.getDay() != 0) {
+    if(start_date.getDay() != 1) {
         start_date = new Date(start_date.setDate(start_date.getDate() - day_of_week));
     }
 
@@ -21,9 +26,16 @@ $(document).ready(function() {
 
     assessments.forEach(function(o) {
         var date = new Date(o.start);
-        date.setHours(0)
-        date.setMinutes(0);
-        date.setSeconds(0);
+        var pieces = o.due_time.toString().split(":");
+        var hour, minute, second;
+        hours = parseInt(pieces[0], 10);
+        minutes = parseInt(pieces[1], 10);
+        seconds = parseInt(pieces[2], 10);
+
+        date.setHours(hours)
+        date.setMinutes(minutes);
+        date.setSeconds(seconds);
+
         var col = courses.filter((el) => {
             return el.id == o.course_id
         });
@@ -36,10 +48,12 @@ $(document).ready(function() {
         ev.push(e);
     });
 
+
     // =============== Recurring classes ================= //
     classes.forEach(function(o) {
 
-        var days = o.day;
+        var days = getDay(o.day);
+        
         var weeks = o.weeks.split(',').map(Number);
         var pieces = o.time.toString().split(":");
         var hour, minute, second;
@@ -51,12 +65,12 @@ $(document).ready(function() {
         for (var n in weeks) {
             // n returns the index
             // weeks[n] returns the correct value
-            var date = new Date(start_date.getTime()+ (weeks[n]*7*86400000));
+            var date = new Date(start_date.getTime()+ ((weeks[n]-1)*7*86400000));
+            
             date.setDate(date.getDate()+days);
             date.setHours(+hours)
             date.setMinutes(minutes);
             date.setSeconds(seconds);
-
             var col = courses.filter((el) => {
                 return el.id == o.course_id
             });
@@ -74,7 +88,13 @@ $(document).ready(function() {
 
     var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid'],
+          plugins: [ 'dayGrid', 'timeGrid', 'list' ],
+          defaultView: 'dayGridMonth',
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          },
           eventSources: [
             {
                 events: ev
@@ -151,7 +171,19 @@ $(document).ready(function() {
 
         var mheader = document.createElement('div');
         mheader.setAttribute('class', 'header');
-        mheader.innerText = o.title;
+        // console.log("HERE");
+        var d = new Date(o.start);
+        
+        var pieces = o.due_time.toString().split(":");
+        var hour, minute, second;
+        hours = parseInt(pieces[0], 10);
+        minutes = parseInt(pieces[1], 10);
+        seconds = parseInt(pieces[2], 10);
+
+        d.setHours(hours)
+        d.setMinutes(minutes);
+        d.setSeconds(seconds);
+        mheader.innerText = o.title+' | Due at '+d.getHours()+':'+d.getMinutes()+' '+d.getDate()+'/'+d.getMonth()+'/'+d.getFullYear();
 
         var content = document.createElement('div');
         content.setAttribute('class', 'content');
@@ -215,9 +247,26 @@ $(document).ready(function() {
             // window.location.href = str;
 
             $('#'+o.id+'.ui.modal').modal('toggle');
-            console.log(str);
+            // console.log(str);
             
         })
+
+        // =============== Notification ================= //
+        Push.Permission.request();
+
+        var tomorrow = new Date(o.start).toDateString();;
+        if (getNotification(o.start)) {
+            Push.create(o.title, {
+                body: "Due on " + tomorrow + " " + o.due_time,
+                icon: "/static/assets/assessment.png",
+                tag: 'assessment',
+                timeout: 8000,
+                onClick: function () {
+                    window.focus();
+                    this.close();
+                }
+            });
+        }
 
     })
     var button = document.createElement('div');
@@ -234,7 +283,24 @@ $(document).ready(function() {
         // console.log(url);
         window.location.href = url;
     })
+
 });
+
+function getNotification(date) {
+    var prevDay = new Date(date);
+    prevDay.setDate(prevDay.getDate()-1);
+
+    var curr_date = new Date();
+
+    if (curr_date.getDate() == prevDay.getDate()
+        && curr_date.getMonth() == prevDay.getMonth()
+        && curr_date.getFullYear() == prevDay.getFullYear()) {
+        console.log("good to notify");
+        return true;
+    }
+
+    return false;
+}
 
 function getColor(color) {
     if (color == "#ca3b33") {
@@ -272,4 +338,24 @@ function getMonday(date)
     }
 
     return monday;
+}
+
+function getDay(d) {
+    if(d == 'Monday') {
+        return 1;
+    } else if (d == 'Tuesday') {
+        return 2;
+    } else if (d == 'Wednesday') {
+        return 3;
+    } else if (d == 'Thursday') {
+        return 4;
+    } else if (d == 'Friday') {
+        return 5;
+    } else if (d == 'Saturday') {
+        return 6;
+    } else if (d == 'Sunday') {
+        return 7;
+    } else {
+        return d;
+    }
 }

@@ -423,4 +423,6 @@ def ics_import():
             db.session.commit()
     print("ICS")
     print(ics)
+
     return redirect(url_for('main.home'))
+
