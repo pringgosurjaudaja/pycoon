@@ -9,7 +9,7 @@ $(document).ready(function() {
     var day_of_week = start_date.getDay();
     
     // Rounding down the date to the nearest monday
-    if(start_date.getDay() != 0) {
+    if(start_date.getDay() != 1) {
         start_date = new Date(start_date.setDate(start_date.getDate() - day_of_week));
     }
 
