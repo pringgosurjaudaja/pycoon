@@ -3,21 +3,21 @@
 <head>
     
     <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Pycoon</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pycoon Add Class</title>
+    <meta name="description" content="Timetable webapp for UNSW students">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- semantic UI -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='semantic/dist/semantic.min.js')}}"></script>
+    
 
-        <!-- semantic UI -->
-        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <script src="../../static/semantic/dist/semantic.min.js"></script>
-
-
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
     <script src="../../static/src/js/add_class.js"></script>
 
     
@@ -35,12 +35,13 @@
         <div class="six wide column" id="add-assessment">
             <h2>Add New Class</h2>
 
-            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_class', course_id=course_id) }}"
-                  name="myForm" onsubmit="return validateForm()">
+     <!--       <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_class', course_id=course_id) }}"
+                  name="myForm" onsubmit="return validateForm()"> -->
+            <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_class', course_id=course_id) }}">
 
                 <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
                     <label>Type</label> 
-                    <select style="width: 50%;border-radius: 0.5rem!important;" name="type">
+                    <select style="width: 100%;border-radius: 0.5rem!important;" name="type">
                         <option disabled selected value> -- select a class type -- </option>
                         <option value="lecture">Lecture</option>
                         <option value="tutorial">Tutorial</option>
@@ -79,61 +80,37 @@
                     <label>Notes (optional)</label>
                     <input type="text" name="notes" placeholder="Notes">
                 </div>
-                <div class="field">
-                    <label>Weeks</label>
-                    <input type="text" name="weeks" placeholder="Weeks"> 
                 
-   <!--             <div class="ui inline checkbox">
-                    <input type="checkbox" name="weeks">
-                    <label value="1">Week 1</label>
-                    <input type="checkbox" name="weeks">
-                    <label value="2">Week 2</label>
-                    <input type="checkbox" name="weeks">
-                    <label value="3">Week 3</label>
-                </div>      -->
-                    
-                <!--    {% for week in tweeks %}
-                    {{week}}
-                    {% endfor %} -->
-                
-         <!--           <div class="list">
-                      <div class="item">
-                        <div class="ui child checkbox">
-                          <input type="checkbox" name="weeks">
-                          <label>Week 1</label>
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="ui child checkbox">
-                          <input type="checkbox" name="week2">
-                          <label>Week 2</label>
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="ui child checkbox">
-                          <input type="checkbox" name="week3">
-                          <label>Week 3</label>
-                        </div>
-                      </div>
-                    </div>   -->
+                <div class="field" id="checkboxes">
+                    <label>Weeks </label>
+                    <!-- <div class="ui checkbox">
+                        <input type="checkbox" name="weeks" value="1">  
+                        <label>1</label>
+                    </div> -->
                     
                 </div>
-                
-                
-                
-                </br></br>
 
-                <!-- <div class="wrapper"> -->
-                    <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.course', course_id=course_id) }}'">
-                        Cancel
-                    </button>
-                    <button name="confirm" type="submit" value ="submit" class="medium ui primary button" >
-                          Confirm
-                    </button>
-                <!-- </div> -->
+                <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.course', course_id=course_id) }}'">
+                    Cancel
+                </button>
+                <button name="confirm" type="submit" value ="submit" class="medium ui primary button" >
+                        Confirm
+                </button>
                 <div class="ui error message"></div>
             </form>
         </div>
     </div>
+    <script>
+        var weeks = {{ term.weeks | tojson }};
+    </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
