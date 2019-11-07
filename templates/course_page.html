@@ -56,7 +56,7 @@
                                         <a class="floating ui circular label" id="delete-class" href="{{url_for('main.delete_class', class_id = class.id)}}">
                                             x
                                         </a>
-                                        <div style="opacity: 0.8; color: white; font-size: 13px;" class="header">{{class.type.name}}--{{class.time}}-{{class.weeks}}</div>
+                                        <div style="opacity: 0.8; color: white; font-size: 13px; text-transform:uppercase" class="header">{{class.type.name}}</div>
                                         <div class="meta">
                                             <span class="category" style="font-size: 13px;">{{class.day}}</span>
                                         </div>
@@ -83,9 +83,9 @@
                                     <a class="floating ui circular label" id="delete-assessment" href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">
                                         x
                                     </a>
-                                    <div style="opacity: 0.8; color: white; font-size: 13px;" class="header">   {{assessment.title}}</div>
+                                    <div style="opacity: 0.8; color: white; font-size: 13px; text-transform:uppercase" class="header">{{assessment.title}}</div>
                                     <div class="meta">
-                                        <span class="category" style="font-size: 13px; opacity: 0.8; color: white;">{{assessment.due_date}}</span>
+                                        <span class="category" style="font-size: 13px;">{{assessment.due_date}}</span>
                                     </div>
                                 </div>
                             </div>

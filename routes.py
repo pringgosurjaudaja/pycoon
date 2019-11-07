@@ -233,7 +233,7 @@ def edit_course(course_id):
 @login_required
 def class_page(class_id):
     curr_class = Class.query.filter_by(id=int(class_id)).first()
-    return render_template('class_dev.html',curr_class=curr_class)    
+    return render_template('class_page.html',curr_class=curr_class)    
 
 @main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
 @login_required
