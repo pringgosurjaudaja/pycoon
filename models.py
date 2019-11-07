@@ -152,4 +152,5 @@ class Class(db.Model):
             'weeks'         : self.weeks,
             'location'      : self.location,
             'course_id'     : self.course_id,
+            'notes'         : self.notes
         }

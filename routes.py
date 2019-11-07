@@ -384,43 +384,54 @@ def ics_import():
         if(y.name == 'VEVENT'and 'Term' not in str(y.get('summary'))):
             summ = str(y.get('summary'))
             course = summ.split(' ',1)[0]
+            exam = False
             if('Lecture' in summ):
                 type = 'lecture'
             elif ('Tutorial' in summ):
                 type = 'tutorial'
             elif('Laboratory' in summ):
                 type = 'lab'
+            elif('Exam' in summ):
+                print("EXAM")
+                exam = True
             start_date = y['DTSTART'].dt
             end_date = y['DTEND'].dt
             class_date = datetime.strptime(str(start_date).split(' ',1)[0], "%Y-%m-%d").date()
-            end_class_date = y['RRULE']['UNTIL'][0]
-            end_class = datetime.strptime(str(end_class_date).split(' ',1)[0], "%Y-%m-%d").date()
+            if(not exam):
+                end_class_date = y['RRULE']['UNTIL'][0]
+                end_class = datetime.strptime(str(end_class_date).split(' ',1)[0], "%Y-%m-%d").date()
+
             start_day_name = class_date.strftime('%A')
             time = str(start_date).split(' ',1)[-1]
             class_time = datetime.strptime(time[0:4],"%H:%M").time()
             end_time = str(end_date).split(' ',1)[-1]
             class_time_end = datetime.strptime(end_time[0:4],"%H:%M").time()
             week_start = class_date - save_term_start
-            class_subtract = end_class - class_date
-            print(class_subtract.days)
-            num_weeks = class_subtract.days
-            week = str(num_weeks).split(' ',1)[0]
-            week_amount = math.ceil(float(week)/7)
-            week_counter = (week_start.days/7)+1
-            freq = y['RRULE']['FREQ']
-            weeks = ''
-            print(week_amount)
-            if('WEEKLY' in str(freq)):
-                for x in range(0,int(week_amount)):
-                    weeks = weeks+str(week_counter)
-                    if(x != int(week_amount)-1):
-                        weeks = weeks+','
-                    week_counter+=1
-                print(weeks)
-            location = y['LOCATION']
-            new_class = Class(type = type, day = start_day_name, time = class_time,end_time = class_time_end, weeks = weeks, location = location ,course_id = course_dict[course])
+            if(not exam):
+                class_subtract = end_class - class_date
+                # print(class_subtract.days)
+                num_weeks = class_subtract.days
+                week = str(num_weeks).split(' ',1)[0]
+                week_amount = math.ceil(float(week)/7)
+                week_counter = (week_start.days/7)+1
+                freq = y['RRULE']['FREQ']
+                weeks = ''
+                print(week_amount)
+                if('WEEKLY' in str(freq)):
+                    for x in range(0,int(week_amount)):
+                        weeks = weeks+str(week_counter)
+                        if(x != int(week_amount)-1):
+                            weeks = weeks+','
+                        week_counter+=1
+                    print(weeks)
+                location = y['LOCATION']
+                new_class = Class(type = type, day = start_day_name, time = class_time,end_time = class_time_end, weeks = weeks, location = location ,course_id = course_dict[course])
+            
+            new_exam = Assessment(title = summ, due_date  = class_date, due_time = class_time, description  = str(y['DESCRIPTION']), course_id = course_dict[course], user_id = current_user.id)
+            db.session.add(new_exam)
             db.session.add(new_class)
             db.session.commit()
+
     print("ICS")
     print(ics)
     return redirect(url_for('main.home'))
