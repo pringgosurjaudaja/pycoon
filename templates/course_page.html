@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-    
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pycoon</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
 
-    <!-- semantic UI -->
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
-    <script
-    src="https://code.jquery.com/jquery-3.1.1.min.js"
-    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-    crossorigin="anonymous"></script>
-    <script src="../../static/semantic/dist/semantic.min.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Pycoon Course Page</title>
+        <meta name="description" content="Timetable webapp for UNSW students">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Semantic UI -->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="{{url_for('static', filename='semantic/dist/semantic.min.js')}}"></script>
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+        <script src="../../static/src/js/course_page.js"></script>
 
 
-    <script src="../../static/src/js/course_page.js"></script>
-    
-    
-</head>
+    </head>
+
 <body>
         
     <div class="ui secondary menu">
@@ -120,4 +118,3 @@
     
 </body>
 </html>
-s

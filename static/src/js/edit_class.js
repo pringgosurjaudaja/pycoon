@@ -25,7 +25,7 @@ $(document).ready(function() {
       $('#checkboxes').append(div);
       
     }
-
+    
     $('.ui.form')
         .form({
             fields: {
