@@ -287,8 +287,8 @@ def edit_class(class_id):
         class_curr.end_time = end_time
         db.session.commit()
         return redirect(url_for('main.class_page', class_id = class_id))
-    class_curr = Class.query.filter_by(id = int(class_id)).first() 
-    return render_template('edit_class.html', class_curr = class_curr, term=term)
+    class_curr = Class.query.filter_by(id = int(class_id)).first()
+    return render_template('edit_class.html', class_curr = class_curr,term=term)
 
 @main.route('/class<class_id>/delete')
 @login_required
