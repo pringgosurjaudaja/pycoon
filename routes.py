@@ -265,7 +265,8 @@ def edit_class(class_id):
     if request.method == 'POST':
         class_curr = Class.query.filter_by(id = int(class_id)).first()
         new_type = request.form.get('type')
-        new_weeks = request.form.get('weeks')
+        new_weeks = request.form.getlist('weeks')
+        new_weeks = ",".join(new_weeks)
         new_day = request.form.get('day')
         new_time_string = request.form.get('start_time')
         new_time = datetime.strptime(new_time_string, "%H:%M").time()
