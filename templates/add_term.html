@@ -29,7 +29,48 @@
             </button>
         </div>
         <div class="ui center aligned middle aligned grid" id="container">
-            <div class="six wide column" id="add-course">
+            <div class="ui placeholder segment">
+                <div class="ui two column stackable center aligned grid">
+                    <div class="ui vertical divider">Or</div>
+                    <div class="middle aligned row">
+                    
+                    <div class="column">
+                        <div class="ui header">Add new term</div>
+                        <form class="ui form left aligned segment" method="POST" action="{{url_for('main.add_term')}}">
+                            <div class="field">
+                                <label>Fullname</label>
+                                <input id="title" placeholder="Term Name" name="title" type="text">
+                            </div>
+                            
+                            <div class="field">
+                                <label>Start Date</label>
+                                <input id="start_date" type="date" placeholder="Enter Start Date" name="start_date">
+                            </div>
+                            <div class="field">
+                                <label>Confirm Password</label>
+                                <input id="end_date" type="date" placeholder="Enter End Date" name="end_date">
+                            </div>
+                            <button id="confirm" class="medium ui primary button">
+                                Confirm
+                            </button>
+                            <div class="ui error message"></div>
+                        </form>
+                    </div>
+                    <div class="column">
+                        <div class="ui header">Upload ICS file</div>
+                        <form class="ui form left aligned segment" method="POST" enctype="multipart/form-data" action = "{{url_for('main.ics_import')}}">
+                            <div class="field">
+                                <input name="ics" type="file"></input>
+                                <br/>
+                            </div>
+                            <button name="confirm" class="medium ui primary button">
+                                Confirm
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                </div>
+             <!-- <div class="six wide column" id="add-course">
                 <h2>Add new Term</h2>
                 <form class="ui form left aligned segment" method="POST" action="{{url_for('main.add_term')}}">
                     <div class="field">
@@ -54,15 +95,15 @@
                     {% endif %}
                 </form>
               </div>
-            </div>
+            </div>  -->
         </div>
-        <h1>Add ICS</h1>
+        <!-- <h1>Add ICS</h1>
         <form method="POST" enctype="multipart/form-data" action = "{{url_for('main.ics_import')}}">
             <div>
             <input name="ics" type="file"></input>
             <br/>
             </div>
             <button name="confirm" type="submit">Confirm</button>
-        </form>
+        </form> -->
     </body>
 </html>
