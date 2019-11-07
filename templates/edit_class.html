@@ -15,7 +15,8 @@
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
         <script src="{{url_for('static', filename='semantic/dist/semantic.min.js')}}"></script>
-
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+    
         <script src="../../static/src/js/edit_class.js"></script>
 
     
@@ -89,28 +90,11 @@
                     <label>Notes (optional)</label>
                     <input type="text" name="notes" placeholder="Notes">
                 </div>
-                <div class="field">
-                    <label>Weeks</label>
-                    <div id="demo"></div>
-                    <script>
-                        var x ="", i;
-                        for (i=1; i<=2; i++) {
-
-                          x = x + "<div class='item'>" +
-                            "<div class='ui child checkbox'>" +
-                              "<input type='checkbox' name='weeks'>" +
-                              "<label>Week " + i + "</label>" +
-                            "</div>" +
-                          "</div>"
-
-                        }
-                        document.getElementById("demo").innerHTML = x;
-                    </script>  
-                </div>
+                <div class="field" id="checkboxes">
+                    <label>Weeks </label>
                     
-                </br></br>     
-
-                <!-- <div class="wrapper"> -->
+                    
+                </div>
                     <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.class_page', class_id=class_curr.id) }}'">
                         Cancel
                     </button>
@@ -122,5 +106,8 @@
             </form>
         </div>
     </div>
+    <script>
+        var weeks = {{ term.weeks | tojson }};
+    </script>
 </body>
 </html>

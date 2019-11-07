@@ -247,7 +247,8 @@ def add_class(course_id):
         time = datetime.strptime(time_string, "%H:%M").time()
         time_string_end = request.form.get('end_time')
         end_time = datetime.strptime(time_string_end, "%H:%M").time() 
-        weeks = request.form.get('weeks')
+        weeks = request.form.getlist('weeks')
+        weeks = ",".join(weeks)
         location = request.form.get('location')
         new_class = Class(type = type, day = day, time = time,end_time=end_time, weeks = weeks, location = location ,course_id = course_id)
         db.session.add(new_class)
@@ -258,15 +259,18 @@ def add_class(course_id):
 @main.route('/class<class_id>/edit', methods=['POST', 'GET'])
 @login_required
 def edit_class(class_id):
+    course_id = Class.query.filter_by(id=int(class_id)).first().course_id
+    course = Course.query.filter_by(id=int(course_id)).first()
+    term = course.term
     if request.method == 'POST':
         class_curr = Class.query.filter_by(id = int(class_id)).first()
         new_type = request.form.get('type')
         new_weeks = request.form.get('weeks')
         new_day = request.form.get('day')
-        new_time_string = request.form.get('time')
-        new_time = datetime.strptime(new_time_string, "%H:%M:%S").time()
+        new_time_string = request.form.get('start_time')
+        new_time = datetime.strptime(new_time_string, "%H:%M").time()
         time_string_end = request.form.get('end_time')
-        end_time = datetime.strptime(time_string_end, "%H:%M:%S").time() 
+        end_time = datetime.strptime(time_string_end, "%H:%M").time() 
         class_curr.type = new_type
         class_curr.day = new_day
         class_curr.time = new_time
@@ -275,7 +279,7 @@ def edit_class(class_id):
         db.session.commit()
         return redirect(url_for('main.class_page', class_id = class_id))
     class_curr = Class.query.filter_by(id = int(class_id)).first() 
-    return render_template('edit_class.html', class_curr = class_curr)
+    return render_template('edit_class.html', class_curr = class_curr, term=term)
 
 @main.route('/class<class_id>/delete')
 @login_required
