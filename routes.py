@@ -426,10 +426,11 @@ def ics_import():
                     print(weeks)
                 location = y['LOCATION']
                 new_class = Class(type = type, day = start_day_name, time = class_time,end_time = class_time_end, weeks = weeks, location = location ,course_id = course_dict[course])
+                db.session.add(new_class)
+            if(exam):
+                new_exam = Assessment(title = summ, due_date  = class_date, due_time = class_time, description  = str(y['DESCRIPTION']), course_id = course_dict[course], user_id = current_user.id)
+                db.session.add(new_exam)
             
-            new_exam = Assessment(title = summ, due_date  = class_date, due_time = class_time, description  = str(y['DESCRIPTION']), course_id = course_dict[course], user_id = current_user.id)
-            db.session.add(new_exam)
-            db.session.add(new_class)
             db.session.commit()
 
     print("ICS")
