@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html>
-<head>
-    
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Pycoon Class Page</title>
-        <meta name="description" content="Timetable webapp for UNSW students">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <!-- Semantic UI -->
-        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <script src="{{url_for('static', filename='semantic/dist/semantic.min.js')}}"></script>
+    <head>
 
-        <script src="../../static/src/js/class_page.js"></script>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <title>Pycoon Class Page</title>
+            <meta name="description" content="Timetable webapp for UNSW students">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
-</head>
+            <!-- Semantic UI -->
+            <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
+            <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+            <script src="{{url_for('static', filename='semantic/dist/semantic.min.js')}}"></script>
+
+            <script src="../../static/src/js/class_page.js"></script>
+
+
+    </head>
 <body>
     
-    <h1>Class Page</h1>
-    <h1>{{curr_class.type.name}}</h1>
-    <h1>{{curr_class.time}}</h1>
-    <h1>{{curr_class.weeks}}</h1>
-    <h1>{{curr_class.day}}</h1>
-    <h1>{{curr_class.location}}</h1>
-    <a href="{{url_for('main.edit_class', class_id = curr_class.id)}}">
-            Edit Class
+    <div class="ui secondary menu">
+            <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.course', course_id=curr_class.course_id)}}'">
+                <i class="left arrow icon"></i>
+                Back
+            </button>
+    </div>
+    
+    <h1 style="text-align:center">Class Information</h1>
+    
+    <div class="ui center aligned middle aligned grid" id="container">
+        <div class="twelve wide column" id="course-page">
+ 
+            <button name="confirm" type="submit" value ="submit" class="mini medium ui secondary button" onclick="window.location.href='{{url_for('main.edit_class', class_id = curr_class.id)}}'">
+                    Edit class
+            </button>
+
+    
+            <form class="ui form left aligned segment">
+                
+            <h1>Class Type &emsp;: {{curr_class.type.name}}</h1>
+            <h1>Day  &emsp;&emsp;&emsp;&emsp;: {{curr_class.day}}</h1>
+            <h1>Time  &emsp;&emsp;&emsp;: {{curr_class.time}} - {{curr_class.end_time}}</h1>
+            <h1>Location  &emsp;&emsp;: {{curr_class.location}}</h1>
+            <h1>Weeks    &emsp;&emsp;: {{curr_class.weeks}}</h1>
+
+            </form>
+        
+        
+        </div>
+    </div>
+        
         
 </body>
 </html>
