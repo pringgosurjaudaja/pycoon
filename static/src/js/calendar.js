@@ -63,7 +63,7 @@ $(document).ready(function() {
         for (var n in weeks) {
             // n returns the index
             // weeks[n] returns the correct value
-            var date = new Date(start_date.getTime()+ (weeks[n]*7*86400000));
+            var date = new Date(start_date.getTime()+ ((weeks[n]-1)*7*86400000));
             
             date.setDate(date.getDate()+days);
             date.setHours(+hours)
