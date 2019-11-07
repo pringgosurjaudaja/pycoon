@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    // import { Calendar } from '@fullcalendar/core';
-    // import timeGridPlugin from '@fullcalendar/timegrid';
     $('#back').click(()=> {
         var str = new String(window.location.href);
         str = str.replace('/calendar','');
