@@ -156,7 +156,7 @@ def assessment(assessment_id):
         db.session.commit()   
     assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
     attachments = Attachment.query.filter_by(assessment_id=assessment_id)
-    return render_template('assessment_dev.html',assessment=assessment, attachments=attachments)    
+    return render_template('assessment.html',assessment=assessment, attachments=attachments)    
 
 @main.route('/attachment<attachment_id>')
 def attachment(attachment_id):

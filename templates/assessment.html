@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Pycoon</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- semantic UI -->
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='semantic/dist/semantic.min.css')}}">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="../../static/semantic/dist/semantic.min.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
+    </head>
+    <body>
+        <div class="ui secondary menu">
+            <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.course', course_id=course_id)}}'">
+                <i class="left arrow icon"></i>
+                Back
+            </button>
+        </div>
+
+        
+
+        <div class="content">
+            <h1 class="ui center aligned header">{{assessment.title}}</br>
+            <div class="ui center aligned sub header">
+                    Due : {{assessment.due_date}}</br>
+                    {{assessment.description}}
+            </div>
+        </div>
+        </br>
+        <div class="ui center aligned container">
+            <a href="{{url_for('main.edit_assessment', assessment_id = assessment.id)}}">
+                <button class="compact ui button">
+                    Edit
+                </button>
+            </a>
+            <a href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">
+                <button class="negative compact ui button">
+                    Delete
+                </button>
+            </a>
+
+            <div class="ui center aligned segment"><div class="ui centered grid">
+                    <div id="list" class="ten wide left aligned column">
+                <div class="ui center aligned segment">
+                    <h3>Attachments</h3>
+                    
+                    {% for attachment in attachments %}
+                        <div class="ui list">
+                            <div class="item">
+                                <img class="ui avatar image" src="/../../static/assets/attach-128.png"></img>
+                                <a href="{{url_for('main.attachment', attachment_id = attachment.id)}}">{{attachment.name}}</a>
+                                | 
+                                <a href="{{url_for('main.delete_attachment', attachment_id = attachment.id)}}">Delete</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="ui center aligned segment">
+                    <h3>Add Attachment</h3>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input class="ui center aligned segment" name="inputFile" type="file" required></input>
+                        </br>
+                        <button class="compact primary ui button" name="confirm" type="submit">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div></div></div>
+
+    </body>
+</html>

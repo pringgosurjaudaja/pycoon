@@ -46,32 +46,52 @@
     
     <div class="ui center aligned middle aligned grid" id="container">
         <div class="twelve wide column" id="course-page">
- 
-            <button name="confirm" type="submit" value ="submit" class="mini medium ui secondary button" onclick="window.location.href='{{url_for('main.edit_class', class_id = curr_class.id)}}'">
-                    Edit class
-            </button>
+            
+            <a href="{{url_for('main.edit_class', class_id = curr_class.id)}}">
+                <button class="compact ui button">
+                    Edit
+                </button>
+            </a>
+            <a href="{{url_for('main.delete_class', class_id = curr_class.id)}}">
+                <button class="negative compact ui button">
+                    Delete
+                </button>
+            </a>
+            </br>
+            
+            <form class="ui form center aligned segment">
+                <div align="center">
+                    <table style="width:50%" align="center">
+                      <col width="130">
+                      <col width="130">
+                      <tr>
+                        <td><h3 >Type</h3></td>
+                        <td><h3 style="text-transform:capitalize">: {{curr_class.type.name}}</h3></td>
+                      </tr>
+                      <tr>
+                        <td><h3 >Day</h3></td>
+                        <td><h3 >: {{curr_class.day}}</h3></td>
+                      </tr>
+                      <tr>
+                        <td><h3 >Time</h3></td>
+                        <td><h3 >: {{curr_class.time}} - {{curr_class.end_time}}</h3></td>
+                      </tr>
+                      <tr>
+                        <td><h3 >Location</h3></td>
+                        <td><h3 >: {{curr_class.location}}</h3></td>
+                      </tr>
+                      <tr>
+                        <td><h3 >Weeks</h3></td>
+                        <td><h3 >: {{curr_class.weeks}}</h3></td>
+                      </tr>
+                      <tr>
+                        <td><h3 >Notes</h3></td>
+                        <td><h3 >: {{curr_class.notes}}</h3></td>
+                      </tr>
+                    </table>
 
-    
-            <form class="ui form left aligned segment">
-                
-      <!--          <label>Class : </label>&nbsp;{{curr_class.type.name}}</br>
-                <label>Day  : </label>&nbsp;{{curr_class.day}}</br>
-                <label>Time   : </label>&nbsp;{{curr_class.time}} - {{curr_class.end_time}}</br>
-                <label>Location: </label>&nbsp;{{curr_class.location}}</br>
-                <label>Weeks: </label>&nbsp;{{curr_class.weeks}}</br>
-                <label>Notes: </label>&nbsp;{{curr_class.notes}}</br>   -->
-
-
-                <h1>Class : {{curr_class.type.name}}</h1>
-                <h1>Day  : {{curr_class.day}}</h1>
-                <h1>Time   : {{curr_class.time}} - {{curr_class.end_time}}</h1>
-                <h1>Location: {{curr_class.location}}</h1>
-                <h1>Weeks: {{curr_class.weeks}}</h1>
-                <h1>Notes: {{curr_class.notes}}</h1>
-
+                </div>
             </form>
-
-        
         </div>
     </div>
         
