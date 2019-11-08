@@ -18,6 +18,19 @@
 
             <script src="../../static/src/js/class_page.js"></script>
 
+        <style>
+            label{
+                display: inline-block;
+                float: left;
+                clear: left;
+                width: 250px;
+                text-align: right;
+            }
+            input {
+              display: inline-block;
+              float: left;
+            }
+        </style>
 
     </head>
 <body>
@@ -41,14 +54,23 @@
     
             <form class="ui form left aligned segment">
                 
-            <h1>Class Type &emsp;: {{curr_class.type.name}}</h1>
-            <h1>Day  &emsp;&emsp;&emsp;&emsp;: {{curr_class.day}}</h1>
-            <h1>Time  &emsp;&emsp;&emsp;: {{curr_class.time}} - {{curr_class.end_time}}</h1>
-            <h1>Location  &emsp;&emsp;: {{curr_class.location}}</h1>
-            <h1>Weeks    &emsp;&emsp;: {{curr_class.weeks}}</h1>
+      <!--          <label>Class : </label>&nbsp;{{curr_class.type.name}}</br>
+                <label>Day  : </label>&nbsp;{{curr_class.day}}</br>
+                <label>Time   : </label>&nbsp;{{curr_class.time}} - {{curr_class.end_time}}</br>
+                <label>Location: </label>&nbsp;{{curr_class.location}}</br>
+                <label>Weeks: </label>&nbsp;{{curr_class.weeks}}</br>
+                <label>Notes: </label>&nbsp;{{curr_class.notes}}</br>   -->
+
+
+                <h1>Class : {{curr_class.type.name}}</h1>
+                <h1>Day  : {{curr_class.day}}</h1>
+                <h1>Time   : {{curr_class.time}} - {{curr_class.end_time}}</h1>
+                <h1>Location: {{curr_class.location}}</h1>
+                <h1>Weeks: {{curr_class.weeks}}</h1>
+                <h1>Notes: {{curr_class.notes}}</h1>
 
             </form>
-        
+
         
         </div>
     </div>
