@@ -6,6 +6,9 @@ $(document).ready(function() {
     })
     console.log("ready");
     
+    let sd = Date.parse(terms[0].start_date);
+    console.log(sd);
+    
     let start_date = new Date(terms[0].start_date);
     
     var day_of_week = start_date.getDay();
@@ -54,8 +57,9 @@ $(document).ready(function() {
 
         var days = getDay(o.day)-1;
         
-        var weeks = o.weeks.split(',').map(Number);
+        var weeks = o.weeks.split(',').map(Number).map(Math.floor);
         var pieces = o.time.toString().split(":");
+
         var hour, minute, second;
         hours = parseInt(pieces[0], 10);
         minutes = parseInt(pieces[1], 10);
@@ -71,6 +75,8 @@ $(document).ready(function() {
             date.setHours(+hours)
             date.setMinutes(minutes);
             date.setSeconds(seconds);
+            
+            
             var col = courses.filter((el) => {
                 return el.id == o.course_id
             });
