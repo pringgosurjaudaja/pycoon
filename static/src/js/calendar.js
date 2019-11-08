@@ -5,10 +5,8 @@ $(document).ready(function() {
         window.location.href = str;
     })
     console.log("ready");
-    
+
     let sd = Date.parse(terms[0].start_date);
-    console.log(sd);
-    
     let start_date = new Date(terms[0].start_date);
     
     var day_of_week = start_date.getDay();
@@ -57,6 +55,7 @@ $(document).ready(function() {
 
         var days = getDay(o.day)-1;
         
+
         var weeks = o.weeks.split(',').map(Number).map(Math.floor);
         var pieces = o.time.toString().split(":");
 
@@ -64,19 +63,20 @@ $(document).ready(function() {
         hours = parseInt(pieces[0], 10);
         minutes = parseInt(pieces[1], 10);
         seconds = parseInt(pieces[2], 10);
-
+        
 
         for (var n in weeks) {
             // n returns the index
             // weeks[n] returns the correct value
+            
+            // var date = new Date(a)
             var date = new Date(start_date.getTime()+ ((weeks[n]-1)*7*86400000));
             
             date.setDate(date.getDate()+days);
             date.setHours(+hours)
             date.setMinutes(minutes);
             date.setSeconds(seconds);
-            
-            
+
             var col = courses.filter((el) => {
                 return el.id == o.course_id
             });
