@@ -156,8 +156,12 @@ def assessment(assessment_id):
         db.session.commit()   
     assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
     attachments = Attachment.query.filter_by(assessment_id=assessment_id)
+<<<<<<< HEAD
     course_id = assessment.course_id
     return render_template('assessment.html',assessment=assessment, attachments=attachments, course_id=course_id)    
+=======
+    return render_template('assessment.html',assessment=assessment, attachments=attachments)    
+>>>>>>> ceabbbdacc8977397c749a923584dba7308414ed
 
 @main.route('/attachment<attachment_id>')
 def attachment(attachment_id):
@@ -234,7 +238,7 @@ def edit_course(course_id):
 @login_required
 def class_page(class_id):
     curr_class = Class.query.filter_by(id=int(class_id)).first()
-    return render_template('class_dev.html',curr_class=curr_class)    
+    return render_template('class_page.html',curr_class=curr_class)    
 
 @main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
 @login_required
