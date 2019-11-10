@@ -47,8 +47,8 @@
                     Delete
                 </button>
             </a>
-
-            <div class="ui center aligned segment"><div class="ui centered grid">
+            </br></br>
+            <div class="ui centered grid">
                     <div id="list" class="ten wide left aligned column">
                 <div class="ui center aligned segment">
                     <h3>Attachments</h3>
@@ -56,10 +56,12 @@
                     {% for attachment in attachments %}
                         <div class="ui list">
                             <div class="item">
-                                <img class="ui avatar image" src="/../../static/assets/attach-128.png"></img>
-                                <a href="{{url_for('main.attachment', attachment_id = attachment.id)}}">{{attachment.name}}</a>
-                                | 
-                                <a href="{{url_for('main.delete_attachment', attachment_id = attachment.id)}}">Delete</a>
+                                <div class="content">
+                                <i class="paperclip icon"></i>
+                                    <a href="{{url_for('main.attachment', attachment_id = attachment.id)}}">{{attachment.name}}</a>
+                                    | 
+                                    <a href="{{url_for('main.delete_attachment', attachment_id = attachment.id)}}">Delete</a>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
@@ -74,7 +76,7 @@
                     </form>
                 </div>
             </div>
-        </div></div></div>
+        </div></div>
 
     </body>
 </html>
