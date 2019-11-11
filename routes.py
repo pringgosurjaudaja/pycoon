@@ -417,7 +417,8 @@ def ics_import():
 
             start_day_name = class_date.strftime('%A')
             time = str(start_date).split(' ',1)[-1]
-            class_time = datetime.strptime(time[0:4],"%H:%M").time()
+            
+            class_time = datetime.strptime(time[0:5],"%H:%M").time()
             end_time = str(end_date).split(' ',1)[-1]
             class_time_end = datetime.strptime(end_time[0:4],"%H:%M").time()
             week_start = class_date - save_term_start
