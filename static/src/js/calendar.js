@@ -97,9 +97,9 @@ $(document).ready(function() {
           plugins: [ 'dayGrid', 'timeGrid', 'list' ],
           defaultView: 'dayGridMonth',
           header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            left: $(window).width() > 765 ?'prev,next today':'prev,next',
+            center: $(window).width() > 765 ?'title':'',
+            right: $(window).width() > 765 ?'dayGridMonth,timeGridWeek,timeGridDay':'title'
           },
           eventSources: [
             {
