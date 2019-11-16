@@ -1,7 +1,7 @@
 $(document).ready(function() {
     console.log( "ready!" );
     
-    $('#color-select').dropdown();
+    $('.ui.selection.dropdown').dropdown();
 
     $('.ui.form')
         .form({
