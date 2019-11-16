@@ -19,7 +19,7 @@ $(document).ready(function() {
     //     }
     // });
 
-    $('.form')
+    $('#computer')
     .form({
         fields: {
           name: {
@@ -59,6 +59,53 @@ $(document).ready(function() {
               },
               {
                 type   : 'match[password]',
+                prompt : 'Password must match'
+              }
+            ]
+          }
+        }
+      });
+
+      $('#mobile')
+    .form({
+        fields: {
+          name: {
+            identifier: 'name',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your name'
+              }
+            ]
+          },
+          skills: {
+            identifier: 'email',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your email'
+              }
+            ]
+          },
+          
+          password: {
+            identifier: 'password1',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter a password'
+              }
+            ]
+          },
+          repassword: {
+            identifier: 'repassword1',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please re-confirm password'
+              },
+              {
+                type   : 'match[password1]',
                 prompt : 'Password must match'
               }
             ]
