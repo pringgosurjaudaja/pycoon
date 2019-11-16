@@ -115,6 +115,113 @@ $(document).ready(function() {
 
                     $('#list').append(segment);
 
+
+                    // ========================= MOBILE ======================= //
+                    segment = document.createElement('div');
+                    segment.setAttribute('class', 'ui massive segment');
+
+                    label = document.createElement('label');
+                    label.innerHTML = data.terms[i].title;
+                    segment.appendChild(label);
+
+
+                    removeId = 'm-remove'+data.terms[i].id;
+                    remove = document.createElement('a');
+                    remove.setAttribute('class', 'ui right corner red label');
+                    icon = document.createElement('i');
+                    icon.setAttribute('class', 'remove icon');
+                    remove.setAttribute('id', removeId);
+                    remove.appendChild(icon);
+                    segment.appendChild(remove);
+
+
+                    divider = document.createElement('div');
+                    divider.setAttribute('class', 'ui divider');
+                    segment.appendChild(divider);
+
+                    horizontal = document.createElement('div');
+                    horizontal.setAttribute('class', 'ui segments');
+
+                    leftSegment = document.createElement('div');
+                    leftSegment.setAttribute('class', 'ui segment');
+                    // leftSegment.innerText = String(data.terms[i].start_date).replace(/,.*/gi,' ');
+
+                    leftLabel = document.createElement('div');
+                    leftLabel.setAttribute('class', 'ui yellow horizontal label');
+                    leftLabel.innerText = 'Start';
+
+                    leftSegment.appendChild(leftLabel);
+                    leftSegment.insertAdjacentText('beforeend', String(data.terms[i].start_date).replace(/,.*/gi,' '));
+                    horizontal.appendChild(leftSegment);
+
+                    rightSegment = document.createElement('div');
+                    rightSegment.setAttribute('class', 'ui segment');
+                    // rightSegment.innerText = String(data.terms[i].end_date).replace(/,.*/gi,' ');;
+
+                    rightLabel = document.createElement('div');
+                    rightLabel.setAttribute('class', 'ui green horizontal label');
+                    rightLabel.innerText = 'End';
+
+                    rightSegment.appendChild(rightLabel);
+                    rightSegment.insertAdjacentText('beforeend', String(data.terms[i].end_date).replace(/,.*/gi,' '));
+                    
+                    horizontal.appendChild(rightSegment);
+
+                    segment.appendChild(horizontal);
+
+                    divider1 = document.createElement('div');
+                    divider1.setAttribute('class', 'ui divider');
+
+                    segment.appendChild(divider1);
+
+
+
+                    progress = document.createElement('div');
+                    progress.setAttribute('class', 'ui indicating progress');
+                    id = 'm-example'+count;
+                    progress.setAttribute('id', id);
+
+                    start = Date.parse(data.terms[i].start_date);
+                    end = Date.parse(data.terms[i].end_date);
+
+                    today = new Date();
+                    diff = end-start;
+                    currentDiff = today - start;
+                    diff = Math.ceil(diff / (1000 * 60 * 60 * 24 * 7));
+                    currentDiff = Math.ceil(currentDiff / (1000 * 60 * 60 * 24 * 7));
+                    
+                    if(currentDiff - diff >= 0) {
+                        currentDiff = diff;
+                    }
+                    if(currentDiff <= 0) {
+                        currentDiff = 0;
+                    }
+
+                    progress.setAttribute('data-value', currentDiff);
+                    progress.setAttribute('data-total', diff);
+                    
+                    bar = document.createElement('div');
+                    bar.setAttribute('class', 'bar');
+                    progress.appendChild(bar);
+
+                    progLabel = document.createElement('label');
+                    progLabel.innerHTML = 'Week';
+                    progLabel.setAttribute('class', 'label');
+                    progress.appendChild(progLabel);
+
+                    segment.appendChild(progress);
+
+                    view = document.createElement('button');
+                    buttonId = 'm-button'+data.terms[i].id;
+                    view.setAttribute('class', 'fluid blue ui button')
+                    view.setAttribute('id', buttonId);
+                    view.innerHTML = 'View';
+                    
+                    segment.appendChild(view);
+
+                    $('#list1').append(segment);
+
+
                     count += 1;
                 }
                 return data;
@@ -122,6 +229,10 @@ $(document).ready(function() {
                 var prefix ="#example";
                 var prefix1 = "#button";
                 var prefix2 = "#remove"
+
+                var prefix3 ="#m-example";
+                var prefix4 = "#m-button";
+                var prefix5 = "#m-remove"
                 for(var n = 0; n < data.terms.length; ++n) {
                     // Must Strictly use const, otherwise wont work
                     const num = data.terms[n].id;
@@ -131,11 +242,27 @@ $(document).ready(function() {
                     $(prefix2+num).click(() => {
                         window.location.href = '/term'+num+'/delete';
                     })
+
+                    $(prefix4+num).click(() => {
+                        window.location.href = '/term'+num;
+                    })
+                    $(prefix5+num).click(() => {
+                        window.location.href = '/term'+num+'/delete';
+                    })
+
+                    
                     
                 }
                 for(var i = 1; i <= count-1; ++i) {
                     var id = prefix + i;
                     $(id).progress({
+                        text: {
+                            active  : 'Week {value} of {total}',
+                            success : 'End of Term! Week {value} of {total}',
+                        }
+                    });
+                    var id1 = prefix3 + i;
+                    $(id1).progress({
                         text: {
                             active  : 'Week {value} of {total}',
                             success : 'End of Term! Week {value} of {total}',
@@ -153,6 +280,8 @@ $(document).ready(function() {
 
 
                 $('#list').append(button);
+                $('#list1').append(button);
+                
                 $('#button').click(() => {
                     window.location.href = '/add/term';
                 })
