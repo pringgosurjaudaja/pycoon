@@ -277,15 +277,25 @@ $(document).ready(function() {
                 var buttonLabel = document.createElement('label');
                 buttonLabel.innerHTML = 'Add New term';
                 button.appendChild(buttonLabel);
-
+                
+                var button1 = document.createElement('div');
+                button1.setAttribute('class', 'ui fluid button teal');
+                button1.setAttribute('id', 'm-button');
+                var buttonLabel1 = document.createElement('label');
+                buttonLabel1.innerHTML = 'Add New term';
+                button1.appendChild(buttonLabel1);
 
                 $('#list').append(button);
-                $('#list1').append(button);
+                $('#list1').append(button1);
                 
                 $('#button').click(() => {
                     window.location.href = '/add/term';
                 })
 
+                $('#m-button').click(() => {
+                    window.location.href = '/add/term';
+                })
+                
             })
             .catch((error)=> {
                 console.log('request failed : '+error);
