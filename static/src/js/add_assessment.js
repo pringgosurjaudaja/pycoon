@@ -1,7 +1,5 @@
 $(document).ready(function() {
     console.log( "ready!" );
-    
-    $('#course-select').dropdown();
 
     var acode = $('#code').val();
     var atitle = $('#title').val();
