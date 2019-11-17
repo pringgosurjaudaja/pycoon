@@ -92,20 +92,27 @@ def add_term():
 @login_required
 def term(term_id):
     term = Term.query.filter_by(id=int(term_id)).first()
+    if(current_user.id != term.user.id):
+        return redirect(url_for('main.home'))
     courses = Course.query.filter_by(term_id=term.id)
     return render_template('term.html',term=term, courses=courses)    
 
 @main.route('/term<term_id>/delete')
 @login_required
 def delete_term(term_id):
-    term_del = Term.query.filter_by(id = int(term_id)).first()
-    db.session.delete(term_del)
+    term = Term.query.filter_by(id = int(term_id)).first()
+    if(current_user.id != term.user.id):
+        return redirect(url_for('main.home'))
+    db.session.delete(term)
     db.session.commit()
     return redirect(url_for('main.home'))
 
 @main.route('/term<term_id>/add/course', methods=['GET', 'POST'])
 @login_required
 def add_course(term_id):
+    term = Term.query.filter_by(id = int(term_id)).first()
+    if(current_user.id != term.user.id):
+        return redirect(url_for('main.home'))
     if request.method == 'POST':
         title = request.form.get('title')
         code = request.form.get('code')
@@ -119,6 +126,9 @@ def add_course(term_id):
 @main.route('/course<course_id>')
 @login_required
 def course(course_id):
+    course = Course.query.filter_by(id = int(course_id)).first()
+    if(current_user.id != course.term.user.id):
+        return redirect(url_for('main.home'))
     course = Course.query.filter_by(id=int(course_id)).first()
     assessments = Assessment.query.filter_by(course_id=course.id, user_id = current_user.id)
     classes = Class.query.filter_by(course_id = course_id)
@@ -130,6 +140,8 @@ def course(course_id):
 def calendar(term_id):
     # url = str(request.referrer)
     term = Term.query.filter_by(id=int(term_id))
+    # if(current_user.id != term.user.id):
+    #     return redirect(url_for('main.home'))
     course = Course.query.filter_by(term_id=int(term_id))
     result_class = []
     result_assessment = []
@@ -149,18 +161,23 @@ def calendar(term_id):
 @main.route('/assessment<assessment_id>', methods=['GET', 'POST'])
 @login_required
 def assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
+    if(current_user.id != assessment.course.term.user.id):
+        return redirect(url_for('main.home'))
     if request.method == 'POST':
         file = request.files['inputFile']
         new_attachment = Attachment(name=file.filename,data=file.read(),assessment_id=assessment_id)
         db.session.add(new_attachment)
         db.session.commit()   
-    assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
     attachments = Attachment.query.filter_by(assessment_id=assessment_id)
     course_id = assessment.course_id
     return render_template('assessment.html',assessment=assessment, attachments=attachments, course_id=course_id)    
 
 @main.route('/attachment<attachment_id>')
 def attachment(attachment_id):
+    attachment = Attachment.query.filter_by(id=int(attachment_id)).first()
+    if(current_user.id != attachment.assessment.course.term.user.id):
+        return redirect(url_for('main.home'))
     file_data = Attachment.query.filter_by(id = attachment_id).first()
     return send_file(BytesIO(file_data.data), attachment_filename=file_data.name, as_attachment=True)
 
@@ -168,6 +185,9 @@ def attachment(attachment_id):
 @main.route('/course<course_id>/add/assessment', methods=['GET', 'POST'])
 @login_required
 def add_assessment(course_id):
+    course = Course.query.filter_by(id = int(course_id)).first()
+    if(current_user.id != course.term.user.id):
+        return redirect(url_for('main.home'))
     if request.method == 'POST':
         title = request.form.get('title')
         due_date_string = request.form.get('due_date')
@@ -187,8 +207,11 @@ def add_assessment(course_id):
 @main.route('/assessment<assessment_id>/edit', methods=['POST', 'GET'])
 @login_required
 def edit_assessment(assessment_id):
+    assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
+    if(current_user.id != assessment.course.term.user.id):
+        return redirect(url_for('main.home'))
+
     if request.method == 'POST':
-        assessment = Assessment.query.filter_by(id = int(assessment_id)).first()
         new_title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         new_due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
@@ -204,7 +227,6 @@ def edit_assessment(assessment_id):
         assessment.description = description
         db.session.commit()
         return redirect(url_for('main.assessment', assessment_id = assessment_id))
-    assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
     return render_template('edit_assessment.html', assessment = assessment)        
 
 @main.route('/api/calendars')
@@ -217,8 +239,11 @@ def calendars():
 @main.route('/course<course_id>/edit', methods=['POST', 'GET'])
 @login_required
 def edit_course(course_id):
+    course = Course.query.filter_by(id = int(course_id)).first()
+    if(current_user.id != course.term.user.id):
+        return redirect(url_for('main.home'))
+
     if request.method == 'POST':
-        course = Course.query.filter_by(id = int(course_id)).first()
         new_code = request.form.get('code')
         new_title = request.form.get('title')
         new_color = request.form.get('color')
@@ -227,19 +252,23 @@ def edit_course(course_id):
         course.color = new_color
         db.session.commit()
         return redirect(url_for('main.course', course_id = course_id))
-    course = Course.query.filter_by(id = int(course_id)).first() 
+
     return render_template('edit_course.html', course = course, term_id = course.term_id)   
 
 @main.route('/class<class_id>')
 @login_required
 def class_page(class_id):
     curr_class = Class.query.filter_by(id=int(class_id)).first()
+    if(current_user.id != curr_class.course.term.user.id):
+        return redirect(url_for('main.home'))
     return render_template('class_page.html',curr_class=curr_class)    
 
 @main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
 @login_required
 def add_class(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
+    if(current_user.id != course.term.user.id):
+        return redirect(url_for('main.home'))
     term = course.term
     if request.method == 'POST':
         type = request.form.get('type')
@@ -262,6 +291,8 @@ def add_class(course_id):
 def edit_class(class_id):
     course_id = Class.query.filter_by(id=int(class_id)).first().course_id
     course = Course.query.filter_by(id=int(course_id)).first()
+    if(current_user.id != course.term.user.id):
+        return redirect(url_for('main.home'))
     term = course.term
     if request.method == 'POST':
         class_curr = Class.query.filter_by(id = int(class_id)).first()
@@ -295,6 +326,8 @@ def edit_class(class_id):
 @login_required
 def delete_class(class_id):
     class_del = Class.query.filter_by(id = int(class_id)).first()
+    if(current_user.id != class_del.course.term.user.id):
+        return redirect(url_for('main.home'))
     course_id = class_del.course_id
     db.session.delete(class_del)
     db.session.commit()
@@ -304,6 +337,8 @@ def delete_class(class_id):
 @login_required
 def delete_course(course_id):
     course = Course.query.filter_by(id = int(course_id)).first() 
+    if(current_user.id != course.term.user.id):
+        return redirect(url_for('main.home'))
     term_id = course.term_id
     db.session.delete(course)
     db.session.commit()
@@ -313,6 +348,8 @@ def delete_course(course_id):
 @login_required
 def delete_assessment(assessment_id):
     assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
+    if(current_user.id != assessment.course.term.user.id):
+        return redirect(url_for('main.home'))
     course_id = assessment.course_id
     db.session.delete(assessment)
     db.session.commit()
@@ -321,7 +358,9 @@ def delete_assessment(assessment_id):
 @main.route('/attachment<attachment_id>/delete')
 @login_required
 def delete_attachment(attachment_id):
-    attachment = Attachment.query.filter_by(id = int(attachment_id)).first() 
+    attachment = Attachment.query.filter_by(id = int(attachment_id)).first()
+    if(current_user.id != attachment.assessment.course.term.user.id):
+        return redirect(url_for('main.home')) 
     assessment_id = attachment.assessment_id
     db.session.delete(attachment)
     db.session.commit()
