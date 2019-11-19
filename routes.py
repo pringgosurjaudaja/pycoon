@@ -140,8 +140,9 @@ def course(course_id):
 def calendar(term_id):
     # url = str(request.referrer)
     term = Term.query.filter_by(id=int(term_id))
-    # if(current_user.id != term.user.id):
-    #     return redirect(url_for('main.home'))
+    
+    if(current_user.id != term.first().user.id):
+        return redirect(url_for('main.home'))
     course = Course.query.filter_by(term_id=int(term_id))
     result_class = []
     result_assessment = []
