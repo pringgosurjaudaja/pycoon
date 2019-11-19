@@ -26,16 +26,21 @@
             </button>
         </div>
 
-        
+        </br></br></br>
 
         <div class="content">
             <h1 class="ui center aligned header">{{assessment.title}}</br>
             <div class="ui center aligned sub header">
-                    Due : {{assessment.due_date}}</br>
-                    {{assessment.description}}
+                    Due : {{assessment.due_date}} </br>
+                    Description: {{assessment.description}}
             </div>
         </div>
         </br>
+
+
+<!--m<div class="computer only ui center aligned middle aligned grid" id="container">
+            <div class="six wide column" id="add-course">-->
+                
         <div class="ui center aligned container">
             <a href="{{url_for('main.edit_assessment', assessment_id = assessment.id)}}">
                 <button class="compact ui button">
@@ -70,13 +75,31 @@
                 <div class="ui center aligned segment">
                     <h3>Add Attachment</h3>
                     <form method="POST" enctype="multipart/form-data">
-                        <input class="ui center aligned segment" name="inputFile" type="file" required></input>
+                        <input class="ui center aligned basic segment" name="inputFile" type="file" required></input>
                         </br>
                         <button class="compact primary ui button" name="confirm" type="submit">Upload</button>
                     </form>
                 </div>
             </div>
         </div></div>
+
+
+
+        <div class="mobile only" id="container">
+            <div class="ui sixteen wide column">
+                Hello  
+                <a href="{{url_for('main.edit_assessment', assessment_id = assessment.id)}}">
+                <button class="compact ui button">
+                    Edit
+                </button>
+            </a>
+            <a href="{{url_for('main.delete_assessment', assessment_id=assessment.id)}}">
+                <button class="negative compact ui button">
+                    Delete
+                </button>
+            </a>
+            </br></br>
+        </div></div>        
 
     </body>
 </html>
