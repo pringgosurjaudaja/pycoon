@@ -193,6 +193,8 @@ def add_assessment(course_id):
         title = request.form.get('title')
         due_date_string = request.form.get('due_date')
         due_date = datetime.strptime(due_date_string, "%Y-%m-%d")
+        if (due_date.date() < course.term.start_date):
+            return render_template('add_assessment.html', course_id=course_id, error=True)    
         time_string = request.form.get('due_time')
         time = datetime.strptime(time_string, "%H:%M").time()
         
