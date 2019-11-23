@@ -10,4 +10,4 @@ LOGIN, SIGNUP SIMPLE:<br/>
 4. type:<br/>
     export FLASK_APP=pycoon<br/>
     export FLASK_DEBUG=1<br/>
-    flask run<br/>
+    flask run  or   python -m flask run<br/>
