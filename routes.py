@@ -265,7 +265,6 @@ def class_page(class_id):
     if(current_user.id != curr_class.course.term.user.id):
         return redirect(url_for('main.error_401'))
 
-    
     return render_template('class_page.html',curr_class=curr_class)    
 
 @main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
