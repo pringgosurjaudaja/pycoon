@@ -93,7 +93,7 @@ def add_term():
 def term(term_id):
     term = Term.query.filter_by(id=int(term_id)).first()
     if(current_user.id != term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     courses = Course.query.filter_by(term_id=term.id)
     return render_template('term.html',term=term, courses=courses)    
 
@@ -102,7 +102,7 @@ def term(term_id):
 def delete_term(term_id):
     term = Term.query.filter_by(id = int(term_id)).first()
     if(current_user.id != term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     db.session.delete(term)
     db.session.commit()
     return redirect(url_for('main.home'))
@@ -112,7 +112,7 @@ def delete_term(term_id):
 def add_course(term_id):
     term = Term.query.filter_by(id = int(term_id)).first()
     if(current_user.id != term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     if request.method == 'POST':
         title = request.form.get('title')
         code = request.form.get('code')
@@ -128,7 +128,7 @@ def add_course(term_id):
 def course(course_id):
     course = Course.query.filter_by(id = int(course_id)).first()
     if(current_user.id != course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     course = Course.query.filter_by(id=int(course_id)).first()
     assessments = Assessment.query.filter_by(course_id=course.id, user_id = current_user.id)
     classes = Class.query.filter_by(course_id = course_id)
@@ -142,7 +142,7 @@ def calendar(term_id):
     term = Term.query.filter_by(id=int(term_id))
     
     if(current_user.id != term.first().user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     course = Course.query.filter_by(term_id=int(term_id))
     result_class = []
     result_assessment = []
@@ -164,7 +164,7 @@ def calendar(term_id):
 def assessment(assessment_id):
     assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
     if(current_user.id != assessment.course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     if request.method == 'POST':
         file = request.files['inputFile']
         new_attachment = Attachment(name=file.filename,data=file.read(),assessment_id=assessment_id)
@@ -178,7 +178,7 @@ def assessment(assessment_id):
 def attachment(attachment_id):
     attachment = Attachment.query.filter_by(id=int(attachment_id)).first()
     if(current_user.id != attachment.assessment.course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     file_data = Attachment.query.filter_by(id = attachment_id).first()
     return send_file(BytesIO(file_data.data), attachment_filename=file_data.name, as_attachment=True)
 
@@ -188,7 +188,7 @@ def attachment(attachment_id):
 def add_assessment(course_id):
     course = Course.query.filter_by(id = int(course_id)).first()
     if(current_user.id != course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     if request.method == 'POST':
         title = request.form.get('title')
         due_date_string = request.form.get('due_date')
@@ -212,7 +212,7 @@ def add_assessment(course_id):
 def edit_assessment(assessment_id):
     assessment = Assessment.query.filter_by(id=int(assessment_id)).first()
     if(current_user.id != assessment.course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
 
     if request.method == 'POST':
         new_title = request.form.get('title')
@@ -244,7 +244,7 @@ def calendars():
 def edit_course(course_id):
     course = Course.query.filter_by(id = int(course_id)).first()
     if(current_user.id != course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
 
     if request.method == 'POST':
         new_code = request.form.get('code')
@@ -263,7 +263,7 @@ def edit_course(course_id):
 def class_page(class_id):
     curr_class = Class.query.filter_by(id=int(class_id)).first()
     if(current_user.id != curr_class.course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     return render_template('class_page.html',curr_class=curr_class)    
 
 @main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
@@ -271,7 +271,7 @@ def class_page(class_id):
 def add_class(course_id):
     course = Course.query.filter_by(id=int(course_id)).first()
     if(current_user.id != course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     term = course.term
     if request.method == 'POST':
         type = request.form.get('type')
@@ -295,7 +295,7 @@ def edit_class(class_id):
     course_id = Class.query.filter_by(id=int(class_id)).first().course_id
     course = Course.query.filter_by(id=int(course_id)).first()
     if(current_user.id != course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     term = course.term
     if request.method == 'POST':
         class_curr = Class.query.filter_by(id = int(class_id)).first()
@@ -330,7 +330,7 @@ def edit_class(class_id):
 def delete_class(class_id):
     class_del = Class.query.filter_by(id = int(class_id)).first()
     if(current_user.id != class_del.course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     course_id = class_del.course_id
     db.session.delete(class_del)
     db.session.commit()
@@ -341,7 +341,7 @@ def delete_class(class_id):
 def delete_course(course_id):
     course = Course.query.filter_by(id = int(course_id)).first() 
     if(current_user.id != course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     term_id = course.term_id
     db.session.delete(course)
     db.session.commit()
@@ -352,7 +352,7 @@ def delete_course(course_id):
 def delete_assessment(assessment_id):
     assessment = Assessment.query.filter_by(id = int(assessment_id)).first() 
     if(current_user.id != assessment.course.term.user.id):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.error_401'))
     course_id = assessment.course_id
     db.session.delete(assessment)
     db.session.commit()
@@ -363,7 +363,7 @@ def delete_assessment(assessment_id):
 def delete_attachment(attachment_id):
     attachment = Attachment.query.filter_by(id = int(attachment_id)).first()
     if(current_user.id != attachment.assessment.course.term.user.id):
-        return redirect(url_for('main.home')) 
+        return redirect(url_for('main.error_401')) 
     assessment_id = attachment.assessment_id
     db.session.delete(attachment)
     db.session.commit()
@@ -385,6 +385,10 @@ def get_assessment(assessment_id):
     attachments = Attachment.query.filter_by(assessment_id=assessment_id)
     return jsonify(assessment=assessment.serialize, attachments=[i.serialize for i in attachments])    
 # [i.serialize for i in qryresult]
+
+@main.route('/401')
+def error_401():
+    return render_template('401.html')
 
 
 @main.route('/home', methods=['POST'])
