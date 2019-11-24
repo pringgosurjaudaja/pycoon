@@ -19,6 +19,29 @@
 
     <script src="../../static/src/js/add_assessment.js"></script>
 
+    <style type="text/css">
+        .mobileHide {  }
+
+        /* Smartphone Portrait and Landscape */
+        @media only screen
+          and (min-device-width : 320px)
+          and (max-device-width : 480px){
+           .mobileHide { display: none;}
+        }
+      </style>
+      
+      
+      <style type="text/css">
+        .mobileShow {display: none;}
+
+        /* Smartphone Portrait and Landscape */
+        @media only screen
+          and (min-device-width : 320px)
+          and (max-device-width : 480px){ 
+            .mobileShow {display: block;}
+        }
+      </style>
+
 </head>
 
 <body>
@@ -33,7 +56,8 @@
         </button>
     </div>
 
-    <div class="computer only ui center aligned middle aligned grid" id="container">
+    <div class="mobileHide">
+    <div class="ui center aligned middle aligned grid mobileHide" id="container">
         <div class="six wide column" id="add-assessment">
             <h2>Add New Assessment</h2>
 
@@ -73,9 +97,10 @@
                 <div class="ui error message"></div>
             </form>
         </div>
-    </div>
+    </div></div>
 
-    <div class="mobile only" id="container">
+    <div class="mobileShow">
+    <div class="mobileShow" id="container">
         <div class="ui sixteen wide column">
             <h2>Add New Assessment</h2>
             <form class="ui form left aligned segment" method="POST"
@@ -95,12 +120,11 @@
                 </div>
                 <div class="field">
                     <label>Description (optional)</label>
-                    <!-- <input type="text" name="description" placeholder="Assessment Description"> -->
                     <textarea name="description"></textarea>
                 </div>
                 </br></br>
 
-                <!-- <div class="wrapper"> -->
+               
                 <button name="cancel" type="button" class="medium ui button"
                     onclick="window.location.href='{{ url_for('main.course', course_id=course_id) }}'">
                     Cancel
@@ -108,11 +132,11 @@
                 <button name="confirm" type="submit" value="submit" class="medium ui primary button">
                     Confirm
                 </button>
-                <!-- </div> -->
+                
                 <div class="ui error message"></div>
             </form>
         </div>
-    </div>
+    </div></div>
 </body>
 
 </html>
