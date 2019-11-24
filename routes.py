@@ -282,6 +282,7 @@ def add_class(course_id):
         end_time = datetime.strptime(time_string_end, "%H:%M").time() 
         weeks = request.form.getlist('weeks')
         weeks = ",".join(weeks)
+        print(weeks)
         location = request.form.get('location')
         new_class = Class(type = type, day = day, time = time,end_time=end_time, weeks = weeks, location = location ,course_id = course_id)
         db.session.add(new_class)
