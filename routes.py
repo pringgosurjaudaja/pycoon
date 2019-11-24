@@ -264,6 +264,20 @@ def class_page(class_id):
     curr_class = Class.query.filter_by(id=int(class_id)).first()
     if(current_user.id != curr_class.course.term.user.id):
         return redirect(url_for('main.error_401'))
+
+    print(curr_class.weeks)
+    arr = curr_class.weeks.split(",")
+    new_week = ""
+    count = 0
+    for a in arr:
+        if count == 0:
+            new_week += str(int(a))
+            count += 1
+        else:
+            new_week += ','+str(int(a))
+            count += 1
+    
+    curr_class.weeks = new_week
     return render_template('class_page.html',curr_class=curr_class)    
 
 @main.route('/course<course_id>/add/class', methods=['GET', 'POST'])
