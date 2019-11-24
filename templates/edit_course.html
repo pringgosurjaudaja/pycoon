@@ -19,7 +19,32 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='src/css/styles.css') }}" >
 
         <script src="../../static/src/js/edit_course.js"></script>
+
+        <style type="text/css">
+            .mobileHide {  }
+    
+            /* Smartphone Portrait and Landscape */
+            @media only screen
+              and (min-device-width : 320px)
+              and (max-device-width : 480px){
+               .mobileHide { display: none;}
+            }
+        </style>
+          
+          
+        <style type="text/css">
+            .mobileShow {display: none;}
+    
+            /* Smartphone Portrait and Landscape */
+            @media only screen
+              and (min-device-width : 320px)
+              and (max-device-width : 480px){ 
+                .mobileShow {display: block;}
+            }
+        </style>
+
      </head>
+
     <body>
         <div class="ui secondary menu">
             <button class="ui left labeled icon button" onclick="window.location.href='{{url_for('main.course', course_id= course.id)}}'">
@@ -27,6 +52,8 @@
                 Back
             </button>
         </div>
+
+        <div class="mobileHide">
         <div class="ui center aligned middle aligned grid" id="container">
             <div class="six wide column" id="add-course">
                 <h2>Edit Course</h2>
@@ -95,6 +122,79 @@
                     <div class="ui error message"></div>
                 </form>
             </div>
-        </div>
+        </div></div>
+
+        <div class="mobileShow">
+                <div class="mobileShow" id="container">
+                    <div class="ui sixteen wide column" id="add-course">
+                        <h2 align="center">Edit Course</h2>
+                        
+                        <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.edit_course', course_id = course.id) }}">
+                            <div class="field">
+                                <label>Course Code</label>
+                                <input type="text" name="code" value = "{{course.code}}"placeholder="COMP1234">
+                            </div>
+                            <div class="field">
+                                <label>Course Title</label>
+                                <input type="text" name="title" value = "{{course.title}}" placeholder="Example Course Title">
+                            </div>
+                            <div class="field">
+                                <label>Color</label>
+                                <div class="ui selection dropdown" id="color-select" name="dropdown">
+                                    <input type="hidden" value = "{{course.color}}" name="color">
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">Select color</div>
+                                    <div class="menu">
+                                        <div class="item" data-value="#ca3b33" data-text="Red">
+                                            <div class="ui red empty circular label"></div>
+                                            Red
+                                        </div>
+                                        <div class="item" data-value="#e27737" data-text="Orange">
+                                            <div class="ui orange empty circular label"></div>
+                                            Orange
+                                        </div>
+                                        <div class="item" data-value="#f2be43" data-text="Orange">
+                                            <div class="ui yellow empty circular label"></div>
+                                            Yellow
+                                        </div>
+                                        <div class="item"  data-value="#baca45" data-text="Olive">
+                                            <div class="ui olive empty circular label"></div>
+                                            Olive
+                                        </div>
+                                        <div class="item"  data-value="#50b2ac" data-text="Teal">
+                                            <div class="ui teal empty circular label"></div>
+                                            Teal
+                                        </div>
+                                        <div class="item"  data-value="#3f85ca" data-text="Blue">
+                                            <div class="ui blue empty circular label"></div>
+                                            Blue
+                                        </div>
+                                        <div class="item"  data-value="#5c3dc2" data-text="Violet">
+                                            <div class="ui violet empty circular label"></div>
+                                            Violet
+                                        </div>
+                                        <div class="item"  data-value="#9640c1" data-text="Purple">
+                                            <div class="ui purple empty circular label"></div>
+                                            Purple
+                                        </div>
+                                        <div class="item"  data-value="#cf4a94" data-text="Pink">
+                                            <div class="ui pink empty circular label"></div>
+                                            Pink
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </br></br>
+                            <button type="button" class="medium ui button" formaction="/" onclick="window.location.href='{{ url_for('main.course', course_id = course.id) }}'">
+                                Cancel
+                            </button>
+                            <button id="confirm" type="submit" class="medium ui primary button">
+                                Confirm
+                            </button>
+                            <div class="ui error message"></div>
+                        </form>
+                    </div>
+                </div></div>
+
     </body>
 </html>
