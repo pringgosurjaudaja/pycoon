@@ -5,6 +5,9 @@ $(document).ready(function() {
     var atitle = $('#title').val();
     var adate = $('#due_date').val();
     
+   
+
+
     $('.ui.form')
         .form({
             fields: {
@@ -37,6 +40,7 @@ $(document).ready(function() {
                 },
                
             }
-        })
-    ;
+        });
+
+      
 });

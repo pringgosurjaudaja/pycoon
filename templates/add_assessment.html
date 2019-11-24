@@ -32,9 +32,8 @@
             Back
         </button>
     </div>
-
-    <div class="computer only ui center aligned middle aligned grid" id="container">
-        <div class="six wide column" id="add-assessment">
+    <div class="ui center aligned grid">
+        <div class="six wide computer nine wide tablet sixteen wide mobile column" id="add-assessment">
             <h2>Add New Assessment</h2>
 
             <!--     <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.add_assessment', course_id=course_id) }}"
@@ -74,45 +73,9 @@
             </form>
         </div>
     </div>
+        
 
-    <div class="mobile only" id="container">
-        <div class="ui sixteen wide column">
-            <h2>Add New Assessment</h2>
-            <form class="ui form left aligned segment" method="POST"
-                action="{{ url_for('main.add_assessment', course_id=course_id) }}">
-
-                <div class="field">
-                    <label>Title</label>
-                    <input type="text" name="title" placeholder="Assessment Name">
-                </div>
-                <div class="field">
-                    <label>Due Date</label>
-                    <input type="date" name="due_date">
-                </div>
-                <div class="field">
-                    <label>Due Time</label>
-                    <input type="time" name="due_time">
-                </div>
-                <div class="field">
-                    <label>Description (optional)</label>
-                    <!-- <input type="text" name="description" placeholder="Assessment Description"> -->
-                    <textarea name="description"></textarea>
-                </div>
-                </br></br>
-
-                <!-- <div class="wrapper"> -->
-                <button name="cancel" type="button" class="medium ui button"
-                    onclick="window.location.href='{{ url_for('main.course', course_id=course_id) }}'">
-                    Cancel
-                </button>
-                <button name="confirm" type="submit" value="submit" class="medium ui primary button">
-                    Confirm
-                </button>
-                <!-- </div> -->
-                <div class="ui error message"></div>
-            </form>
-        </div>
-    </div>
+        
 </body>
 
 </html>
