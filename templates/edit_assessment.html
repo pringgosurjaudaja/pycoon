@@ -19,6 +19,29 @@
     
     <script src="../static/src/js/edit_assessment.js"></script>
     
+    <style type="text/css">
+        .mobileHide {  }
+
+        /* Smartphone Portrait and Landscape */
+        @media only screen
+          and (min-device-width : 320px)
+          and (max-device-width : 480px){
+           .mobileHide { display: none;}
+        }
+    </style>
+      
+      
+    <style type="text/css">
+        .mobileShow {display: none;}
+
+        /* Smartphone Portrait and Landscape */
+        @media only screen
+          and (min-device-width : 320px)
+          and (max-device-width : 480px){ 
+            .mobileShow {display: block;}
+        }
+    </style>
+
 </head>
 <body>
     
@@ -31,6 +54,7 @@
         </button>
     </div>
     
+    <div class="mobileHide">
     <div class="ui center aligned middle aligned grid" id="container">
         <div class="six wide column" id="add-assessment">
             <h2>Edit Assessment</h2>
@@ -67,6 +91,44 @@
                 <div class="ui error message"></div>
             </form>
         </div>
-    </div>
+    </div></div>
+
+    <div class="mobileShow">
+        <div class="mobileShow" id="container">
+            <div class="ui sixteen wide column">
+                <h2>Edit Assessment</h2>
+    
+                <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.edit_assessment', assessment_id = assessment.id) }}"
+                      name="myForm">
+                    <div class="field">
+                        <label>Title</label>
+                        <input type="text" name="title" value="{{assessment.title}}" placeholder="Assessment Name">
+                    </div>
+                    <div class="field">
+                        <label>Due Date</label>
+                        <input type="date" value="{{assessment.due_date}}" name="due_date">
+                    </div>
+                    <div class="field">
+                        <label>Due Time</label>
+                        <input type="time" name="due_time">
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea name="description"></textarea>
+                    </div>
+                    </br></br>
+    
+                        <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.assessment', assessment_id=assessment.id) }}'">
+                            Cancel
+                        </button>
+                        <button name="confirm" type="submit" value ="submit" class="medium ui primary button" >
+                            Confirm
+                        </button>
+                    <div class="ui error message"></div>
+                </form>
+            </div>
+        </div></div> 
+
+
 </body>
 </html>
