@@ -36,13 +36,40 @@ $(document).ready(function() {
         div.appendChild(input);
         div.appendChild(label);
       }
-      
-      
-      
       $('#checkboxes').append(div);
-      
     }
-    
+    for(var i =1 ; i<= weeks; ++i) {
+      var div = document.createElement('div');
+      if(curr_weeks.includes(i)) {
+        div.setAttribute('class', 'ui checked checkbox');
+        var input = document.createElement('input');
+        input.setAttribute('type', 'checkbox');
+        input.setAttribute('checked', '');
+        input.setAttribute('name', 'weeks');
+        input.setAttribute('value', i);
+        input.setAttribute('class', 'cinput');
+        var label = document.createElement('label');
+        label.setAttribute('class', 'clabel');
+        label.innerText = i;
+
+        div.appendChild(input);
+        div.appendChild(label);
+      } else {
+        div.setAttribute('class', 'ui checkbox');
+        var input = document.createElement('input');
+        input.setAttribute('type', 'checkbox');
+        input.setAttribute('name', 'weeks');
+        input.setAttribute('value', i);
+        input.setAttribute('class', 'cinput');
+        var label = document.createElement('label');
+        label.setAttribute('class', 'clabel');
+        label.innerText = i;
+
+        div.appendChild(input);
+        div.appendChild(label);
+      }
+      $('#checkboxes1').append(div);
+    }
     $('.ui.form')
         .form({
             fields: {
