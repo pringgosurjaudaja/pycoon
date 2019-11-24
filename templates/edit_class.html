@@ -19,6 +19,28 @@
     
         <script src="../../static/src/js/edit_class.js"></script>
 
+        <style type="text/css">
+            .mobileHide {  }
+    
+            /* Smartphone Portrait and Landscape */
+            @media only screen
+              and (min-device-width : 320px)
+              and (max-device-width : 480px){
+               .mobileHide { display: none;}
+            }
+        </style>
+          
+          
+        <style type="text/css">
+            .mobileShow {display: none;}
+    
+            /* Smartphone Portrait and Landscape */
+            @media only screen
+              and (min-device-width : 320px)
+              and (max-device-width : 480px){ 
+                .mobileShow {display: block;}
+            }
+        </style>
     
 </head>
 <body>
@@ -32,6 +54,7 @@
         </button>
     </div>
     
+    <div class="mobileHide">
     <div class="ui center aligned middle aligned grid" id="container">
         <div class="six wide column" id="edit-class">
             <h2>Edit Class</h2>
@@ -104,7 +127,86 @@
                 <div class="ui error message"></div>
             </form>
         </div>
-    </div>
+    </div></div>
+
+
+    <div class="mobileShow">
+    <!-- <div class="ui center aligned middle aligned grid" id="container"> -->
+    <div class="mobileShow" id="container">
+        <div class="ui sixteen wide column" id="add-assessment">
+            <h2 align="center">Edit Assessment</h2>
+    
+                <form class="ui form left aligned segment" method="POST" action="{{ url_for('main.edit_class', class_id = class_curr.id) }}">
+                                            
+                        
+                    <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
+                        <label>Type</label> 
+                        <select style="width: 100%;border-radius: 0.5rem!important;" name="type" value="{{class_curr.type}}">
+                            <option disabled selected value> -- select a class type -- </option>
+                            <option value="lecture">Lecture</option>
+                            <option value="tutorial">Tutorial</option>
+                            <option value="lab">Lab</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="meeting">Meeting</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+    
+           <!--         <div class="field">
+                        <label>Type</label>
+                        <input type="text" name="type" value="{{class_curr.type}}" placeholder="Class Type">
+                    </div>  -->
+                                                                                                           
+                    <div class="field">
+                        <label>Location</label>
+                        <input type="text" name="location" value="{{class_curr.location}}">
+                    </div>
+                    <div class="field dropdown" id="course-select" name="dropdown" style="width:100%;margin-left:auto;margin-right:auto;">
+                        <label>Day</label> 
+                        <select style="width: 100%;border-radius: 0.5rem!important;" name="day" id="day">
+                            <option id="Monday" value="Monday">Monday</option>
+                            <option id="Tuesday" value="Tuesday">Tuesday</option>
+                            <option id="Wednesday" value="Wednesday">Wednesday</option>
+                            <option id="Thursday" value="Thursday">Thursday</option>
+                            <option id="Friday" value="Friday">Friday</option>
+                            <option id="Saturday" value="Saturday">Saturday</option>
+                            <option id="Sunday" value="Sunday">Sunday</option>
+                        </select>
+                    </div>                                                                                       
+              <!--      <div class="field">
+                        <label>Day</label>
+                        <input type="text" value="{{class_curr.day}}" name="day">
+                    </div>      -->
+                     <div class="field">
+                        <label>Start Time</label>
+                        <input type="time" name="start_time" value="{{class_curr.time}}">
+                    </div>
+                    <div class="field">
+                        <label>End Time</label>
+                        <input type="time" name="end_time" value="{{class_curr.end_time}}">
+                    </div>
+                    <div class="field">
+                        <label>Notes (optional)</label>
+                        <input type="text" name="notes" placeholder="Notes">
+                    </div>
+                    <div class="field" id="checkboxes">
+                        <label>Weeks </label>
+                        
+                        
+                    </div>
+                        <button name="cancel" type="button" class="medium ui button" onclick="window.location.href='{{ url_for('main.class_page', class_id=class_curr.id) }}'">
+                            Cancel
+                        </button>
+                        <button name="confirm" type="submit" value ="submit" class="medium ui primary button" >
+                            Confirm
+                        </button>
+                    <!-- </div> -->
+                    <div class="ui error message"></div>
+                </form>
+            </div>
+        </div></div>
+
+
     <script>
         var weeks = {{ term.weeks | tojson }};
         var curr_weeks = {{ class_curr.weeks | tojson }};
